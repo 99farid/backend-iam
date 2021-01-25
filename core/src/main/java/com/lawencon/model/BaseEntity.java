@@ -10,8 +10,6 @@ import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 	public static final long serialVersionUID = 1L;
@@ -22,15 +20,12 @@ public abstract class BaseEntity implements Serializable {
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	private String id;
 
-	@JsonIgnore
 	@Column(name = "created_by")
 	private String createdBy;
 
-	@JsonIgnore
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
-	@JsonIgnore
 	@Column(name = "updated_by")
 	private String updatedBy;
 
