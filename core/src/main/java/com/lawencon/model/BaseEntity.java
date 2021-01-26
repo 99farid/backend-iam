@@ -7,12 +7,15 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PreUpdate;
+import javax.persistence.Version;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
-	public static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L; 
 
 	@Id
 	@Column(name = "id")
@@ -24,6 +27,7 @@ public abstract class BaseEntity implements Serializable {
 	private String createdBy;
 
 	@Column(name = "created_at")
+	@CreationTimestamp
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_by")
@@ -31,8 +35,14 @@ public abstract class BaseEntity implements Serializable {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+	
+	@PreUpdate
+    public void preUpdate() {
+		updatedAt = LocalDateTime.now();
+    }
 
 	@Column(name = "version")
+	@Version
 	private Long version;
 
 	public Long getVersion() {
@@ -40,11 +50,7 @@ public abstract class BaseEntity implements Serializable {
 	}
 
 	public void setVersion(Long version) {
-		if (version == null) {
-			this.version = 0L;
-		} else {
-			this.version = version;
-		}
+		this.version = version;
 	}
 
 	public String getId() {
