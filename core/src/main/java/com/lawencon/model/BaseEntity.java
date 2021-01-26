@@ -15,12 +15,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
-	public static final long serialVersionUID = 1L; 
+	public static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(generator = "UUID")
-	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	@Column(name = "id", columnDefinition = "varchar DEFAULT uuid_generate_v4()")
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
 	private String id;
 
 	@Column(name = "created_by")
@@ -35,11 +35,11 @@ public abstract class BaseEntity implements Serializable {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
-	
+
 	@PreUpdate
-    public void preUpdate() {
+	public void preUpdate() {
 		updatedAt = LocalDateTime.now();
-    }
+	}
 
 	@Column(name = "version")
 	@Version
