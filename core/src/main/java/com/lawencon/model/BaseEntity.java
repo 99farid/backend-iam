@@ -7,10 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
@@ -27,7 +27,6 @@ public abstract class BaseEntity implements Serializable {
 	private String createdBy;
 
 	@Column(name = "created_at")
-	@CreationTimestamp
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_by")
@@ -37,8 +36,12 @@ public abstract class BaseEntity implements Serializable {
 	private LocalDateTime updatedAt;
 
 	public BaseEntity() {
-		if (version == null)
-			version = 0L;
+		version = 0L;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		createdAt = LocalDateTime.now();
 	}
 
 	@PreUpdate
