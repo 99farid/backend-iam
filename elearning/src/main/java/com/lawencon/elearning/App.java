@@ -22,19 +22,19 @@ public class App  {
 	public CommandLineRunner commandLineRunner(MahasiswaService mhs) {
 		return args -> {
 			Mahasiswa m = new Mahasiswa();
-//			Mahasiswa m = mhs.findById("18c82164-b2b8-4102-8c32-071a73459a12");
+//			Mahasiswa m = mhs.findById("f9fffc9f-4fd4-4439-9c3d-b16c80d48bef");
 			m.setNama("mhs");
 //			m.setId("7c4673bf-518e-4198-a5b8-14890613755e");
 //			m.setVersion(1L);   
 
-			Universitas univ = new Universitas();
-			univ.setId("1"); 
+//			Universitas univ = new Universitas();
+//			univ.setId("1"); 
 //			univ.setVersion(11L); 
 			
 //			System.out.println(univ.getVersion());
-			m.setUniversitas(univ);
+//			m.setUniversitas(univ);
 
-			mhs.save(m);
+			mhs.insert(m);
 
 		};
 	}
