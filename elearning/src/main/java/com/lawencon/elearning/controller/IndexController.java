@@ -16,7 +16,7 @@ import com.lawencon.elearning.model.Mahasiswa;
 import com.lawencon.elearning.service.MahasiswaService;
 
 @RestController
-@RequestMapping("test")
+@RequestMapping("mhs")
 public class IndexController {
 
 	@Autowired
@@ -25,7 +25,7 @@ public class IndexController {
 	@GetMapping("{id}")
 	public ResponseEntity<?> getMhs(@PathVariable("id") String id) {
 		try {
-			Mahasiswa mhs = mahasiswaService.findById(id);
+			Mahasiswa mhs = mahasiswaService.findById(id).orElseThrow(() -> new RuntimeException("ID Not Found"));
 			return new ResponseEntity<>(mhs, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -33,7 +33,7 @@ public class IndexController {
 		}
 
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody String data) {
 		try {

@@ -1,4 +1,4 @@
-package com.lawencon.util;
+package com.lawencon.helper;
 
 /**
  * @author lawencon05

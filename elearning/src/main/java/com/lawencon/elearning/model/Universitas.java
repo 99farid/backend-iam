@@ -2,7 +2,7 @@ package com.lawencon.elearning.model;
 
 import javax.persistence.Entity;
 
-import com.lawencon.model.BaseEntity;
+import com.lawencon.base.BaseEntity;
 
 @Entity
 public class Universitas extends BaseEntity {

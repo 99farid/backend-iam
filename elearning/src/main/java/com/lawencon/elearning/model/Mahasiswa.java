@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.lawencon.model.BaseEntity;
+import com.lawencon.base.BaseEntity;
 
 @Entity
 public class Mahasiswa extends BaseEntity {

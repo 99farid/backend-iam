@@ -1,4 +1,4 @@
-package com.lawencon.model;
+package com.lawencon.base;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -52,6 +52,17 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name = "version")
 	@Version
 	private Long version;
+
+	@Column(name = "is_active")
+	private Boolean isActive = true;
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public Long getVersion() {
 		return version;
