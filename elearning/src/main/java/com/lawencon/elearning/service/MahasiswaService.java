@@ -1,7 +1,6 @@
 package com.lawencon.elearning.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.lawencon.elearning.model.Mahasiswa;
 
@@ -11,7 +10,7 @@ public interface MahasiswaService {
 
 	void update(Mahasiswa data) throws Exception;
 
-	Optional<Mahasiswa> findById(String id) throws Exception;
+	Mahasiswa findById(String id) throws Exception;
 
 	List<Mahasiswa> findAll() throws Exception;
 

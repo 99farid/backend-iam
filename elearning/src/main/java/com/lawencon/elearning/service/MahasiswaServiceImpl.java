@@ -1,7 +1,6 @@
 package com.lawencon.elearning.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,7 @@ public class MahasiswaServiceImpl extends BaseServiceImpl implements MahasiswaSe
 	public void insert(Mahasiswa data) throws Exception {
 		try {
 			begin();
-			mahasiswaDao.insert(data, () -> {
-				// put code here before insert
-			});
+			mahasiswaDao.insert(data);
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,15 +30,12 @@ public class MahasiswaServiceImpl extends BaseServiceImpl implements MahasiswaSe
 	@Override
 	public void update(Mahasiswa data) throws Exception {
 		try {
-			Mahasiswa mhsDb = findById(data.getId()).orElseThrow(() -> new RuntimeException("ID Not Found"));
+			Mahasiswa mhsDb = findById(data.getId());	
 			data.setCreatedAt(mhsDb.getCreatedAt());
 			data.setCreatedBy(mhsDb.getCreatedBy());
-			data.setUpdatedBy(mhsDb.getCreatedBy());
 
 			begin();
-			mahasiswaDao.update(data, () -> {
-				// put code here before update
-			});
+			mahasiswaDao.update(data);
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +44,7 @@ public class MahasiswaServiceImpl extends BaseServiceImpl implements MahasiswaSe
 	}
 
 	@Override
-	public Optional<Mahasiswa> findById(String id) throws Exception {
+	public Mahasiswa findById(String id) throws Exception {
 		return mahasiswaDao.findById(id);
 	}
 

@@ -9,8 +9,6 @@ import javax.persistence.TypedQuery;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Repository;
 
-import com.lawencon.helper.Callback;
-
 /**
  * <p>
  * Abstract DAO untuk handle basic CRUD
@@ -42,28 +40,16 @@ public class BaseDaoImpl<T extends BaseEntity> {
 		return em().createQuery("FROM " + clazz.getName(), clazz).getResultList();
 	}
 
-	protected void save(final T entity, Callback before, Callback after) throws Exception {
-		if (before != null)
-			before.exec();
-
+	protected void save(final T entity) throws Exception {
 		if (entity.getId() != null) {
 			em().merge(entity);
 		} else {
 			em().persist(entity);
 		}
-
-		if (after != null)
-			after.exec();
 	}
 
-	protected void delete(final T entity, Callback before, Callback after) throws Exception {
-		if (before != null)
-			before.exec();
-
+	protected void delete(final T entity) throws Exception {
 		em().remove(entity);
-
-		if (after != null)
-			after.exec();
 	}
 
 	protected void deleteById(final Object entityId) throws Exception {
@@ -73,7 +59,7 @@ public class BaseDaoImpl<T extends BaseEntity> {
 		}
 
 		if (entity != null)
-			delete(entity, null, null);
+			delete(entity);
 		else
 			throw new Exception("ID Not Found");
 	}
