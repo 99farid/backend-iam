@@ -21,6 +21,18 @@ public class Invoice extends BaseEntity{
 	
 	@Column(name = "total_price", nullable = false)
 	private BigDecimal totalPrice;
+	
+	@Column(nullable = false)
+	private File invoicePict;
+	
+
+	public File getInvoicePict() {
+		return invoicePict;
+	}
+
+	public void setInvoicePict(File invoicePict) {
+		this.invoicePict = invoicePict;
+	}
 
 	public String getCode() {
 		return code;
