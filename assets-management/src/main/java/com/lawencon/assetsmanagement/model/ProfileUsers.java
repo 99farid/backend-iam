@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "profile_user")
-public class ProfileUser extends BaseEntity {
+public class ProfileUsers extends BaseEntity {
 
 	private static final long serialVersionUID = 199051703932493253L;
 
@@ -19,11 +19,12 @@ public class ProfileUser extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_employee", nullable = false)
-	private Employee idEmployee;
+	private Employees idEmployee;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_profile_pict", nullable = false)
-	private File idProfilePict;
+	private Files idProfilePict;
+	
 	
 	public Users setIdUser() {
 		return idUser;
@@ -33,19 +34,19 @@ public class ProfileUser extends BaseEntity {
 		this.idUser = idUser;
 	}
 	
-	public Employee setIdEmplyoee() {
+	public Employees setIdEmplyoee() {
 		return idEmployee;
 	}
 	
-	public void getIdEmployee(Employee idEmployee) {
+	public void getIdEmployee(Employees idEmployee) {
 		this.idEmployee = idEmployee;
 	}
 	
-	public File setIdProfilePict() {
+	public Files setIdProfilePict() {
 		return idProfilePict;
 	}
 	
-	public void getIdProfilePict(File idProfilePict) {
+	public void getIdProfilePict(Files idProfilePict) {
 		this.idProfilePict = idProfilePict;
 	}
 }

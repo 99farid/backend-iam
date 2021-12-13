@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class Company extends BaseEntity {
+public class Companies extends BaseEntity {
 
 	private static final long serialVersionUID = -1548841025065373821L;
 

@@ -19,15 +19,15 @@ public class TransactionOut extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_employee", nullable = false)
-	private Employee idEmployee;
+	private Employees idEmployee;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_location", nullable = false)
-	private Location idLocation;
+	private Locations idLocation;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_general_item", nullable = false)
-	private Asset idGeneralItem;
+	private Assets idGeneralItem;
 	
 	public String setCode() {
 		return code;
@@ -37,27 +37,27 @@ public class TransactionOut extends BaseEntity {
 		this.code = code;	
 	}
 	
-	public Employee setIdEmployee() {
+	public Employees setIdEmployee() {
 		return idEmployee;
 	}
 	
-	public void getIdEmployee(Employee idEmployee) {
+	public void getIdEmployee(Employees idEmployee) {
 		this.idEmployee = idEmployee;
 	}
 	
-	public Location setIdLocation() {
+	public Locations setIdLocation() {
 		return idLocation;
 	}
 	
-	public void getIdLocation(Location idLocation) {
+	public void getIdLocation(Locations idLocation) {
 		this.idLocation = idLocation;
 	}
 	
-	public Asset setIdGeneralItem() {
+	public Assets setIdGeneralItem() {
 		return idGeneralItem;
 	}
 	
-	public void getIdGeneralItem(Asset idGeneralItem) {
+	public void getIdGeneralItem(Assets idGeneralItem) {
 		this.idGeneralItem = idGeneralItem;
 	}
 }

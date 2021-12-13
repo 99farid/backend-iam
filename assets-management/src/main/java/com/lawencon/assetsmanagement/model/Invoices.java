@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class Invoice extends BaseEntity{
+public class Invoices extends BaseEntity{
 	
 	private static final long serialVersionUID = -6489013604362874894L;
 
@@ -21,6 +21,18 @@ public class Invoice extends BaseEntity{
 	
 	@Column(name = "total_price", nullable = false)
 	private BigDecimal totalPrice;
+	
+	@Column(nullable = false)
+	private Files invoicePict;
+	
+
+	public Files getInvoicePict() {
+		return invoicePict;
+	}
+
+	public void setInvoicePict(Files invoicePict) {
+		this.invoicePict = invoicePict;
+	}
 
 	public String getCode() {
 		return code;

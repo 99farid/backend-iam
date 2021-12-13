@@ -11,7 +11,7 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "detail_transaction_out")
-public class DetailTransactionOut extends BaseEntity{
+public class DetailTransactionsOut extends BaseEntity{
 
 	private static final long serialVersionUID = 5738129835522199612L;
 
@@ -19,7 +19,7 @@ public class DetailTransactionOut extends BaseEntity{
 	private TransactionOut idTransactionOut;
 	
 	@JoinColumn(name = "id_asset", nullable = false)
-	private Asset idAsset;
+	private Assets idAsset;
 
 	@Column(name = "check_out_date", nullable = false)
 	private LocalDate checkOutDate;
@@ -33,11 +33,11 @@ public class DetailTransactionOut extends BaseEntity{
 		this.idTransactionOut = idTransactionOut;
 	}
 	
-	public Asset setIdAsset() {
+	public Assets setIdAsset() {
 		return idAsset;
 	}
 	
-	public void getIdAsset(Asset idAsset) {
+	public void getIdAsset(Assets idAsset) {
 		this.idAsset = idAsset;
 	}
 	

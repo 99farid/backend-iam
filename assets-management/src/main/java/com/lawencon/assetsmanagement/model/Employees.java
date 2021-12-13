@@ -8,13 +8,13 @@ import javax.persistence.ManyToOne;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class Employee extends BaseEntity{
+public class Employees extends BaseEntity{
 
 	private static final long serialVersionUID = 7217564241483812487L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_company", nullable = false)
-	private Company idCompany;
+	private Companies idCompany;
 	
 	@Column(length = 32, unique = true, nullable = false)
 	private String nip;
@@ -28,11 +28,11 @@ public class Employee extends BaseEntity{
 	@Column(length = 32, nullable = false)
 	private String department;
 
-	public Company setIdCompany() {
+	public Companies setIdCompany() {
 		return idCompany;
 	}
 	
-	public void getIdCompany(Company idCompany) {
+	public void getIdCompany(Companies idCompany) {
 		this.idCompany = idCompany;
 	}
 	
