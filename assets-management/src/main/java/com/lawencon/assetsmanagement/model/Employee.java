@@ -10,6 +10,8 @@ import com.lawencon.base.BaseEntity;
 @Entity
 public class Employee extends BaseEntity{
 
+	private static final long serialVersionUID = 7217564241483812487L;
+
 	@ManyToOne
 	@JoinColumn(name = "id_company", nullable = false)
 	private Company idCompany;

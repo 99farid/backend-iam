@@ -8,6 +8,8 @@ import com.lawencon.base.BaseEntity;
 @Entity
 public class Company extends BaseEntity {
 
+	private static final long serialVersionUID = -1548841025065373821L;
+
 	@Column(length = 36, unique= true, nullable = false)
 	private String code;
 	
