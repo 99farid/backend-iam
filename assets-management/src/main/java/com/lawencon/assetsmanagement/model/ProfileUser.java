@@ -22,8 +22,8 @@ public class ProfileUser extends BaseEntity {
 	private Employee idEmployee;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_file", nullable = false)
-	private File idFile;
+	@JoinColumn(name = "id_profile_pict", nullable = false)
+	private File idProfilePict;
 	
 	public Users setIdUser() {
 		return idUser;
@@ -41,11 +41,11 @@ public class ProfileUser extends BaseEntity {
 		this.idEmployee = idEmployee;
 	}
 	
-	public File setIdFile() {
-		return idFile;
+	public File setIdProfilePict() {
+		return idProfilePict;
 	}
 	
-	public void getIdFile(File idFile) {
-		this.idFile = idFile;
+	public void getIdProfilePict(File idProfilePict) {
+		this.idProfilePict = idProfilePict;
 	}
 }
