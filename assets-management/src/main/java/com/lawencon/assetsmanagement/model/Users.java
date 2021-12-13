@@ -1,5 +1,10 @@
 package com.lawencon.assetsmanagement.model;
+import javax.persistence.Entity;
 
-public class Users {
+
+import com.lawencon.base.BaseEntity;
+
+@Entity
+public class Users extends BaseEntity {
 
 }
