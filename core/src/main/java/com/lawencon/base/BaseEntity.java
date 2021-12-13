@@ -32,8 +32,8 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name = "updated_by")
 	private String updatedBy;
 
-	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
+	@Column(name = "updated_date")
+	private LocalDateTime updatedDate;
 
 	public BaseEntity() {
 		version = 0L;
@@ -46,7 +46,7 @@ public abstract class BaseEntity implements Serializable {
 
 	@PreUpdate
 	public void preUpdate() {
-		updatedAt = LocalDateTime.now();
+		updatedDate = LocalDateTime.now();
 	}
 
 	@Column(name = "version")
@@ -105,10 +105,10 @@ public abstract class BaseEntity implements Serializable {
 	}
 
 	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
+		return updatedDate;
 	}
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
+		this.updatedDate = updatedAt;
 	}
 }
