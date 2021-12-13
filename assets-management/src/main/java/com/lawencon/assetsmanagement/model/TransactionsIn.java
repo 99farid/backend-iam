@@ -21,7 +21,7 @@ public class TransactionsIn extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "id_transaction_out", nullable = false)
-	private TransactionOut transactionOut;
+	private TransactionsOut transactionOut;
 	
 	@Column(nullable = false)
 	private LocalDate checkInDate;
@@ -34,11 +34,11 @@ public class TransactionsIn extends BaseEntity{
 		this.code = code;
 	}
 
-	public TransactionOut getTransactionOut() {
+	public TransactionsOut getTransactionOut() {
 		return transactionOut;
 	}
 
-	public void setTransactionOut(TransactionOut transactionOut) {
+	public void setTransactionOut(TransactionsOut transactionOut) {
 		this.transactionOut = transactionOut;
 	}
 

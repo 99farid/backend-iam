@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "transaction_out")
-public class TransactionOut extends BaseEntity {
+public class TransactionsOut extends BaseEntity {
 
 	private static final long serialVersionUID = 1259288568796069056L;
 	
