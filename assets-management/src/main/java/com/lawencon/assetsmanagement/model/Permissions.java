@@ -7,7 +7,9 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 public class Permissions extends BaseEntity {
-	
+
+	private static final long serialVersionUID = 889951114744529210L;
+
 	@Column(length = 12, unique = true, nullable = false)
 	private String code;
 	

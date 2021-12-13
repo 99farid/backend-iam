@@ -9,12 +9,14 @@ import com.lawencon.base.BaseEntity;
 @Entity
 public class PermissionsDetail extends BaseEntity {
 
+	private static final long serialVersionUID = -16104524883422396L;
+
 	@ManyToOne
 	@JoinColumn(name = "id_role", nullable = false)
 	private Roles idRole;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_permission", nullable= false)
+	@JoinColumn(name = "id_permission", nullable = false)
 	private Permissions idPermission;
 	
 	public Roles setIdRole() {

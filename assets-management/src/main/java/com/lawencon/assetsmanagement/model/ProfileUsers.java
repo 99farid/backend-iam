@@ -1,13 +1,17 @@
 package com.lawencon.assetsmanagement.model;
 
+import com.lawencon.base.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "profile_user")
-public class ProfileUser {
+public class ProfileUsers extends BaseEntity {
+
+	private static final long serialVersionUID = 199051703932493253L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_user", nullable = false)
@@ -15,11 +19,11 @@ public class ProfileUser {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_employee", nullable = false)
-	private Employee idEmployee;
+	private Employees idEmployee;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "id_file", nullable = false)
-//	private File idFile;
+	@ManyToOne
+	@JoinColumn(name = "id_file", nullable = false)
+	private Files idFile;
 	
 	public Users setIdUser() {
 		return idUser;
@@ -29,19 +33,19 @@ public class ProfileUser {
 		this.idUser = idUser;
 	}
 	
-	public Employee setIdEmplyoee() {
+	public Employees setIdEmplyoee() {
 		return idEmployee;
 	}
 	
-	public void getIdEmployee(Employee idEmployee) {
+	public void getIdEmployee(Employees idEmployee) {
 		this.idEmployee = idEmployee;
 	}
 	
-//	public File setIdFile() {
-//		return idFile;
-//	}
-//	
-//	public void getIdFile(File idFile) {
-//		this.idFile = idFile;
-//	}
+	public Files setIdFile() {
+		return idFile;
+	}
+	
+	public void getIdFile(Files idFile) {
+		this.idFile = idFile;
+	}
 }

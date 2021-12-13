@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class Item extends BaseEntity{
+public class Items extends BaseEntity{
 	
 	private static final long serialVersionUID = 330696244128438788L;
 
@@ -19,7 +19,7 @@ public class Item extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "id_item_type", nullable = false)
-	private ItemType itemType;
+	private ItemTypes itemType;
 	
 	@Column(length = 32, nullable = false)
 	private String brand;
@@ -38,11 +38,11 @@ public class Item extends BaseEntity{
 		this.description = description;
 	}
 
-	public ItemType getItemType() {
+	public ItemTypes getItemType() {
 		return itemType;
 	}
 
-	public void setItemType(ItemType itemType) {
+	public void setItemType(ItemTypes itemType) {
 		this.itemType = itemType;
 	}
 

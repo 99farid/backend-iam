@@ -8,37 +8,37 @@ import javax.persistence.ManyToOne;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class DetailTransactionIn extends BaseEntity{
+public class DetailTransactionsIn extends BaseEntity{
 	
 	private static final long serialVersionUID = -8081228968172607094L;
 	
 	@Column(name = "id_transaction_in")
-	private TransactionIn transactionIn;
+	private TransactionsIn transactionIn;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_asset", nullable = false)
-	private Asset asset;
+	private Assets asset;
 	
 	@ManyToOne
 	@JoinColumn(name = "conditionAsset", nullable = false)
-	private ConditionAsset conditionAsset;
+	private ConditionAssets conditionAsset;
 	
-	public TransactionIn getTransactionIn() {
+	public TransactionsIn getTransactionIn() {
 		return transactionIn;
 	}
-	public void setTransactionIn(TransactionIn transactionIn) {
+	public void setTransactionIn(TransactionsIn transactionIn) {
 		this.transactionIn = transactionIn;
 	}
-	public Asset getAsset() {
+	public Assets getAsset() {
 		return asset;
 	}
-	public void setAsset(Asset asset) {
+	public void setAsset(Assets asset) {
 		this.asset = asset;
 	}
-	public ConditionAsset getConditionAsset() {
+	public ConditionAssets getConditionAsset() {
 		return conditionAsset;
 	}
-	public void setConditionAsset(ConditionAsset conditionAsset) {
+	public void setConditionAsset(ConditionAssets conditionAsset) {
 		this.conditionAsset = conditionAsset;
 	}
 	

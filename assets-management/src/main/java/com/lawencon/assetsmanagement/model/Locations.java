@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class Location extends BaseEntity{
+public class Locations extends BaseEntity{
 	
 	private static final long serialVersionUID = -3902967015421009810L;
 
@@ -14,7 +14,7 @@ public class Location extends BaseEntity{
 	private String code;
 	
 	@Column(nullable = false)
-	private Company company;
+	private Companies company;
 	
 	@Column(length = 32, nullable = false)
 	private String locationName;
@@ -27,11 +27,11 @@ public class Location extends BaseEntity{
 		this.code = code;
 	}
 
-	public Company getCompany() {
+	public Companies getCompany() {
 		return company;
 	}
 
-	public void setCompany(Company company) {
+	public void setCompany(Companies company) {
 		this.company = company;
 	}
 

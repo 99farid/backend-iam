@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class File extends BaseEntity{
+public class Files extends BaseEntity{
 
 	private static final long serialVersionUID = 4049987320330733803L;
 

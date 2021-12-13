@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "condition_asset")
-public class ConditionAsset extends BaseEntity{
+public class ConditionAssets extends BaseEntity{
 	
 	private static final long serialVersionUID = 8802233957966662402L;
 
@@ -19,7 +19,7 @@ public class ConditionAsset extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "id_status_asset", nullable = false)
-	private StatusAsset statusAsset;
+	private StatusAssets statusAsset;
 	
 	@Column(length = 32, nullable = false)
 	private String conditionAssetName;
@@ -32,11 +32,11 @@ public class ConditionAsset extends BaseEntity{
 		this.code = code;
 	}
 
-	public StatusAsset getStatusAsset() {
+	public StatusAssets getStatusAsset() {
 		return statusAsset;
 	}
 
-	public void setStatusAsset(StatusAsset statusAsset) {
+	public void setStatusAsset(StatusAssets statusAsset) {
 		this.statusAsset = statusAsset;
 	}
 

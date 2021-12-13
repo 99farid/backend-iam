@@ -8,7 +8,7 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "status_asset")
-public class StatusAsset extends BaseEntity{
+public class StatusAssets extends BaseEntity{
 	
 	private static final long serialVersionUID = 7580712562063032430L;
 

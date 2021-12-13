@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class Asset extends BaseEntity {
+public class Assets extends BaseEntity {
 	
 	private static final long serialVersionUID = 5830622787061837014L;
 
@@ -20,31 +20,31 @@ public class Asset extends BaseEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "id_item", nullable = false, unique = true)
-	private Item item;
+	private Items item;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_status_asset", nullable = false)
-	private StatusAsset statusAsset;
+	private StatusAssets statusAsset;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_company", nullable = false)
-	private Company company;
+	private Companies company;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_invoice", nullable = false)
-	private Invoice invoice;
+	private Invoices invoice;
 	
 	@Column(nullable = false)
 	private LocalDate expiredDate;
 	
 	@Column(nullable = false)
-	private File display;
+	private Files display;
 
-	public File getDisplay() {
+	public Files getDisplay() {
 		return display;
 	}
 
-	public void setDisplay(File display) {
+	public void setDisplay(Files display) {
 		this.display = display;
 	}
 
@@ -56,35 +56,35 @@ public class Asset extends BaseEntity {
 		this.code = code;
 	}
 
-	public Item getItem() {
+	public Items getItem() {
 		return item;
 	}
 
-	public void setItem(Item item) {
+	public void setItem(Items item) {
 		this.item = item;
 	}
 
-	public StatusAsset getStatusAsset() {
+	public StatusAssets getStatusAsset() {
 		return statusAsset;
 	}
 
-	public void setStatusAsset(StatusAsset statusAsset) {
+	public void setStatusAsset(StatusAssets statusAsset) {
 		this.statusAsset = statusAsset;
 	}
 
-	public Company getCompany() {
+	public Companies getCompany() {
 		return company;
 	}
 
-	public void setCompany(Company company) {
+	public void setCompany(Companies company) {
 		this.company = company;
 	}
 
-	public Invoice getInvoice() {
+	public Invoices getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(Invoice invoice) {
+	public void setInvoice(Invoices invoice) {
 		this.invoice = invoice;
 	}
 
