@@ -4,31 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.lawencon.assetsmanagement.dao.RolesDao;
-import com.lawencon.assetsmanagement.model.Roles;
+import com.lawencon.assetsmanagement.dao.UsersDao;
+import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.base.BaseDaoImpl;
 
 @Repository
-public class RolesDaoImpl extends BaseDaoImpl<Roles> implements RolesDao {
+public class UsersDaoImpl extends BaseDaoImpl<Users> implements UsersDao {
 
 	@Override
-	public List<Roles> findAll() throws Exception {
+	public List<Users> findAll() throws Exception {
 		return getAll();
 	}
-
+	
 	@Override
-	public Roles findById(String id) throws Exception {
+	public Users findById(String id) throws Exception {
 		return getById(id);
 	}
-
+	
 	@Override
-	public Roles saveOrUpdate(Roles data) throws Exception {
+	public Users saveOrUpdate(Users data) throws Exception {
 		return save(data);
 	}
-
+	
 	@Override
 	public boolean removeById(String id) throws Exception {
 		return deleteById(id);
 	}
-
+	
 }

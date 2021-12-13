@@ -10,11 +10,11 @@ import com.lawencon.base.BaseEntity;
 @Entity
 public class Employees extends BaseEntity{
 
-	private static final long serialVersionUID = 7217564241483812487L;
+	private static final long serialVersionUID = 7600468914814562970L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_company", nullable = false)
-	private Companies idCompany;
+	private Companies company;
 	
 	@Column(length = 32, unique = true, nullable = false)
 	private String nip;
@@ -28,43 +28,43 @@ public class Employees extends BaseEntity{
 	@Column(length = 32, nullable = false)
 	private String department;
 
-	public Companies setIdCompany() {
-		return idCompany;
+	public Companies getCompany() {
+		return company;
 	}
-	
-	public void getIdCompany(Companies idCompany) {
-		this.idCompany = idCompany;
+
+	public void setCompany(Companies company) {
+		this.company = company;
 	}
-	
-	public String setNip() {
+
+	public String getNip() {
 		return nip;
 	}
-	
-	public void getNip(String nip) {
+
+	public void setNip(String nip) {
 		this.nip = nip;
 	}
-	
-	public String setFullName() {
+
+	public String getFullName() {
 		return fullName;
 	}
-	
-	public void getFullName(String fullName) {
+
+	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	
-	public String setPhoneNo() {
+
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	
-	public void getPhoneNo(String phoneNo) {
+
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	
-	public String setDepartment() {
+
+	public String getDepartment() {
 		return department;
 	}
-	
-	public void getDepartment(String department) {
+
+	public void setDepartment(String department) {
 		this.department = department;
 	}
 }

@@ -11,53 +11,53 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "transaction_out")
 public class TransactionsOut extends BaseEntity {
-
-	private static final long serialVersionUID = 1259288568796069056L;
 	
+	private static final long serialVersionUID = -6377906156681298363L;
+
 	@Column(length = 32, unique = true, nullable = false)
 	private String code;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_employee", nullable = false)
-	private Employees idEmployee;
+	private Employees employee;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_location", nullable = false)
-	private Locations idLocation;
+	private Locations location;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_general_item", nullable = false)
-	private Assets idGeneralItem;
-	
-	public String setCode() {
+	private Assets generalItem;
+
+	public String getCode() {
 		return code;
 	}
-	
-	public void getCode(String code) {
-		this.code = code;	
+
+	public void setCode(String code) {
+		this.code = code;
 	}
-	
-	public Employees setIdEmployee() {
-		return idEmployee;
+
+	public Employees getEmployee() {
+		return employee;
 	}
-	
-	public void getIdEmployee(Employees idEmployee) {
-		this.idEmployee = idEmployee;
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
-	
-	public Locations setIdLocation() {
-		return idLocation;
+
+	public Locations getLocation() {
+		return location;
 	}
-	
-	public void getIdLocation(Locations idLocation) {
-		this.idLocation = idLocation;
+
+	public void setLocation(Locations location) {
+		this.location = location;
 	}
-	
-	public Assets setIdGeneralItem() {
-		return idGeneralItem;
+
+	public Assets getGeneralItem() {
+		return generalItem;
 	}
-	
-	public void getIdGeneralItem(Assets idGeneralItem) {
-		this.idGeneralItem = idGeneralItem;
+
+	public void setGeneralItem(Assets generalItem) {
+		this.generalItem = generalItem;
 	}
 }
