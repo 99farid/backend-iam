@@ -26,14 +26,22 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name = "created_by")
 	private String createdBy;
 
-	@Column(name = "created_at")
-	private LocalDateTime createdAt;
+	@Column(name = "created_date")
+	private LocalDateTime createdDate;
 
 	@Column(name = "updated_by")
 	private String updatedBy;
 
 	@Column(name = "updated_date")
 	private LocalDateTime updatedDate;
+	
+	@Column(name = "ver")
+	@Version
+	private Long version;
+
+	@Column(name = "is_active")
+	private Boolean isActive = true;
+
 
 	public BaseEntity() {
 		version = 0L;
@@ -41,20 +49,13 @@ public abstract class BaseEntity implements Serializable {
 
 	@PrePersist
 	public void prePersist() {
-		createdAt = LocalDateTime.now();
+		createdDate = LocalDateTime.now();
 	}
 
 	@PreUpdate
 	public void preUpdate() {
 		updatedDate = LocalDateTime.now();
 	}
-
-	@Column(name = "version")
-	@Version
-	private Long version;
-
-	@Column(name = "is_active")
-	private Boolean isActive = true;
 
 	public Boolean getIsActive() {
 		return isActive;
@@ -88,12 +89,12 @@ public abstract class BaseEntity implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getUpdatedBy() {
@@ -104,11 +105,11 @@ public abstract class BaseEntity implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
-	public LocalDateTime getUpdatedAt() {
+	public LocalDateTime getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedDate = updatedAt;
+	public void setUpdatedDate(LocalDateTime updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 }
