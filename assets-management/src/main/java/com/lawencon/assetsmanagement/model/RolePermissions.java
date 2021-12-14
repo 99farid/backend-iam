@@ -3,11 +3,13 @@ package com.lawencon.assetsmanagement.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-public class PermissionsDetail extends BaseEntity {
+@Table(name = "role_permissions")
+public class RolePermissions extends BaseEntity {
 
 	private static final long serialVersionUID = 5542835391266620043L;
 
