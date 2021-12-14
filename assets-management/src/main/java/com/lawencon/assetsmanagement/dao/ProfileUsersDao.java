@@ -10,6 +10,8 @@ public interface ProfileUsersDao {
 	
 	ProfileUsers findById(String id) throws Exception;
 	
+//	List<ProfileUsers> findByNip(String nip) throws Exception;
+	
 	ProfileUsers saveOrUpdate(ProfileUsers data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;
