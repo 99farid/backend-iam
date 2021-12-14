@@ -5,17 +5,15 @@ import java.util.List;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
-import com.lawencon.assetsmanagement.model.PermissionsDetail;
+import com.lawencon.assetsmanagement.model.RolePermissions;
 
-public interface PermissionsDetailService {
+public interface RolePermissionsService {
 
-	List<PermissionsDetail> findAll() throws Exception;
+	List<RolePermissions> findAll() throws Exception;
 	
-	PermissionsDetail findById(String id) throws Exception;
+	RolePermissions findById(String id) throws Exception;
 	
-	InsertResDto insert(PermissionsDetail data) throws Exception;
-	
-	UpdateResDto update(PermissionsDetail data) throws Exception;
+//	UpdateResDto update(RolePermissions data) throws Exception;
 	
 	DeleteResDataDto removeById(String id) throws Exception;
 }
