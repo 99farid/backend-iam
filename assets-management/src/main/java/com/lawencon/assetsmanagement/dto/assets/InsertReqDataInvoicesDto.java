@@ -3,19 +3,27 @@ package com.lawencon.assetsmanagement.dto.assets;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.lawencon.assetsmanagement.dto.files.InsertReqFilesDto;
+import com.lawencon.assetsmanagement.dto.files.InsertReqDataFilesDto;
 
 public class InsertReqDataInvoicesDto {
 	
+	private String id;
 	private String code;
 	private LocalDate purchaseDate;
 	private BigDecimal totalPrice;
-	private InsertReqFilesDto invoicePict;
+	private InsertReqDataFilesDto invoicePict;
 	
-	public InsertReqFilesDto getInvoicePict() {
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public InsertReqDataFilesDto getInvoicePict() {
 		return invoicePict;
 	}
-	public void setInvoicePict(InsertReqFilesDto invoicePict) {
+	public void setInvoicePict(InsertReqDataFilesDto invoicePict) {
 		this.invoicePict = invoicePict;
 	}
 	public String getCode() {

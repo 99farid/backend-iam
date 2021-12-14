@@ -2,7 +2,7 @@ package com.lawencon.assetsmanagement.dto.assets;
 
 import java.time.LocalDate;
 
-import com.lawencon.assetsmanagement.dto.files.InsertReqFilesDto;
+import com.lawencon.assetsmanagement.dto.files.InsertReqDataFilesDto;
 
 public class InsertReqDataAssetsDto {
 	
@@ -12,14 +12,13 @@ public class InsertReqDataAssetsDto {
 	private String idCompany;
 	private InsertReqDataInvoicesDto invoice;
 	private LocalDate expiredDate;
-	private InsertReqFilesDto idDisplay;
+	private InsertReqDataFilesDto display;
 	
-	
-	public InsertReqFilesDto getIdDisplay() {
-		return idDisplay;
+	public InsertReqDataFilesDto getDisplay() {
+		return display;
 	}
-	public void setIdDisplay(InsertReqFilesDto idDisplay) {
-		this.idDisplay = idDisplay;
+	public void setDisplay(InsertReqDataFilesDto display) {
+		this.display = display;
 	}
 	public String getCode() {
 		return code;
