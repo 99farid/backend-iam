@@ -1,14 +1,14 @@
 package com.lawencon.assetsmanagement.dto.transactionsin;
 
-public class InsertReqTransactionInDto {
+public class InsertReqTransactionsInDto {
 	
-	private InsertReqDataHeaderTransactionInDto data;
+	private InsertReqDataHeaderTransactionsInDto data;
 	private String msg;
 	
-	public InsertReqDataHeaderTransactionInDto getData() {
+	public InsertReqDataHeaderTransactionsInDto getData() {
 		return data;
 	}
-	public void setData(InsertReqDataHeaderTransactionInDto data) {
+	public void setData(InsertReqDataHeaderTransactionsInDto data) {
 		this.data = data;
 	}
 	public String getMsg() {

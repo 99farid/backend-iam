@@ -1,8 +1,8 @@
-package com.lawencon.assetsmanagement.dto.asset;
+package com.lawencon.assetsmanagement.dto.assets;
 
 import java.math.BigDecimal;
 
-public class InsertReqDataItemDto {
+public class InsertReqDataItemsDto {
 	private String description;
 	private String idItemType;
 	private String brand;

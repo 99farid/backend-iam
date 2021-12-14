@@ -1,16 +1,16 @@
-package com.lawencon.assetsmanagement.dto.asset;
+package com.lawencon.assetsmanagement.dto.assets;
 
 import java.time.LocalDate;
 
 import com.lawencon.assetsmanagement.dto.files.InsertReqFilesDto;
 
-public class InsertReqDataAssetDto {
+public class InsertReqDataAssetsDto {
 	
 	private String code;
-	private InsertReqDataItemDto item;
+	private InsertReqDataItemsDto item;
 	private String idStatusAsset;
 	private String idCompany;
-	private InsertReqDataInvoiceDto invoice;
+	private InsertReqDataInvoicesDto invoice;
 	private LocalDate expiredDate;
 	private InsertReqFilesDto idDisplay;
 	
@@ -27,10 +27,10 @@ public class InsertReqDataAssetDto {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public InsertReqDataItemDto getItem() {
+	public InsertReqDataItemsDto getItem() {
 		return item;
 	}
-	public void setItem(InsertReqDataItemDto item) {
+	public void setItem(InsertReqDataItemsDto item) {
 		this.item = item;
 	}
 	public String getIdStatusAsset() {
@@ -45,10 +45,10 @@ public class InsertReqDataAssetDto {
 	public void setIdCompany(String idCompany) {
 		this.idCompany = idCompany;
 	}
-	public InsertReqDataInvoiceDto getInvoice() {
+	public InsertReqDataInvoicesDto getInvoice() {
 		return invoice;
 	}
-	public void setInvoice(InsertReqDataInvoiceDto invoice) {
+	public void setInvoice(InsertReqDataInvoicesDto invoice) {
 		this.invoice = invoice;
 	}
 	public LocalDate getExpiredDate() {

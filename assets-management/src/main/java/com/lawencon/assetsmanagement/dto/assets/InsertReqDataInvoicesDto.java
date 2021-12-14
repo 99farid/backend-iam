@@ -1,11 +1,11 @@
-package com.lawencon.assetsmanagement.dto.asset;
+package com.lawencon.assetsmanagement.dto.assets;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.lawencon.assetsmanagement.dto.files.InsertReqFilesDto;
 
-public class InsertReqDataInvoiceDto {
+public class InsertReqDataInvoicesDto {
 	
 	private String code;
 	private LocalDate purchaseDate;

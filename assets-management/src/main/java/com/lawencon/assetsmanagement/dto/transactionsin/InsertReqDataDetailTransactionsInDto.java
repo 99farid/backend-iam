@@ -1,6 +1,6 @@
 package com.lawencon.assetsmanagement.dto.transactionsin;
 
-public class InsertReqDataDetailTransactionInDto {
+public class InsertReqDataDetailTransactionsInDto {
 
 	private String idAsset;
 	private String idConditionAsset;

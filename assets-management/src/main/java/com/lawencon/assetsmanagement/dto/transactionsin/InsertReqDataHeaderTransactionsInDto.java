@@ -3,17 +3,17 @@ package com.lawencon.assetsmanagement.dto.transactionsin;
 import java.time.LocalDate;
 import java.util.List;
 
-public class InsertReqDataHeaderTransactionInDto {
+public class InsertReqDataHeaderTransactionsInDto {
 	
 	private String idTransactionOut;
 	private LocalDate checkInDate;
-	private List<InsertReqDataDetailTransactionInDto> detailData;
+	private List<InsertReqDataDetailTransactionsInDto> detailData;
 	
 	
-	public List<InsertReqDataDetailTransactionInDto> getDetailData() {
+	public List<InsertReqDataDetailTransactionsInDto> getDetailData() {
 		return detailData;
 	}
-	public void setDetailData(List<InsertReqDataDetailTransactionInDto> detailData) {
+	public void setDetailData(List<InsertReqDataDetailTransactionsInDto> detailData) {
 		this.detailData = detailData;
 	}
 	public String getIdTransactionOut() {
