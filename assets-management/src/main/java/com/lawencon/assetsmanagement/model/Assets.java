@@ -34,7 +34,7 @@ public class Assets extends BaseEntity {
 	@JoinColumn(name = "id_invoice", nullable = false)
 	private Invoices invoice;
 	
-	@Column(nullable = false)
+	@Column(name = "expired_date")
 	private LocalDate expiredDate;
 	
 	@Column(nullable = false)
