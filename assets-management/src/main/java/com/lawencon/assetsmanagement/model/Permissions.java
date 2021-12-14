@@ -8,27 +8,27 @@ import com.lawencon.base.BaseEntity;
 @Entity
 public class Permissions extends BaseEntity {
 
-	private static final long serialVersionUID = 889951114744529210L;
+	private static final long serialVersionUID = -5330899124288656065L;
 
 	@Column(length = 12, unique = true, nullable = false)
 	private String code;
 	
 	@Column(length = 64, nullable = false)
 	private String permissionName;
-	
-	public String setCode() {
+
+	public String getCode() {
 		return code;
 	}
-	
-	public void getCode(String code) {
+
+	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	public String setPermissionName() {
+
+	public String getPermissionName() {
 		return permissionName;
 	}
-	
-	public void getPermissionName(String permissionName) {
+
+	public void setPermissionName(String permissionName) {
 		this.permissionName = permissionName;
-	}	
+	}
 }

@@ -11,41 +11,41 @@ import javax.persistence.Table;
 @Table(name = "profile_user")
 public class ProfileUsers extends BaseEntity {
 
-	private static final long serialVersionUID = 199051703932493253L;
+	private static final long serialVersionUID = -5803795226717112984L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_user", nullable = false)
-	private Users idUser;
+	private Users user;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_employee", nullable = false)
-	private Employees idEmployee;
+	private Employees employee;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_file", nullable = false)
-	private Files idFile;
-	
-	public Users setIdUser() {
-		return idUser;
+	@JoinColumn(name = "id_profile_pict", nullable = false)
+	private Files profilePict;
+
+	public Users getUser() {
+		return user;
 	}
-	
-	public void getIdUser(Users idUser) {
-		this.idUser = idUser;
+
+	public void setUser(Users user) {
+		this.user = user;
 	}
-	
-	public Employees setIdEmplyoee() {
-		return idEmployee;
+
+	public Employees getEmployee() {
+		return employee;
 	}
-	
-	public void getIdEmployee(Employees idEmployee) {
-		this.idEmployee = idEmployee;
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
-	
-	public Files setIdFile() {
-		return idFile;
+
+	public Files getProfilePict() {
+		return profilePict;
 	}
-	
-	public void getIdFile(Files idFile) {
-		this.idFile = idFile;
+
+	public void setProfilePict(Files profilePict) {
+		this.profilePict = profilePict;
 	}
 }

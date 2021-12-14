@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -13,39 +14,40 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "detail_transaction_out")
 public class DetailTransactionsOut extends BaseEntity{
 
-	private static final long serialVersionUID = 5738129835522199612L;
+	private static final long serialVersionUID = -4495416002246685185L;
 
+	@ManyToOne
 	@JoinColumn(name = "id_transaction_out", nullable = false)
-	private TransactionsOut idTransactionOut;
+	private TransactionsOut transactionOut;
 	
+	@ManyToOne
 	@JoinColumn(name = "id_asset", nullable = false)
-	private Assets idAsset;
+	private Assets asset;
 
 	@Column(name = "check_out_date", nullable = false)
 	private LocalDate checkOutDate;
-	
-	
-	public TransactionsOut setIdTransactionOut() {
-		return idTransactionOut;
+
+	public TransactionsOut getTransactionOut() {
+		return transactionOut;
 	}
-	
-	public void getIdTransactionOut(TransactionsOut idTransactionOut) {
-		this.idTransactionOut = idTransactionOut;
+
+	public void setTransactionOut(TransactionsOut transactionOut) {
+		this.transactionOut = transactionOut;
 	}
-	
-	public Assets setIdAsset() {
-		return idAsset;
+
+	public Assets getAsset() {
+		return asset;
 	}
-	
-	public void getIdAsset(Assets idAsset) {
-		this.idAsset = idAsset;
+
+	public void setAsset(Assets asset) {
+		this.asset = asset;
 	}
-	
-	public LocalDate setCheckOutDate() {
+
+	public LocalDate getCheckOutDate() {
 		return checkOutDate;
 	}
-	
-	public void getCheckOutDate(LocalDate checkOutDate) {
+
+	public void setCheckOutDate(LocalDate checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 }
