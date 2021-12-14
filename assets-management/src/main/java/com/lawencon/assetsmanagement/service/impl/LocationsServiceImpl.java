@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
@@ -14,6 +15,7 @@ import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.service.LocationsService;
 import com.lawencon.base.BaseServiceImpl;
 
+@Service
 public class LocationsServiceImpl extends BaseServiceImpl implements LocationsService{
 
 	@Autowired
