@@ -11,7 +11,7 @@ public interface StatusAssetsService {
 	
 	List<StatusAssets> findAll() throws Exception;
 	
-	StatusAssets findById(String id);
+	StatusAssets findById(String id) throws Exception;
 	
 	InsertResDto insert(StatusAssets data) throws Exception;
 	
