@@ -18,15 +18,15 @@ public class TransactionsOut extends BaseEntity {
 	private String code;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_employee", nullable = false)
+	@JoinColumn(name = "id_employee")
 	private Employees employee;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_location", nullable = false)
+	@JoinColumn(name = "id_location")
 	private Locations location;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_general_item", nullable = false)
+	@JoinColumn(name = "id_general_item")
 	private Assets generalItem;
 
 	public String getCode() {
