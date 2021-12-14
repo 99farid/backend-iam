@@ -34,7 +34,7 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)
-				.setParameter("id_transaction_out", idHeader)
+				.setParameter("idHeader", idHeader)
 				.getResultList();
 		List<DetailTransactionsOut> resultDetailTransactionsOut = new ArrayList<>();
 		

@@ -4,6 +4,7 @@ import com.lawencon.base.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -13,12 +14,12 @@ public class ProfileUsers extends BaseEntity {
 
 	private static final long serialVersionUID = -5803795226717112984L;
 
-	@ManyToOne
-	@JoinColumn(name = "id_user", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_user", unique = true, nullable = false)
 	private Users user;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_employee", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_employee", unique = true, nullable = false)
 	private Employees employee;
 	
 	@ManyToOne
