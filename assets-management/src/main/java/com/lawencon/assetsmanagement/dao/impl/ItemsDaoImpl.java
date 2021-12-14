@@ -2,10 +2,13 @@ package com.lawencon.assetsmanagement.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.assetsmanagement.dao.ItemsDao;
 import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.base.BaseDaoImpl;
 
+@Repository
 public class ItemsDaoImpl extends BaseDaoImpl<Items> implements ItemsDao{
 
 	@Override

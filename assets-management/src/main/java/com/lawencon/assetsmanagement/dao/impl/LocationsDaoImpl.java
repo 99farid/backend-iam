@@ -2,10 +2,13 @@ package com.lawencon.assetsmanagement.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.base.BaseDaoImpl;
 
+@Repository
 public class LocationsDaoImpl extends BaseDaoImpl<Locations> implements LocationsDao{
 
 	@Override

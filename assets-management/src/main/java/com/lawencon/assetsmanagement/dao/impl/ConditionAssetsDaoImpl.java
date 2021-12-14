@@ -2,10 +2,13 @@ package com.lawencon.assetsmanagement.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.base.BaseDaoImpl;
 
+@Repository
 public class ConditionAssetsDaoImpl extends BaseDaoImpl<ConditionAssets> implements ConditionAssetsDao{
 
 	@Override
