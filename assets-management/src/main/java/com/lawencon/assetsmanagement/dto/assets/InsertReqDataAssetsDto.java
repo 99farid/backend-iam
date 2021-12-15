@@ -12,14 +12,7 @@ public class InsertReqDataAssetsDto {
 	private String idCompany;
 	private InsertReqDataInvoicesDto invoice;
 	private LocalDate expiredDate;
-	private InsertReqDataFilesDto display;
 	
-	public InsertReqDataFilesDto getDisplay() {
-		return display;
-	}
-	public void setDisplay(InsertReqDataFilesDto display) {
-		this.display = display;
-	}
 	public String getCode() {
 		return code;
 	}

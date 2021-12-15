@@ -1,14 +1,18 @@
 package com.lawencon.assetsmanagement.dto.assets;
 
-public class InsertReqAssetsDto {
+import java.util.List;
+
+import com.lawencon.assetsmanagement.model.Assets;
+
+public class FindAllResAssetsDto {
 	
-	private InsertReqDataAssetsDto data;
+	private List<Assets> data;
 	private String msg;
 	
-	public InsertReqDataAssetsDto getData() {
+	public List<Assets> getData() {
 		return data;
 	}
-	public void setData(InsertReqDataAssetsDto data) {
+	public void setData(List<Assets> data) {
 		this.data = data;
 	}
 	public String getMsg() {
@@ -17,6 +21,5 @@ public class InsertReqAssetsDto {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
 	
 }

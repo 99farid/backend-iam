@@ -11,7 +11,6 @@ public class InsertReqDataInvoicesDto {
 	private String code;
 	private LocalDate purchaseDate;
 	private BigDecimal totalPrice;
-	private InsertReqDataFilesDto invoicePict;
 	
 	
 	public String getId() {
@@ -19,12 +18,6 @@ public class InsertReqDataInvoicesDto {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public InsertReqDataFilesDto getInvoicePict() {
-		return invoicePict;
-	}
-	public void setInvoicePict(InsertReqDataFilesDto invoicePict) {
-		this.invoicePict = invoicePict;
 	}
 	public String getCode() {
 		return code;
