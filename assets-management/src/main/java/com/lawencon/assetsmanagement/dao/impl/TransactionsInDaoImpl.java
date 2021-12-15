@@ -25,5 +25,13 @@ public class TransactionsInDaoImpl extends BaseDaoImpl<TransactionsIn> implement
 	public TransactionsIn saveOrUpdate(TransactionsIn data) throws Exception {
 		return save(data);
 	}
+
+	@Override
+	public Integer countData() throws Exception {
+		String sql = "SElECT count(id) FROM transactions_in";
+		Object result = createNativeQuery(sql).getSingleResult();
+				
+		return (Integer) result;
+	}
 	
 }

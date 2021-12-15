@@ -1,5 +1,6 @@
 package com.lawencon.assetsmanagement.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,14 @@ public class ItemsDaoImpl extends BaseDaoImpl<Items> implements ItemsDao{
 	@Override
 	public boolean removeById(String id) throws Exception {
 		return deleteById(id);
+	}
+
+	@Override
+	public BigDecimal getTotalPrice() throws Exception {
+		String sql = "SELECT sum(price) FROM items";
+		Object result = createNativeQuery(sql).getSingleResult();
+		
+		return new BigDecimal(result.toString());
 	}
 
 }

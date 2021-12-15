@@ -13,4 +13,9 @@ public interface StatusAssetsDao {
  	StatusAssets saveOrUpdate(StatusAssets data) throws Exception;
  	
  	boolean removeById(String id) throws Exception;
+ 	
+ 	List<StatusAssets> findAllForNewAsset() throws Exception;
+ 	
+ 	StatusAssets findOnAssignStatus() throws Exception;
+ 	
 }

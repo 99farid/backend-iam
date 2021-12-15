@@ -12,4 +12,6 @@ public interface TransactionsInDao {
 	
 	TransactionsIn saveOrUpdate(TransactionsIn data) throws Exception;
 	
+	Integer countData() throws Exception;
+	
 }

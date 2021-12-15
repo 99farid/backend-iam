@@ -14,4 +14,12 @@ public interface AssetsDao {
 	
 	boolean removeById(String id) throws Exception;
 	
+	Integer countAsset() throws Exception;
+	
+	Integer countAssetByStatus(String statusCode) throws Exception;
+	
+	List<Assets> findAllFilterByType(String typeCode) throws Exception;
+	
+	List<Assets> findAllFilterBySearch(String input) throws Exception;
+	
 }

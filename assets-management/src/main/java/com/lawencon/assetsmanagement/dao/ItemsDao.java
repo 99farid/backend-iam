@@ -1,5 +1,6 @@
 package com.lawencon.assetsmanagement.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.lawencon.assetsmanagement.model.Items;
@@ -14,4 +15,5 @@ public interface ItemsDao {
 	
 	boolean removeById(String id) throws Exception;
 	
+	BigDecimal getTotalPrice() throws Exception;
 }
