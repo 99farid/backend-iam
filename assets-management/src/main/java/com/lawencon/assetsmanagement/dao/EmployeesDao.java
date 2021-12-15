@@ -10,6 +10,8 @@ public interface EmployeesDao {
 	
 	Employees findById(String id) throws Exception;
 	
+	Employees findByNip(String nip) throws Exception;
+	
 	Employees saveOrUpdate(Employees data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;

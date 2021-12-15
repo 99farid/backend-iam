@@ -10,9 +10,9 @@ public interface UsersDao {
 	
 	Users findById(String id) throws Exception;
 	
+	Users findByEmail (String email) throws Exception;
+
 	Users saveOrUpdate(Users data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;
-	
-//	Users getByUsername (String email) throws Exception;
 }
