@@ -2,6 +2,8 @@ package com.lawencon.assetsmanagement.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
@@ -14,7 +16,7 @@ public interface ProfileUsersService {
 	
 	ProfileUsers findById(String id) throws Exception;
 	
-	InsertResDto insert(InsertReqDataProfileUsersDto data) throws Exception;
+	InsertResDto insert(InsertReqDataProfileUsersDto data, MultipartFile file) throws Exception;
 	
 	UpdateResDto update(ProfileUsers data)throws Exception;
 	
