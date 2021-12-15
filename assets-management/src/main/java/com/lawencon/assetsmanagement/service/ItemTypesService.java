@@ -1,17 +1,17 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.util.List;
-
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.itemtypes.FindAllResItemTypesDto;
+import com.lawencon.assetsmanagement.dto.itemtypes.FindByIdResItemTypesDto;
 import com.lawencon.assetsmanagement.model.ItemTypes;
 
 public interface ItemTypesService {
 	
-	List<ItemTypes> findAll() throws Exception;
+	FindAllResItemTypesDto findAll() throws Exception;
 	
-	ItemTypes findById(String id) throws Exception;
+	FindByIdResItemTypesDto findById(String id) throws Exception;
 	
 	InsertResDto insert(ItemTypes data) throws Exception;
 	

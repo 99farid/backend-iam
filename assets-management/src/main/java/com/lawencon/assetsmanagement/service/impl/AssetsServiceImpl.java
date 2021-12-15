@@ -1,9 +1,8 @@
 package com.lawencon.assetsmanagement.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
@@ -17,6 +16,10 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.Companies;
@@ -53,110 +56,169 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 	private FilesDao filesDao;
 
 	@Override
-	public List<Assets> findAll() throws Exception {
-		return assetsDao.findAll();
-	}
-
-	@Override
-	public Assets findById(String id) throws Exception {
-		return assetsDao.findById(id);
-	}
-
-	@Override
-	public InsertResDto insert(InsertReqDataAssetsDto data) throws Exception {
-		Assets asset = new Assets();
-		asset.setCode(data.getCode());
-
-		Companies company = companiesDao.findById(data.getIdCompany());
-		asset.setCompany(company);
-
-		ItemTypes type = typeDao.findById(data.getItem().getIdItemType());
-
-		Items item = new Items();
-		item.setBrand(data.getItem().getBrand());
-		item.setDescription(data.getItem().getDescription());
-		item.setSerial(data.getItem().getSerial());
-		item.setPrice(data.getItem().getPrice());
-		item.setItemType(type);
-		item.setCreatedBy("1");
-		item.setIsActive(true);
-		begin();
-		item = itemsDao.saveOrUpdate(item);
-		asset.setItem(item);
-		Invoices invoice = new Invoices();
-		if (data.getInvoice().getId() != null) {
-			invoice = invoicesDao.findById(data.getInvoice().getId());
-		} else {
-			invoice.setCode(data.getInvoice().getCode());
-			invoice.setPurchaseDate(data.getInvoice().getPurchaseDate());
-			invoice.setTotalPrice(data.getInvoice().getTotalPrice());
-
-			Files invoicePict = new Files();
-			invoicePict.setDataFile(data.getInvoice().getInvoicePict().getDataFile());
-			invoicePict.setExtention(data.getInvoice().getInvoicePict().getExtention());
-			invoicePict.setCreatedBy("1");
-			invoicePict.setIsActive(true);
-			invoicePict = filesDao.saveOrUpdate(invoicePict);
-
-			invoice.setInvoicePict(invoicePict);
-			invoice.setIsActive(true);
-			invoice = invoicesDao.saveOrUpdate(invoice);
-		}
-		asset.setInvoice(invoice);
-
-		StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
-		asset.setStatusAsset(status);
-
-		asset.setCreatedBy("1L");
-		asset.setExpiredDate(data.getExpiredDate());
-
-		Files display = new Files();
-		display.setDataFile(data.getDisplay().getDataFile());
-		display.setExtention(data.getDisplay().getExtention());
-		display.setCreatedBy("1");
-		display.setIsActive(true);
-
-		display = filesDao.saveOrUpdate(display);
-
-		asset.setDisplay(display);
-
-		asset = assetsDao.saveOrUpdate(asset);
-		commit();
-
-		InsertResDataDto dataResult = new InsertResDataDto();
-		dataResult.setId(asset.getId());
-
-		InsertResDto result = new InsertResDto();
-		result.setData(dataResult);
-		result.setMsg("");
-
+	public FindAllResAssetsDto findAll() throws Exception {
+		FindAllResAssetsDto result = new FindAllResAssetsDto();
+		result.setData(assetsDao.findAll());
+		result.setMsg(null);
 		return result;
+	}
+
+	@Override
+	public FindByIdResAssetsDto findById(String id) throws Exception {
+		FindByIdResAssetsDto result = new FindByIdResAssetsDto();
+		result.setData(assetsDao.findById(id));
+		result.setMsg(null);
+		return result;
+	}
+
+	@Override
+	public InsertResDto insert(InsertReqDataAssetsDto data, MultipartFile display, MultipartFile invoicePict) throws Exception {
+		try {
+			Assets asset = new Assets();
+			asset.setCode(data.getCode());
+
+			Companies company = companiesDao.findById(data.getIdCompany());
+			asset.setCompany(company);
+
+			ItemTypes type = typeDao.findById(data.getItem().getIdItemType());
+
+			Items item = new Items();
+			item.setBrand(data.getItem().getBrand());
+			item.setDescription(data.getItem().getDescription());
+			item.setSerial(data.getItem().getSerial());
+			item.setPrice(data.getItem().getPrice());
+			item.setItemType(type);
+			item.setCreatedBy("1");
+			item.setIsActive(true);
+			begin();
+			item = itemsDao.saveOrUpdate(item);
+			asset.setItem(item);
+			Invoices invoice = new Invoices();
+			if (data.getInvoice().getId() != null) {
+				invoice = invoicesDao.findById(data.getInvoice().getId());
+			} else {
+				invoice.setCode(data.getInvoice().getCode());
+				invoice.setPurchaseDate(data.getInvoice().getPurchaseDate());
+				invoice.setTotalPrice(data.getInvoice().getTotalPrice());
+				
+				String extention = invoicePict.getName();
+				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+				
+				Files newInvoicePict = new Files();
+				newInvoicePict.setDataFile(invoicePict.getBytes());
+				newInvoicePict.setExtention(extention);
+				newInvoicePict.setCreatedBy("1");
+				newInvoicePict.setIsActive(true);
+				newInvoicePict = filesDao.saveOrUpdate(newInvoicePict);
+
+				invoice.setInvoicePict(newInvoicePict);
+				invoice.setIsActive(true);
+				invoice = invoicesDao.saveOrUpdate(invoice);
+			}
+			asset.setInvoice(invoice);
+
+			StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
+			asset.setStatusAsset(status);
+
+			asset.setCreatedBy("1L");
+			asset.setExpiredDate(data.getExpiredDate());
+
+			
+			String extention = display.getName();
+			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+			Files newDisplay = new Files();
+			newDisplay.setDataFile(display.getBytes());
+			newDisplay.setExtention(extention);
+			newDisplay.setCreatedBy("1");
+			newDisplay.setIsActive(true);
+
+			newDisplay = filesDao.saveOrUpdate(newDisplay);
+
+			asset.setDisplay(newDisplay);
+
+			asset = assetsDao.saveOrUpdate(asset);
+			commit();
+
+			InsertResDataDto dataResult = new InsertResDataDto();
+			dataResult.setId(asset.getId());
+
+			InsertResDto result = new InsertResDto();
+			result.setData(dataResult);
+			result.setMsg("");
+
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+		
 	}
 
 	@Override
 	public UpdateResDto update(Assets data) throws Exception {
-		begin();
-		Assets asset = assetsDao.saveOrUpdate(data);
-		commit();
-		UpdateResDataDto dataResult = new UpdateResDataDto();
-		dataResult.setVersion(asset.getVersion());
+		try {
+			begin();
+			Assets asset = assetsDao.saveOrUpdate(data);
+			commit();
+			UpdateResDataDto dataResult = new UpdateResDataDto();
+			dataResult.setVersion(asset.getVersion());
 
-		UpdateResDto result = new UpdateResDto();
-		result.setData(dataResult);
-		result.setMsg("");
+			UpdateResDto result = new UpdateResDto();
+			result.setData(dataResult);
+			result.setMsg("");
 
-		return result;
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+		
 	}
 
 	@Override
 	public DeleteResDataDto removeById(String id) throws Exception {
-		DeleteResDataDto result = new DeleteResDataDto();
-		begin();
-		if (!assetsDao.removeById(id)) {
+		try {
+			DeleteResDataDto result = new DeleteResDataDto();
+			begin();
+			if (!assetsDao.removeById(id)) {
+				result.setMsg("");
+			}
 			result.setMsg("");
+			commit();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
 		}
-		result.setMsg("");
-		commit();
+		
+	}
+
+	@Override
+	public Integer countAsset() throws Exception {
+		return assetsDao.countAsset();
+	}
+
+	@Override
+	public Integer countAssetByStatus(String statusCode) throws Exception {
+		return assetsDao.countAssetByStatus(statusCode);
+	}
+
+	@Override
+	public FindAllFilterByTypeResAssetsDto findAllFilterByType(String typeCode) throws Exception {
+		FindAllFilterByTypeResAssetsDto result = new FindAllFilterByTypeResAssetsDto();
+		result.setData(assetsDao.findAllFilterByType(typeCode));
+		result.setMsg(null);
+		return result;
+	}
+
+	@Override
+	public FindAllFilterBySearchResAssetsDto findAllFilterBySearch(String input) throws Exception {
+		FindAllFilterBySearchResAssetsDto result = new FindAllFilterBySearchResAssetsDto();
+		result.setData(assetsDao.findAllFilterBySearch(input));
+		result.setMsg(null);
 		return result;
 	}
 

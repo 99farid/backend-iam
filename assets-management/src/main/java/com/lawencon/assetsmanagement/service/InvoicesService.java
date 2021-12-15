@@ -3,14 +3,14 @@ package com.lawencon.assetsmanagement.service;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
+import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
 import com.lawencon.assetsmanagement.model.Invoices;
 
-import java.util.List;
-
 public interface InvoicesService {
-	List<Invoices> findAll() throws Exception;
+	FindAllResInvoicesDto findAll() throws Exception;
 	
-	Invoices findById(String id) throws Exception;
+	FindByIdResInvoicesDto findById(String id) throws Exception;
 	
 	InsertResDto insert(Invoices data) throws Exception;
 	

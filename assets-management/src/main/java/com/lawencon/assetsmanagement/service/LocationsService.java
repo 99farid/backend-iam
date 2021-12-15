@@ -1,17 +1,17 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.util.List;
-
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.locations.FindAllResLocationsDto;
+import com.lawencon.assetsmanagement.dto.locations.FindByIdResLocationsDto;
 import com.lawencon.assetsmanagement.model.Locations;
 
 public interface LocationsService {
 	
-	List<Locations> findAll() throws Exception;
+	FindAllResLocationsDto findAll() throws Exception;
 	
-	Locations findById(String id) throws Exception;
+	FindByIdResLocationsDto findById(String id) throws Exception;
 	
 	InsertResDto insert(Locations data) throws Exception;
 	
