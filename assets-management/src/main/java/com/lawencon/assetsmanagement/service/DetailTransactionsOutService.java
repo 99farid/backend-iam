@@ -1,19 +1,14 @@
 package com.lawencon.assetsmanagement.service;
 
-
-import java.util.List;
-
-import com.lawencon.assetsmanagement.dto.InsertResDto;
-import com.lawencon.assetsmanagement.dto.transactionsout.InsertReqDataDetailTransactionsOutDto;
-import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
+import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllDetailTransactionsOutDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindByIdDetailTransactionsOutDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindByIdResHeaderDto;
 
 public interface DetailTransactionsOutService {
 
-	List<DetailTransactionsOut> findAll() throws Exception;
+	FindAllDetailTransactionsOutDto findAll() throws Exception;
 	
-	DetailTransactionsOut findById(String id) throws Exception;
+	FindByIdDetailTransactionsOutDto findById(String id) throws Exception;
 	
-	List<DetailTransactionsOut> findByIdHeader(String idHeader) throws Exception;
-	
-	InsertResDto saveOrUpdate(InsertReqDataDetailTransactionsOutDto data) throws Exception;
+	FindByIdResHeaderDto findByIdHeader(String idHeader) throws Exception;
 }

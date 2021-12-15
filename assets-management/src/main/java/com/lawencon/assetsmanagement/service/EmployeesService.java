@@ -1,17 +1,20 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.util.List;
-
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.employees.FindAllResEmployeesDto;
+import com.lawencon.assetsmanagement.dto.employees.FindByIdResEmployeesDto;
+import com.lawencon.assetsmanagement.dto.employees.FindByResNipDto;
 import com.lawencon.assetsmanagement.model.Employees;
 
 public interface EmployeesService {
 
-	List<Employees> findAll() throws Exception;
+	FindAllResEmployeesDto findAll() throws Exception;
 	
-	Employees findById(String id) throws Exception;
+	FindByIdResEmployeesDto findById(String id) throws Exception;
+	
+	FindByResNipDto findByNip(String nip) throws Exception;
 	
 	InsertResDto insert(Employees data) throws Exception;
 	

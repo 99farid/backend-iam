@@ -1,17 +1,20 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.util.List;
-
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.users.FindAllResUsersDto;
+import com.lawencon.assetsmanagement.dto.users.FindByIdResUsersDto;
+import com.lawencon.assetsmanagement.dto.users.FindByResEmailDto;
 import com.lawencon.assetsmanagement.model.Users;
 
 public interface UsersService {
 
-	List<Users> findAll() throws Exception;
+	FindAllResUsersDto findAll() throws Exception;
 	
-	Users findById(String id) throws Exception;
+	FindByIdResUsersDto findById(String id) throws Exception;
+	
+	FindByResEmailDto findByEmail (String email) throws Exception;
 	
 	InsertResDto insert(Users data) throws Exception;
 	
