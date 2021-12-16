@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
@@ -54,15 +55,21 @@ public class ProfileUserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody InsertReqDataProfileUsersDto data, @RequestPart MultipartFile file) throws Exception {
-		InsertResDto profileUsers = profileUsersService.insert(data, file);
-	
+	public ResponseEntity<?> insert(@RequestPart String data, @RequestPart MultipartFile file) throws Exception {
+		InsertResDto profileUsers = profileUsersService.insert(new ObjectMapper().readValue(data, InsertReqDataProfileUsersDto.class), file);
+		
 		return new ResponseEntity<>(profileUsers, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody ProfileUsers data) throws Exception {
 		UpdateResDto profileUsers = profileUsersService.update(data);
+//		UpdateResDataDto ver = new UpdateResDataDto();
+//		ver.setVersion(user.getVersion());
+//		
+//		UpdateResDto result = new UpdateResDto();
+//		result.setData(ver);
+//		result.setMsg(MessageEnum.UPDATED.getMsg());
 		
 		return new ResponseEntity<>(profileUsers, HttpStatus.OK);
 	}
