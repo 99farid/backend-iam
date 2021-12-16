@@ -13,42 +13,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
-import com.lawencon.assetsmanagement.dto.locations.FindAllResLocationsDto;
-import com.lawencon.assetsmanagement.dto.locations.FindByIdResLocationsDto;
-import com.lawencon.assetsmanagement.model.Locations;
-import com.lawencon.assetsmanagement.service.LocationsService;
+import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
+import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
+import com.lawencon.assetsmanagement.model.Invoices;
+import com.lawencon.assetsmanagement.service.InvoicesService;
 
-public class LocationsController {
+public class InvoiceController {
 	@Autowired
-	private LocationsService locationsService;
+	private InvoicesService invoicesService;
 	
 	@GetMapping
 	public ResponseEntity<?> findAll() throws Exception{
-		FindAllResLocationsDto result = locationsService.findAll();
+		FindAllResInvoicesDto result = invoicesService.findAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
-		FindByIdResLocationsDto result = locationsService.findById(id);
+		FindByIdResInvoicesDto result = invoicesService.findById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> insert (@RequestBody Locations data) throws Exception{
-		InsertResDto result = locationsService.insert(data);
+	public ResponseEntity<?> insert (@RequestBody Invoices data) throws Exception{
+		InsertResDto result = invoicesService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update (@RequestBody Locations data) throws Exception{
-		UpdateResDto result = locationsService.update(data);
+	public ResponseEntity<?> update (@RequestBody Invoices data) throws Exception{
+		UpdateResDto result = invoicesService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@DeleteMapping ("{id}")
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception{
-		DeleteResDataDto result =   locationsService.removeById(id);
+		DeleteResDataDto result =   invoicesService.removeById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
