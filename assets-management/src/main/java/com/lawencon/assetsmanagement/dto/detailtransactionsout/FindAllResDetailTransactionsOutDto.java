@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 
-public class FindAllDetailTransactionsOutDto {
+public class FindAllResDetailTransactionsOutDto {
 
 	private List<DetailTransactionsOut> data;
 	
