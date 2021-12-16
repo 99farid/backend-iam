@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "profile_user")
+@Table(name = "profile_users")
 public class ProfileUsers extends BaseEntity {
 
 	private static final long serialVersionUID = -5803795226717112984L;
@@ -23,7 +23,7 @@ public class ProfileUsers extends BaseEntity {
 	private Employees employee;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_profile_pict", nullable = false)
+	@JoinColumn(name = "id_profile_pict")
 	private Files profilePict;
 
 	public Users getUser() {
