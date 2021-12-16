@@ -2,7 +2,7 @@ package com.lawencon.assetsmanagement.dto.detailtransactionsout;
 
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 
-public class FindByIdDetailTransactionsOutDto {
+public class FindByIdResDetailTransactionsOutDto {
 
 	private DetailTransactionsOut data;
 	
