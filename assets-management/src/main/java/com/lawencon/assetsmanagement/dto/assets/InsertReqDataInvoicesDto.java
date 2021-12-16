@@ -3,12 +3,13 @@ package com.lawencon.assetsmanagement.dto.assets;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.lawencon.assetsmanagement.dto.files.InsertReqDataFilesDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class InsertReqDataInvoicesDto {
 	
 	private String id;
 	private String code;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate purchaseDate;
 	private BigDecimal totalPrice;
 	

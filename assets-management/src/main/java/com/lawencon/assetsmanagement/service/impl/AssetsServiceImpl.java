@@ -1,5 +1,8 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +19,8 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
@@ -98,10 +103,11 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 				invoice = invoicesDao.findById(data.getInvoice().getId());
 			} else {
 				invoice.setCode(data.getInvoice().getCode());
+				
 				invoice.setPurchaseDate(data.getInvoice().getPurchaseDate());
 				invoice.setTotalPrice(data.getInvoice().getTotalPrice());
 				
-				String extention = invoicePict.getName();
+				String extention = invoicePict.getOriginalFilename();
 				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
 				
 				Files newInvoicePict = new Files();
@@ -113,6 +119,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 				invoice.setInvoicePict(newInvoicePict);
 				invoice.setIsActive(true);
+				invoice.setCreatedBy("1");
 				invoice = invoicesDao.saveOrUpdate(invoice);
 			}
 			asset.setInvoice(invoice);
@@ -120,11 +127,11 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
 			asset.setStatusAsset(status);
 
-			asset.setCreatedBy("1L");
+			asset.setCreatedBy("1");
 			asset.setExpiredDate(data.getExpiredDate());
 
 			
-			String extention = display.getName();
+			String extention = display.getOriginalFilename();
 			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
 			Files newDisplay = new Files();
 			newDisplay.setDataFile(display.getBytes());
@@ -197,13 +204,19 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 	}
 
 	@Override
-	public Integer countAsset() throws Exception {
-		return assetsDao.countAsset();
+	public CountAssetResAssetsDto countAsset() throws Exception {
+		CountAssetResAssetsDto result = new CountAssetResAssetsDto();
+		result.setData(assetsDao.countAsset());
+		result.setMsg(null);
+		return result;
 	}
 
 	@Override
-	public Integer countAssetByStatus(String statusCode) throws Exception {
-		return assetsDao.countAssetByStatus(statusCode);
+	public CountAssetByStatusResAssetsDto countAssetByStatus(String statusCode) throws Exception {
+		CountAssetByStatusResAssetsDto result = new CountAssetByStatusResAssetsDto();
+		result.setData(assetsDao.countAssetByStatus(statusCode));
+		result.setMsg(null);
+		return result;
 	}
 
 	@Override

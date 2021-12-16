@@ -4,12 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "condition_asset")
 public class ConditionAssets extends BaseEntity{
 	
 	private static final long serialVersionUID = 8802233957966662402L;

@@ -18,7 +18,8 @@ public class InvoicesDaoImpl extends BaseDaoImpl<Invoices> implements InvoicesDa
 
 	@Override
 	public Invoices findById(String id) throws Exception {
-		return getById(id);
+		Invoices result = getById(id);
+		return result;
 	}
 
 	@Override

@@ -1,14 +1,14 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.util.List;
-
-import com.lawencon.assetsmanagement.model.DetailTransactionsIn;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindAllResDetailTransactionInDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindByIdHeaderResDetailTransactionInDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindByIdResDetailTransactionInDto;
 
 public interface DetailTransactionsInService {
 
-	List<DetailTransactionsIn> findAll() throws Exception;
+	FindAllResDetailTransactionInDto findAll() throws Exception;
 	
-	DetailTransactionsIn findById(String id) throws Exception;
+	FindByIdResDetailTransactionInDto findById(String id) throws Exception;
 	
-	List<DetailTransactionsIn> findByIdHeader(String idHeader) throws Exception;
+	FindByIdHeaderResDetailTransactionInDto findByIdHeader(String idHeader) throws Exception;
 }

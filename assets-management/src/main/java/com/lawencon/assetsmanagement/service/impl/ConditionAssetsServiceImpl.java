@@ -1,5 +1,6 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
@@ -16,6 +17,8 @@ import com.lawencon.base.BaseServiceImpl;
 
 @Service
 public class ConditionAssetsServiceImpl extends BaseServiceImpl implements ConditionAssetsService{
+	
+	@Autowired
 	private ConditionAssetsDao conditionAssetsDao;
 
 	@Override

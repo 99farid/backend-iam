@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.lawencon.base.BaseEntity;
 
@@ -16,13 +18,14 @@ public class Invoices extends BaseEntity{
 	@Column(length = 12, unique = true, nullable = false)
 	private String code;
 	
-	@Column(name = "purchase_date", nullable = false)
+	@Column(name = "invoice_date", nullable = false)
 	private LocalDate purchaseDate;
 	
 	@Column(name = "total_price", nullable = false)
 	private BigDecimal totalPrice;
 	
-	@Column(nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_invoice_pict")
 	private Files invoicePict;
 	
 

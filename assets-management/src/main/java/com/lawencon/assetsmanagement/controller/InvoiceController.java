@@ -15,44 +15,44 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
-import com.lawencon.assetsmanagement.dto.itemtypes.FindAllResItemTypesDto;
-import com.lawencon.assetsmanagement.dto.itemtypes.FindByIdResItemTypesDto;
-import com.lawencon.assetsmanagement.model.ItemTypes;
-import com.lawencon.assetsmanagement.service.ItemTypesService;
+import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
+import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
+import com.lawencon.assetsmanagement.model.Invoices;
+import com.lawencon.assetsmanagement.service.InvoicesService;
 
 @RestController
-@RequestMapping("item-types")
-public class ItemTypesController {
+@RequestMapping("invoices")
+public class InvoiceController {
 	@Autowired
-	private ItemTypesService typeService;
+	private InvoicesService invoicesService;
 	
 	@GetMapping
 	public ResponseEntity<?> findAll() throws Exception{
-		FindAllResItemTypesDto result = typeService.findAll();
+		FindAllResInvoicesDto result = invoicesService.findAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
-		FindByIdResItemTypesDto result = typeService.findById(id);
+		FindByIdResInvoicesDto result = invoicesService.findById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> insert (@RequestBody ItemTypes data) throws Exception{
-		InsertResDto result = typeService.insert(data);
+	public ResponseEntity<?> insert (@RequestBody Invoices data) throws Exception{
+		InsertResDto result = invoicesService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update (@RequestBody ItemTypes data) throws Exception{
-		UpdateResDto result = typeService.update(data);
+	public ResponseEntity<?> update (@RequestBody Invoices data) throws Exception{
+		UpdateResDto result = invoicesService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@DeleteMapping ("{id}")
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception{
-		DeleteResDataDto result =   typeService.removeById(id);
+		DeleteResDataDto result =   invoicesService.removeById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

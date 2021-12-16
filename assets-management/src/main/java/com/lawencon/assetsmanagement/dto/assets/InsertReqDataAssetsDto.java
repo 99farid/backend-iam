@@ -2,8 +2,6 @@ package com.lawencon.assetsmanagement.dto.assets;
 
 import java.time.LocalDate;
 
-import com.lawencon.assetsmanagement.dto.files.InsertReqDataFilesDto;
-
 public class InsertReqDataAssetsDto {
 	
 	private String code;

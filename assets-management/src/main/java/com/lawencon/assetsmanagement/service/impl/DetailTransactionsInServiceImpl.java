@@ -1,12 +1,12 @@
 package com.lawencon.assetsmanagement.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.dao.DetailTransactionsInDao;
-import com.lawencon.assetsmanagement.model.DetailTransactionsIn;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindAllResDetailTransactionInDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindByIdHeaderResDetailTransactionInDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindByIdResDetailTransactionInDto;
 import com.lawencon.assetsmanagement.service.DetailTransactionsInService;
 import com.lawencon.base.BaseServiceImpl;
 
@@ -16,17 +16,27 @@ public class DetailTransactionsInServiceImpl extends BaseServiceImpl implements 
 	DetailTransactionsInDao detailDao;
 
 	@Override
-	public List<DetailTransactionsIn> findAll() throws Exception {
-		return detailDao.findAll();
+	public FindAllResDetailTransactionInDto findAll() throws Exception {
+		FindAllResDetailTransactionInDto result = new FindAllResDetailTransactionInDto();
+		result.setData(detailDao.findAll());
+		result.setMsg(null);
+		
+		return result;
 	}
 
 	@Override
-	public DetailTransactionsIn findById(String id) throws Exception {
-		return detailDao.findById(id);
+	public FindByIdResDetailTransactionInDto findById(String id) throws Exception {
+		FindByIdResDetailTransactionInDto result = new FindByIdResDetailTransactionInDto();
+		result.setData(detailDao.findByIdHeader(id));
+		result.setMsg(null);
+		return result;
 	}
 
 	@Override
-	public List<DetailTransactionsIn> findByIdHeader(String idHeader) throws Exception {
-		return detailDao.findByIdHeader(idHeader);
+	public FindByIdHeaderResDetailTransactionInDto findByIdHeader(String idHeader) throws Exception {
+		FindByIdHeaderResDetailTransactionInDto result = new FindByIdHeaderResDetailTransactionInDto();
+		result.setData(detailDao.findByIdHeader(idHeader));
+		result.setMsg(null);
+		return result;
 	}
 }

@@ -2,6 +2,8 @@ package com.lawencon.assetsmanagement.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.lawencon.base.BaseEntity;
 
@@ -13,10 +15,11 @@ public class Locations extends BaseEntity{
 	@Column(length = 12, unique = true, nullable = false)
 	private String code;
 	
-	@Column(nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "id_company",nullable = false)
 	private Companies company;
 	
-	@Column(length = 32, nullable = false)
+	@Column(name = "locations_name" ,length = 32, nullable = false)
 	private String locationName;
 
 	public String getCode() {
