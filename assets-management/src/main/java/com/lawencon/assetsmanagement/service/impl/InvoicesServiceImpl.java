@@ -24,7 +24,7 @@ public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesServ
 	public FindAllResInvoicesDto findAll() throws Exception {
 		FindAllResInvoicesDto result = new FindAllResInvoicesDto();
 		result.setData(invoicesDao.findAll());
-		result.setData(null);
+		result.setMsg(null);
 		return result;
 	}
 

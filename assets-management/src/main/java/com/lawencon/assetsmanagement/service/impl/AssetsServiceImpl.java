@@ -1,5 +1,8 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -100,6 +103,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 				invoice = invoicesDao.findById(data.getInvoice().getId());
 			} else {
 				invoice.setCode(data.getInvoice().getCode());
+				
 				invoice.setPurchaseDate(data.getInvoice().getPurchaseDate());
 				invoice.setTotalPrice(data.getInvoice().getTotalPrice());
 				
@@ -115,6 +119,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 				invoice.setInvoicePict(newInvoicePict);
 				invoice.setIsActive(true);
+				invoice.setCreatedBy("1");
 				invoice = invoicesDao.saveOrUpdate(invoice);
 			}
 			asset.setInvoice(invoice);
@@ -122,7 +127,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
 			asset.setStatusAsset(status);
 
-			asset.setCreatedBy("1L");
+			asset.setCreatedBy("1");
 			asset.setExpiredDate(data.getExpiredDate());
 
 			
