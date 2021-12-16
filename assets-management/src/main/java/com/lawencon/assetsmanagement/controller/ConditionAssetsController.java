@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -18,6 +20,9 @@ import com.lawencon.assetsmanagement.dto.conditionassets.FindByIdResConditionAss
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.assetsmanagement.service.ConditionAssetsService;
 
+
+@RestController
+@RequestMapping("condition-assets")
 public class ConditionAssetsController {
 
 	@Autowired

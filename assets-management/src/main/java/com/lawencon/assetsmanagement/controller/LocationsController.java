@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -17,7 +19,8 @@ import com.lawencon.assetsmanagement.dto.locations.FindAllResLocationsDto;
 import com.lawencon.assetsmanagement.dto.locations.FindByIdResLocationsDto;
 import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.service.LocationsService;
-
+@RestController
+@RequestMapping("locations")
 public class LocationsController {
 	@Autowired
 	private LocationsService locationsService;
