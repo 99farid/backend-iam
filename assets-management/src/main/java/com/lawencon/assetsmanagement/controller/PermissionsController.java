@@ -43,8 +43,8 @@ public class PermissionsController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("input")
-	public ResponseEntity<?> findAllFilterByName(@RequestParam("input") String input) throws Exception {
+	@GetMapping("name")
+	public ResponseEntity<?> findAllFilterByName(@RequestParam("q") String input) throws Exception {
 		FindAllResFilterByNameDto result = permissionsService.findAllFilterByName(input);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
