@@ -2,15 +2,13 @@ package com.lawencon.assetsmanagement.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "status_asset")
 public class StatusAssets extends BaseEntity{
 	
-	private static final long serialVersionUID = 7580712562063032430L;
+	private static final long serialVersionUID = -406507364019092272L;
 
 	@Column(length = 12, unique = true, nullable = false)
 	private String code;

@@ -7,7 +7,6 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "item_type")
 public class ItemTypes extends BaseEntity{
 	
 	private static final long serialVersionUID = 2055751440309761435L;

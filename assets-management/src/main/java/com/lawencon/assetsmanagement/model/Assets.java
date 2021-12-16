@@ -37,7 +37,8 @@ public class Assets extends BaseEntity {
 	@Column(name = "expired_date")
 	private LocalDate expiredDate;
 	
-	@Column(nullable = false)
+	@OneToOne
+	@JoinColumn(name= "id_display")
 	private Files display;
 
 	public Files getDisplay() {
