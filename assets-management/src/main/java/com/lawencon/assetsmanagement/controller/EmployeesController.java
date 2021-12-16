@@ -44,7 +44,7 @@ public class EmployeesController {
 	}
 	
 	@GetMapping("nip")
-	public ResponseEntity<?> findByNip(@RequestParam("nip") String nip) throws Exception {
+	public ResponseEntity<?> findByNip(@RequestParam("q") String nip) throws Exception {
 		FindByResNipDto result = employeesService.findByNip(nip);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
