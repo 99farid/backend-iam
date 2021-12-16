@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.dao.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,7 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 
 	@Override
 	public StatusAssets findById(String id) throws Exception {
+		
 		return getById(id);
 	}
 
