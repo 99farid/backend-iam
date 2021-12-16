@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
@@ -24,9 +26,9 @@ public interface AssetsService {
 
 	DeleteResDataDto removeById(String id) throws Exception;
 
-	Integer countAsset() throws Exception;
+	CountAssetResAssetsDto countAsset() throws Exception;
 
-	Integer countAssetByStatus(String statusCode) throws Exception;
+	CountAssetByStatusResAssetsDto countAssetByStatus(String statusCode) throws Exception;
 
 	FindAllFilterByTypeResAssetsDto findAllFilterByType(String typeCode) throws Exception;
 

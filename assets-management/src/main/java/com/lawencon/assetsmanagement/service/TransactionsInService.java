@@ -1,16 +1,15 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.util.List;
-
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.transactionsin.FindAllResTransactionsInDto;
+import com.lawencon.assetsmanagement.dto.transactionsin.FindByIdResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataHeaderTransactionsInDto;
-import com.lawencon.assetsmanagement.model.TransactionsIn;
 
 public interface TransactionsInService {
 
-	List<TransactionsIn> findAll() throws Exception;
+	FindAllResTransactionsInDto findAll() throws Exception;
 	
-	TransactionsIn findById(String id) throws Exception;
+	FindByIdResTransactionsInDto findById(String id) throws Exception;
 	
 	InsertResDto insert(InsertReqDataHeaderTransactionsInDto data) throws Exception;
 	

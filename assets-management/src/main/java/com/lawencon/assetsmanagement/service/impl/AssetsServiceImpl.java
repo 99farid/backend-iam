@@ -16,6 +16,8 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
@@ -101,7 +103,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 				invoice.setPurchaseDate(data.getInvoice().getPurchaseDate());
 				invoice.setTotalPrice(data.getInvoice().getTotalPrice());
 				
-				String extention = invoicePict.getName();
+				String extention = invoicePict.getOriginalFilename();
 				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
 				
 				Files newInvoicePict = new Files();
@@ -124,7 +126,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			asset.setExpiredDate(data.getExpiredDate());
 
 			
-			String extention = display.getName();
+			String extention = display.getOriginalFilename();
 			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
 			Files newDisplay = new Files();
 			newDisplay.setDataFile(display.getBytes());
@@ -197,13 +199,19 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 	}
 
 	@Override
-	public Integer countAsset() throws Exception {
-		return assetsDao.countAsset();
+	public CountAssetResAssetsDto countAsset() throws Exception {
+		CountAssetResAssetsDto result = new CountAssetResAssetsDto();
+		result.setData(assetsDao.countAsset());
+		result.setMsg(null);
+		return result;
 	}
 
 	@Override
-	public Integer countAssetByStatus(String statusCode) throws Exception {
-		return assetsDao.countAssetByStatus(statusCode);
+	public CountAssetByStatusResAssetsDto countAssetByStatus(String statusCode) throws Exception {
+		CountAssetByStatusResAssetsDto result = new CountAssetByStatusResAssetsDto();
+		result.setData(assetsDao.countAssetByStatus(statusCode));
+		result.setMsg(null);
+		return result;
 	}
 
 	@Override

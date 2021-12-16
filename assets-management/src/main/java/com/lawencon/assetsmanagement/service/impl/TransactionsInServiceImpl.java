@@ -1,8 +1,5 @@
 package com.lawencon.assetsmanagement.service.impl;
 
-import java.util.List;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +12,8 @@ import com.lawencon.assetsmanagement.dao.TransactionsInDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.transactionsin.FindAllResTransactionsInDto;
+import com.lawencon.assetsmanagement.dto.transactionsin.FindByIdResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataDetailTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataHeaderTransactionsInDto;
 import com.lawencon.assetsmanagement.model.Assets;
@@ -47,13 +46,20 @@ public class TransactionsInServiceImpl extends BaseServiceImpl implements Transa
 	StatusAssetsDao statusDao;
 	
 	@Override
-	public List<TransactionsIn> findAll() throws Exception {
-		return transactionsInDao.findAll();
+	public FindAllResTransactionsInDto findAll() throws Exception {
+		FindAllResTransactionsInDto result = new FindAllResTransactionsInDto();
+		result.setData(transactionsInDao.findAll());
+		result.setMsg(null);
+
+		return result;
 	}
 
 	@Override
-	public TransactionsIn findById(String id) throws Exception {
-		return transactionsInDao.findById(id);
+	public FindByIdResTransactionsInDto findById(String id) throws Exception {
+		FindByIdResTransactionsInDto result = new FindByIdResTransactionsInDto();
+		result.setData(transactionsInDao.findById(id));
+		result.setMsg(null);
+		return result;
 	}
 
 	@Override
