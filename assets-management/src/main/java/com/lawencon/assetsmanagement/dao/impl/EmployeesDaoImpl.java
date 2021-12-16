@@ -32,7 +32,7 @@ public class EmployeesDaoImpl extends BaseDaoImpl<Employees> implements Employee
 		try {
 			
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT e.id AS id_employee, e.id_company, c.id, c.code, c.company_name, e.nip, e.full_name, e.phone_no, e.department, ");
+			queryBuilder.append("SELECT e.id AS id_employee, c.id, c.code, c.company_name, e.nip, e.full_name, e.phone_no, e.department, ");
 			queryBuilder.append("e.ver, e.created_by, e.created_date, e.updated_by, e.updated_date, e.is_active  ");
 			queryBuilder.append("FROM employees AS e ");
 			queryBuilder.append("INNER JOIN companies AS c ON c.id = e.id_company ");
@@ -46,6 +46,7 @@ public class EmployeesDaoImpl extends BaseDaoImpl<Employees> implements Employee
 				Object[] objArr = (Object[]) result;
 				employee = new Employees();
 				employee.setId(objArr[0].toString());
+				
 				
 				Companies companies = new Companies();
 				companies.setId(objArr[1].toString());
