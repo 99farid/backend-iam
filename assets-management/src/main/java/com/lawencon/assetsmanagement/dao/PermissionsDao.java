@@ -10,6 +10,8 @@ public interface PermissionsDao {
 	
 	Permissions findById(String id) throws Exception;
 	
+	List<Permissions> findAllFilterByName(String input) throws Exception;
+	
 	Permissions saveOrUpdate(Permissions data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;

@@ -13,7 +13,7 @@ public class Companies extends BaseEntity {
 	@Column(length = 36, unique= true, nullable = false)
 	private String code;
 	
-	@Column(length = 64, nullable = false)
+	@Column(name = "company_name", length = 64, nullable = false)
 	private String companyName;
 
 	public String getCode() {

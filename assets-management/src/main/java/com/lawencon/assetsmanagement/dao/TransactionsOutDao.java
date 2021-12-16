@@ -10,5 +10,11 @@ public interface TransactionsOutDao {
 	
 	TransactionsOut findById(String id) throws Exception;
 	
+	List<TransactionsOut> findAllFilterByIdEmployee() throws Exception;
+	
+	List<TransactionsOut> findAllFilterByIdLocation() throws Exception;
+	
+	List<TransactionsOut> findAllFilterByIdGeneralItem() throws Exception;
+	
 	TransactionsOut saveOrUpdate(TransactionsOut data) throws Exception;
 }
