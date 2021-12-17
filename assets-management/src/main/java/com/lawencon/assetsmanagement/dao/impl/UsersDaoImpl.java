@@ -31,7 +31,7 @@ public class UsersDaoImpl extends BaseDaoImpl<Users> implements UsersDao {
 		Users user = null;
 		try {
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT u.id AS id_users, r.id, u.id_role, u.email, u.pass, r.code, r.role_name, ");
+			queryBuilder.append("SELECT u.id AS id_users, r.id, r.code, r.role_name, u.email, u.pass, ");
 			queryBuilder.append("u.ver, u.created_by, u.created_date, u.updated_by, u.updated_date, u.is_active ");
 			queryBuilder.append("FROM users AS u ");
 			queryBuilder.append("INNER JOIN roles AS r ON r.id = u.id_role ");

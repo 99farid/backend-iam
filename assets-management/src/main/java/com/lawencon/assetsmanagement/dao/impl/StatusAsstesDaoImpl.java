@@ -3,7 +3,6 @@ package com.lawencon.assetsmanagement.dao.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -111,6 +110,44 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 			throw new Exception(e);
 		}
 		
+	}
+
+	@Override
+	public List<StatusAssets> findAllFilterByCode(String code) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");
+		queryBuilder.append("SELECT id, code, status_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active");
+		queryBuilder.append("FROM status_assets ");
+		queryBuilder.append("WHERE code LIKE :code");
+		
+		String sql = queryBuilder.toString();
+		
+		List<?> result = createNativeQuery(sql)
+				.setParameter("code", code)
+				.getResultList();
+		List<StatusAssets> resultList = new ArrayList<StatusAssets>();
+		
+		result.forEach(rs->{
+			Object[] arrObj = (Object[]) rs;
+			StatusAssets status = new StatusAssets();
+			status.setId(arrObj[0].toString());
+			status.setCode(arrObj[1].toString());
+			status.setStatusAssetName(arrObj[2].toString());
+			status.setVersion(Long.valueOf(arrObj[3].toString()));
+			status.setCreatedBy(arrObj[4].toString());
+			status.setCreatedDate(((Timestamp) arrObj[5]).toLocalDateTime());
+			if(arrObj[6] != null) {
+				status.setUpdatedBy(arrObj[6].toString());
+			}
+			if(arrObj[7] != null) {
+				status.setUpdatedDate(((Timestamp) arrObj[7]).toLocalDateTime());
+			}
+			status.setIsActive((Boolean) arrObj[8]);
+			
+			resultList.add(status);
+			
+		});
+		
+		return resultList;
 	}
 
 }

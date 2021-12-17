@@ -62,9 +62,9 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 		queryBuilder.append("SELECT a ");
 		queryBuilder.append("FROM Assets a ");
 		queryBuilder.append("INNER JOIN FETCH a.display ");
-		queryBuilder.append("INNER JOIN FETCH a.item i ");
+		queryBuilder.append("INNER JOIN FETCH a.item AS i ");
 		queryBuilder.append("INNER JOIN FETCH i.itemType ");
-		queryBuilder.append("WHERE i.itemType.code = :code");
+		queryBuilder.append("WHERE a.item.itemType.code = :code");
 		
 		String sql = queryBuilder.toString();
 		
@@ -74,11 +74,11 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 	@Override
 	public List<Assets> findAllFilterBySearch(String input) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder("");
-		queryBuilder.append("SELECT a");
-		queryBuilder.append("FROM Assets a");
-		queryBuilder.append("INNER JOIN FETCH a.item i");
+		queryBuilder.append("SELECT a ");
+		queryBuilder.append("FROM Assets a ");
+		queryBuilder.append("INNER JOIN FETCH a.item  i");
 		queryBuilder.append("INNER JOIN FETCH a.display ");
-		queryBuilder.append("WHERE (i.description LIKE :input OR i.brand LIKE :input) AND a.statusAsset.code = :statusCode");
+		queryBuilder.append("WHERE a.item.description LIKE :input OR a.item.brand LIKE :input AND a.statusAsset.code = :statusCode");
 		
 		String sql = queryBuilder.toString();
 		

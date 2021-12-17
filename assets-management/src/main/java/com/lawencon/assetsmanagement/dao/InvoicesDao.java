@@ -14,4 +14,5 @@ public interface InvoicesDao {
 	
 	boolean removeById(String id) throws Exception;
 	
+	List<Invoices> findAllFilterByCode(String code) throws Exception;
 }

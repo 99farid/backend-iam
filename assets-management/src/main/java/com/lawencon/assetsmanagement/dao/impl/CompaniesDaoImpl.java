@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.dao.impl;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -30,4 +32,38 @@ public class CompaniesDaoImpl extends BaseDaoImpl<Companies> implements Companie
 	public boolean removeById(String id) throws Exception {
 		return deleteById(id);
 	}
+
+	@Override
+	public List<Companies> findAllFilterByCode(String code) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append("SELECT id, code, company_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
+		queryBuilder.append("FROM companies ");
+		queryBuilder.append("WHERE code LIKE :code");
+		
+		String sql = queryBuilder.toString();
+		List<?> result = createNativeQuery(sql).setParameter("code", code).getResultList();
+		List<Companies> resultList = new ArrayList<Companies>();
+		
+		result.forEach(rs -> {
+			Object[] arrObj = (Object[]) rs;
+			Companies company = new Companies();
+			company.setId(arrObj[0].toString());
+			company.setCode(arrObj[1].toString());
+			company.setCompanyName(arrObj[2].toString());
+			company.setVersion(Long.valueOf(arrObj[3].toString()));
+			company.setCreatedBy(arrObj[4].toString());
+			company.setCreatedDate(((Timestamp)arrObj[5]).toLocalDateTime());
+			if(arrObj[6] != null) {
+				company.setUpdatedBy(arrObj[6].toString());
+			}
+			if(arrObj[7] != null) {
+				company.setUpdatedDate(((Timestamp)arrObj[7]).toLocalDateTime());
+			}
+			company.setIsActive((Boolean) arrObj[8]);
+			
+			resultList.add(company);
+		});
+		return resultList;
+	}
+	
 }
