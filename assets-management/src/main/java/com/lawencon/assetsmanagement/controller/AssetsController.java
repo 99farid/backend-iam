@@ -23,6 +23,8 @@ import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
@@ -60,6 +62,11 @@ public class AssetsController {
 		InsertResDto result = assetsService.insert(convertToModel(data, InsertReqDataAssetsDto.class), display, invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
+	@PostMapping("excel")
+	public ResponseEntity<?> insertFromExcel(@RequestPart MultipartFile data ) throws Exception{
+		InsertResDto result = assetsService.insertFromExcel(data);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
+	}
 	
 	@PutMapping
 	public ResponseEntity<?> update (@RequestBody Assets data) throws Exception{
@@ -79,9 +86,21 @@ public class AssetsController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@GetMapping ("count-by-status")
-	public ResponseEntity<?> countAssetByStatus(@RequestParam String code) throws Exception{
+	public ResponseEntity<?> countAssetByStatus(@RequestParam("q") String code) throws Exception{
 		CountAssetByStatusResAssetsDto result =   assetsService.countAssetByStatus(code);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-
+	
+	@GetMapping ("type")
+	public ResponseEntity<?> findAllFilterByType(@RequestParam("q") String typeCode) throws Exception{
+		FindAllFilterByTypeResAssetsDto result =   assetsService.findAllFilterByType(typeCode);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping ("search")
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("q") String input) throws Exception{
+		FindAllFilterBySearchResAssetsDto result =   assetsService.findAllFilterBySearch(input);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
