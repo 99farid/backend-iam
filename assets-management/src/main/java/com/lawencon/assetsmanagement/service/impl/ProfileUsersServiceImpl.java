@@ -87,7 +87,7 @@ public class ProfileUsersServiceImpl extends BaseServiceImpl implements ProfileU
 			profileUsers.setUser(users);
 			profileUsers.setEmployee(employees);
 			profileUsers.setProfilePict(filesSave);
-			profileUsers.setCreatedBy("....");
+			profileUsers.setCreatedBy("1");
 			profileUsers.setIsActive(data.getIsActive());
 			
 			ProfileUsers profileUsersSave = profileUsersDao.saveOrUpdate(profileUsers);
