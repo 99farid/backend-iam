@@ -1,4 +1,4 @@
-package com.lawencon.assetsmanagement.sercurity.jwt;
+package com.lawencon.assetsmanagement.security.jwt;
 
 import java.util.Date;
 import java.util.HashMap;

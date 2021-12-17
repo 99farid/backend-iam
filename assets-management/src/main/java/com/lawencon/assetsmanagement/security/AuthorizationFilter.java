@@ -1,4 +1,4 @@
-package com.lawencon.assetsmanagement.sercurity;
+package com.lawencon.assetsmanagement.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.lawencon.assetsmanagement.sercurity.jwt.JwtComponent;
+import com.lawencon.assetsmanagement.security.jwt.JwtComponent;
 
 import io.jsonwebtoken.Claims;
 
