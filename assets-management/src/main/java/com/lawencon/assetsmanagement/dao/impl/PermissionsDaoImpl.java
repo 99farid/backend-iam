@@ -29,7 +29,7 @@ public class PermissionsDaoImpl extends BaseDaoImpl<Permissions> implements Perm
 		queryBuilder.append("SELECT id, code, permission_name, ");
 		queryBuilder.append("ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM permissions AS p ");
-		queryBuilder.append("WHERE permission_name LIKE :input%% OR permission_name LIKE %%:input ");
+		queryBuilder.append("WHERE permission_name LIKE :input");
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)

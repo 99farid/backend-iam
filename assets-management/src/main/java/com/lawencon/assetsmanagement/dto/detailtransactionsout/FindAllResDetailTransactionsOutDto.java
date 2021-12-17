@@ -1,18 +1,20 @@
 package com.lawencon.assetsmanagement.dto.detailtransactionsout;
 
+import java.util.List;
+
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 
-public class FindByIdDetailTransactionsOutDto {
+public class FindAllResDetailTransactionsOutDto {
 
-	private DetailTransactionsOut data;
+	private List<DetailTransactionsOut> data;
 	
 	private String msg;
 
-	public DetailTransactionsOut getData() {
+	public List<DetailTransactionsOut> getData() {
 		return data;
 	}
 
-	public void setData(DetailTransactionsOut data) {
+	public void setData(List<DetailTransactionsOut> data) {
 		this.data = data;
 	}
 

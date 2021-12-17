@@ -55,13 +55,14 @@ public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
 			role.setRoleName(data.getRoleName());
 			role.setCreatedBy(".....");
 			role.setIsActive(data.getIsActive());
-			
+		
 			begin();
 			Roles rolesSave = rolesDao.saveOrUpdate(role);
 		
 			for(String permissionId: data.getIdPermission()) {
 				RolePermissions rolepermission = new RolePermissions();
 				rolepermission.setRole(rolesSave);
+				rolepermission.setCreatedBy("1");
 				
 				Permissions permission = new Permissions();
 				permission.setId(permissionId);

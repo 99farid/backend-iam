@@ -15,8 +15,10 @@ import com.lawencon.assetsmanagement.dto.profileusers.FindAllResProfileUsersDto;
 import com.lawencon.assetsmanagement.dto.profileusers.FindByIdResProfileUsersDto;
 import com.lawencon.assetsmanagement.dto.profileusers.FindByResUserIdDto;
 import com.lawencon.assetsmanagement.dto.profileusers.InsertReqDataProfileUsersDto;
+import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Files;
 import com.lawencon.assetsmanagement.model.ProfileUsers;
+import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.ProfileUsersService;
 import com.lawencon.base.BaseServiceImpl;
 
@@ -68,12 +70,22 @@ public class ProfileUsersServiceImpl extends BaseServiceImpl implements ProfileU
 			Files fileInsert = new Files();
 			fileInsert.setDataFile(file.getBytes());
 			fileInsert.setExtention(extention);
+			fileInsert.setCreatedBy("1");
+			
 			
 			begin();
 			Files filesSave = new Files();
 			filesSave = filesDao.saveOrUpdate(fileInsert);
 			ProfileUsers profileUsers = new ProfileUsers();
 			
+			Users users = new Users();
+			users.setId(data.getIdUser());
+			
+			Employees employees = new Employees();
+			employees.setId(data.getIdEmployee());
+			
+			profileUsers.setUser(users);
+			profileUsers.setEmployee(employees);
 			profileUsers.setProfilePict(filesSave);
 			profileUsers.setCreatedBy("....");
 			profileUsers.setIsActive(data.getIsActive());
