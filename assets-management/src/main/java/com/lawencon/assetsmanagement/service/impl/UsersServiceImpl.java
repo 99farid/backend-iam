@@ -18,6 +18,7 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.users.FindAllResUsersDto;
 import com.lawencon.assetsmanagement.dto.users.FindByIdResUsersDto;
 import com.lawencon.assetsmanagement.dto.users.FindByResEmailDto;
+import com.lawencon.assetsmanagement.email.EmailHandler;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.UsersService;
 import com.lawencon.base.BaseServiceImpl;
@@ -31,11 +32,13 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptEncoder;
 	
+	@Autowired
+	private EmailHandler emailHandler;
 	public FindAllResUsersDto findAll() throws Exception {
 		FindAllResUsersDto result = new FindAllResUsersDto();
 		result.setData(usersDao.findAll());
 		result.setMsg(null);
-		
+		emailHandler.sendSimpleMessage("99.faridazhari@gmail.com", "Password ini rahsia", "ssaws");
 		return result;
 	}
 	

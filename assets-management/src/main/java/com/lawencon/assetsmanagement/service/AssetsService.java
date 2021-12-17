@@ -33,5 +33,7 @@ public interface AssetsService {
 	FindAllFilterByTypeResAssetsDto findAllFilterByType(String typeCode) throws Exception;
 
 	FindAllFilterBySearchResAssetsDto findAllFilterBySearch(String input) throws Exception;
+	
+	InsertResDto insertFromExcel (MultipartFile data) throws Exception;
 
 }

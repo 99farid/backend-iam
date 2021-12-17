@@ -1,8 +1,5 @@
 package com.lawencon.assetsmanagement.service.impl;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +32,7 @@ import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.service.AssetsService;
 import com.lawencon.base.BaseServiceImpl;
+import com.lawencon.util.ExcelUtil;
 
 @Service
 public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService {
@@ -60,6 +58,9 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 	@Autowired
 	private FilesDao filesDao;
 
+	@Autowired
+	private ExcelUtil excelUtil;
+	
 	@Override
 	public FindAllResAssetsDto findAll() throws Exception {
 		FindAllResAssetsDto result = new FindAllResAssetsDto();
@@ -144,6 +145,17 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			asset.setDisplay(newDisplay);
 
 			asset = assetsDao.saveOrUpdate(asset);
+			
+			//proses insert track activity
+			/*
+			 *set code,
+			 *nama aset(items.getDesc)
+			 *status (asset.getStatus),
+			 *activity (enumActivity.InsertAsset.getActivity),
+			 *tanggal (localdate.now())
+			 * 
+			 * acttrackDao.saveOrUpdate()
+			 */
 			commit();
 
 			InsertResDataDto dataResult = new InsertResDataDto();
@@ -167,6 +179,13 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 		try {
 			begin();
 			Assets asset = assetsDao.saveOrUpdate(data);
+			
+			/*
+			 * code,
+			 * nama asset (asset.item.getDesx)
+			 * status (asset.getStatus.getName)
+			 * activity (enumActivity.updateasset)
+			 */
 			commit();
 			UpdateResDataDto dataResult = new UpdateResDataDto();
 			dataResult.setVersion(asset.getVersion());
@@ -174,7 +193,6 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
 			result.setMsg("");
-
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -233,6 +251,19 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 		result.setData(assetsDao.findAllFilterBySearch(input));
 		result.setMsg(null);
 		return result;
+	}
+
+	@Override
+	public InsertResDto insertFromExcel(MultipartFile data) throws Exception {
+		excelUtil.init("Sheet1", data.getInputStream());
+		for(int i = 0; i< excelUtil.getRowCountInSheet(); i++) {
+			for (int j = 0; j<excelUtil.getColCountInRow(i); j++) {
+				System.out.print(excelUtil.getCellData(i, j)+ " - ");
+				
+			}
+			System.out.println();
+		}
+		return null;
 	}
 
 }

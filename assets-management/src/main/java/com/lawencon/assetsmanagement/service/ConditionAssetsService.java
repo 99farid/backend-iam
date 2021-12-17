@@ -18,4 +18,6 @@ public interface ConditionAssetsService {
 	UpdateResDto update(ConditionAssets data) throws Exception;
 	
 	DeleteResDataDto removeById(String id) throws Exception;
+	
+	
 }
