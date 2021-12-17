@@ -11,6 +11,4 @@ public interface TrackActivityDao {
 	TrackActivity findById(String id) throws Exception;
 	
 	TrackActivity saveOrUpdate(TrackActivity data) throws Exception;
-	
-	boolean removeById(String id) throws Exception;
 }

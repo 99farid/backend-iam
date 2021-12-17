@@ -20,7 +20,7 @@ public class TrackActivity extends BaseEntity{
 	@Column(length = 64,  nullable = false)
 	private String nameAsset;
 	
-	@Column(length = 64,  nullable = false)
+	@Column(length = 64,  nullable = false)   
 	private String statusAsset;
 	
 	@Column(length = 64,  nullable = false)

@@ -43,20 +43,21 @@
 	<title>
 		<band height="172" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="99" backcolor="#8FE1FF" uuid="9ae16e2e-de04-4554-8c1e-939e7538a6f0"/>
+				<reportElement x="0" y="0" width="555" height="123" backcolor="#8FE1FF" uuid="9ae16e2e-de04-4554-8c1e-939e7538a6f0"/>
 			</rectangle>
 			<image>
 				<reportElement x="5" y="-10" width="106" height="91" uuid="2e66ecc7-56c3-4d95-8ecd-cebcd3786f8f"/>
 				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="8" y="76" width="100" height="30" uuid="1dfa2118-5d66-4195-a9b2-059fafca8125"/>
+				<reportElement x="8" y="94" width="100" height="30" uuid="1dfa2118-5d66-4195-a9b2-059fafca8125"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[History Assets Report]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="412" y="7" width="57" height="19" uuid="862630e7-534e-4284-aadc-950edbbc52d5"/>
+				<reportElement x="377" y="25" width="57" height="19" uuid="862630e7-534e-4284-aadc-950edbbc52d5"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[IAM System]]></text>
 			</staticText>
@@ -64,16 +65,16 @@
 				<reportElement x="0" y="0" width="0" height="0" uuid="65e4b438-2773-4d7a-8ee1-5ab31d182722"/>
 			</frame>
 			<staticText>
-				<reportElement x="412" y="23" width="57" height="19" uuid="f13ae5b7-b420-4651-b966-a441252774cf"/>
+				<reportElement x="377" y="43" width="57" height="19" uuid="f13ae5b7-b420-4651-b966-a441252774cf"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Date       :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="412" y="38" width="166" height="49" uuid="e2e69c73-e92a-4acd-9a26-495fab763d54"/>
+				<reportElement x="377" y="60" width="268" height="100" uuid="e2e69c73-e92a-4acd-9a26-495fab763d54"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Location : Pakuwon Tower, 
 Jl. Casablanca No.Kav 88,
@@ -82,9 +83,9 @@ Kec. Tebet, Kota Jakarta Selatan,
 Daerah Khusus Ibukota Jakarta 12870]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="450" y="24" width="76" height="12" uuid="f310af99-3f9f-47d9-b1d6-aaa0b4c18b87"/>
+				<reportElement x="424" y="43" width="170" height="12" uuid="f310af99-3f9f-47d9-b1d6-aaa0b4c18b87"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -155,12 +156,15 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 		<band height="125" splitType="Stretch"/>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="58" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="110" y="22" width="354" height="30" uuid="83cf1a71-5491-46ce-82bd-99f1dd17a710"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[@Copyright 2021 IAM System]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
