@@ -28,12 +28,12 @@ public class ProfileUsersDaoImpl extends BaseDaoImpl<ProfileUsers> implements Pr
 	public ProfileUsers findByUser(String userId) throws Exception {
 		try {
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT pu FROM ProfileUsers AS pu ");
-			queryBuilder.append("INNER JOIN FETCH pu.user AS u ");
-			queryBuilder.append("INNER JOIN FETCH pu.employee AS e ");
-			queryBuilder.append("INNER JOIN FETCH pu.profilePict ");
+			queryBuilder.append("SELECT pu FROM ProfileUsers pu ");
+			queryBuilder.append("INNER JOIN FETCH pu.user ");
+			queryBuilder.append("INNER JOIN FETCH pu.employee e ");
 			queryBuilder.append("INNER JOIN FETCH e.company ");
-			queryBuilder.append("WHERE pu.u.id = :userId ");
+			queryBuilder.append("INNER JOIN FETCH pu.profilePict ");
+			queryBuilder.append("WHERE pu.user.id = :userId ");
 
 			String sql = queryBuilder.toString();
 			
@@ -44,9 +44,7 @@ public class ProfileUsersDaoImpl extends BaseDaoImpl<ProfileUsers> implements Pr
 			throw new NoResultException("Profile User Not Found");
 		} catch (NonUniqueResultException e) {
 			throw new NonUniqueResultException("Profile User Found More Than One");
-		}
-		
-		
+		}	
 	}
 	
 	@Override
