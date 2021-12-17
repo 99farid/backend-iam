@@ -1,6 +1,12 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.dao.UsersDao;
@@ -21,6 +27,9 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 
 	@Autowired
 	private UsersDao usersDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptEncoder;
 	
 	public FindAllResUsersDto findAll() throws Exception {
 		FindAllResUsersDto result = new FindAllResUsersDto();
@@ -52,7 +61,7 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 		try {
 			InsertResDto insertResDto = new InsertResDto();
 			InsertResDataDto insertResDataDto = new InsertResDataDto();
-			
+			data.setPass(bCryptEncoder.encode(data.getPass()));
 			begin();
 			Users usersSave = usersDao.saveOrUpdate(data);
 			commit();
@@ -115,5 +124,18 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 			rollback();
 			throw new Exception(e);
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Users result = null;
+		try {
+			result = findByEmail(email).getData();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new UsernameNotFoundException(e.getMessage());
+		}
+		
+		return new User(result.getEmail(), result.getPass(), new ArrayList<>());
 	}
 }

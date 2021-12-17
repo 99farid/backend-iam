@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
@@ -8,7 +10,7 @@ import com.lawencon.assetsmanagement.dto.users.FindByIdResUsersDto;
 import com.lawencon.assetsmanagement.dto.users.FindByResEmailDto;
 import com.lawencon.assetsmanagement.model.Users;
 
-public interface UsersService {
+public interface UsersService extends UserDetailsService{
 
 	FindAllResUsersDto findAll() throws Exception;
 	
