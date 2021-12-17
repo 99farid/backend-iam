@@ -48,7 +48,7 @@ public class ProfileUserController {
 	}
 	
 	@GetMapping("userId")
-	public ResponseEntity<?> findByUserId(@RequestParam("userId") String userId) throws Exception {
+	public ResponseEntity<?> findByUserId(@RequestParam("q") String userId) throws Exception {
 		FindByResUserIdDto result = profileUsersService.findByUser(userId);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
