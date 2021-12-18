@@ -35,11 +35,11 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 	@Override
 	public List<TransactionsOut> findAllFilterByIdEmployee() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT to.id AS id_transout, e.id, to.id_employee, e.full_name, ");
-		queryBuilder.append("to.ver, to.created_by, to.created_date, to.updated_by, to.updated_date, to.is_active ");
-		queryBuilder.append("FROM transactions_out AS to ");
-		queryBuilder.append("INNER JOIN employees AS e ON e.id = to.id_employee ");
-		queryBuilder.append("WHERE to.id_location IS NULL AND to.id_general_item IS NULL ");
+		queryBuilder.append("SELECT t.id AS id_transout, e.id, e.full_name, ");
+		queryBuilder.append("t.ver, t.created_by, t.created_date, t.updated_by, t.updated_date, t.is_active ");
+		queryBuilder.append("FROM transactions_out AS t ");
+		queryBuilder.append("INNER JOIN employees AS e ON e.id = t.id_employee ");
+		queryBuilder.append("WHERE t.id_location IS NULL AND t.id_general_item IS NULL ");
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)
@@ -58,13 +58,13 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 			transactionsOut.setVersion(Long.valueOf(objArr[3].toString()));
 			transactionsOut.setCreatedBy(objArr[4].toString());
 			transactionsOut.setCreatedDate(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-			if (objArr[5] != null) {
-				transactionsOut.setUpdatedBy(objArr[5].toString());
-			}
 			if (objArr[6] != null) {
-				transactionsOut.setUpdatedDate(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
+				transactionsOut.setUpdatedBy(objArr[6].toString());
 			}
-			transactionsOut.setIsActive(Boolean.valueOf(objArr[7].toString()));
+			if (objArr[7] != null) {
+				transactionsOut.setUpdatedDate(Timestamp.valueOf(objArr[7].toString()).toLocalDateTime());
+			}
+			transactionsOut.setIsActive(Boolean.valueOf(objArr[8].toString()));
 			
 			resultTransactionOut.add(transactionsOut);
 		});
@@ -75,11 +75,11 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 	@Override
 	public List<TransactionsOut> findAllFilterByIdLocation() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT to.id AS id_transout, l.id, to.id_location, l.location_name, ");
-		queryBuilder.append("to.ver, to.created_by, to.created_date, to.updated_by, to.updated_date, to.is_active ");
-		queryBuilder.append("FROM transactions_out AS to ");
-		queryBuilder.append("INNER JOIN locations AS l ON l.id = to.id_location ");
-		queryBuilder.append("WHERE to.id_employee IS NULL AND to.id_general_item IS NULL ");
+		queryBuilder.append("SELECT t.id AS id_transout, l.id, l.locations_name, ");
+		queryBuilder.append("t.ver, t.created_by, t.created_date, t.updated_by, t.updated_date, t.is_active ");
+		queryBuilder.append("FROM transactions_out AS t ");
+		queryBuilder.append("INNER JOIN locations AS l ON l.id = t.id_location ");
+		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_general_item IS NULL ");
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)
@@ -98,13 +98,13 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 			transactionsOut.setVersion(Long.valueOf(objArr[3].toString()));
 			transactionsOut.setCreatedBy(objArr[4].toString());
 			transactionsOut.setCreatedDate(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-			if (objArr[5] != null) {
-				transactionsOut.setUpdatedBy(objArr[5].toString());
-			}
 			if (objArr[6] != null) {
-				transactionsOut.setUpdatedDate(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
+				transactionsOut.setUpdatedBy(objArr[6].toString());
 			}
-			transactionsOut.setIsActive(Boolean.valueOf(objArr[7].toString()));
+			if (objArr[7] != null) {
+				transactionsOut.setUpdatedDate(Timestamp.valueOf(objArr[7].toString()).toLocalDateTime());
+			}
+			transactionsOut.setIsActive(Boolean.valueOf(objArr[8].toString()));
 			
 			resultTransactionOut.add(transactionsOut);
 		});
@@ -115,12 +115,12 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 	@Override
 	public List<TransactionsOut> findAllFilterByIdGeneralItem() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT to.id AS id_transout, a.id, to.id_general_item, a.id_item, ");
-		queryBuilder.append("to.ver, to.created_by, to.created_date, to.updated_by, to.updated_date, to.is_active ");
-		queryBuilder.append("FROM transactions_out AS to ");
-		queryBuilder.append("INNER JOIN assets AS a ON a.id = to.id_general_item ");
+		queryBuilder.append("SELECT t.id AS id_transout, a.id, a.id_item, ");
+		queryBuilder.append("t.ver, t.created_by, t.created_date, t.updated_by, t.updated_date, t.is_active ");
+		queryBuilder.append("FROM transactions_out AS t ");
+		queryBuilder.append("INNER JOIN assets AS a ON a.id = t.id_general_item ");
 		queryBuilder.append("INNER JOIN items AS i ON i.id = a.id_item ");
-		queryBuilder.append("WHERE to.id_employee IS NULL AND to.id_location IS NULL ");
+		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_location IS NULL ");
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)

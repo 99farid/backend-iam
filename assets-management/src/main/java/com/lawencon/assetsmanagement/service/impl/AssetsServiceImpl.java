@@ -1,9 +1,12 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lawencon.assetsmanagement.constant.ActivityTrack;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dao.FilesDao;
@@ -11,6 +14,7 @@ import com.lawencon.assetsmanagement.dao.InvoicesDao;
 import com.lawencon.assetsmanagement.dao.ItemTypesDao;
 import com.lawencon.assetsmanagement.dao.ItemsDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
+import com.lawencon.assetsmanagement.dao.TrackActivityDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -30,6 +34,7 @@ import com.lawencon.assetsmanagement.model.Invoices;
 import com.lawencon.assetsmanagement.model.ItemTypes;
 import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.model.StatusAssets;
+import com.lawencon.assetsmanagement.model.TrackActivity;
 import com.lawencon.assetsmanagement.service.AssetsService;
 import com.lawencon.base.BaseServiceImpl;
 import com.lawencon.util.ExcelUtil;
@@ -57,6 +62,9 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 	@Autowired
 	private FilesDao filesDao;
+	
+	@Autowired
+	private TrackActivityDao trackActivityDao;
 
 	@Autowired
 	private ExcelUtil excelUtil;
@@ -146,16 +154,16 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 			asset = assetsDao.saveOrUpdate(asset);
 			
-			//proses insert track activity
-			/*
-			 *set code,
-			 *nama aset(items.getDesc)
-			 *status (asset.getStatus),
-			 *activity (enumActivity.InsertAsset.getActivity),
-			 *tanggal (localdate.now())
-			 * 
-			 * acttrackDao.saveOrUpdate()
-			 */
+			TrackActivity track = new TrackActivity();
+			track.setCode(item.getDescription());
+			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
+			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
+			track.setDateActivity(LocalDate.now());
+			track.setCreatedBy("1");
+			track.setIsActive(track.getIsActive());
+			
+			trackActivityDao.saveOrUpdate(track);
+			
 			commit();
 
 			InsertResDataDto dataResult = new InsertResDataDto();
@@ -186,6 +194,13 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			 * status (asset.getStatus.getName)
 			 * activity (enumActivity.updateasset)
 			 */
+			TrackActivity track = new TrackActivity();
+			track.setCode(asset.getItem().getDescription());
+			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
+			track.setActivity(ActivityTrack.UPDATE_ASSET.getName());
+			track.setDateActivity(LocalDate.now());
+			
+			trackActivityDao.saveOrUpdate(track);
 			commit();
 			UpdateResDataDto dataResult = new UpdateResDataDto();
 			dataResult.setVersion(asset.getVersion());
