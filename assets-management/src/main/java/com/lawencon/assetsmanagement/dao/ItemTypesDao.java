@@ -14,6 +14,6 @@ public interface ItemTypesDao {
 	
 	boolean removeById(String id) throws Exception;
 	
-	List<ItemTypes> findAll(String code) throws Exception;
+	List<ItemTypes> findAllFilterByCode(String code) throws Exception;
 	
 }

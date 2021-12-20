@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.assetsmanagement.dao.ItemTypesDao;
-import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.model.ItemTypes;
 import com.lawencon.base.BaseDaoImpl;
 
@@ -35,7 +34,7 @@ public class ItemTypesDaoImpl extends BaseDaoImpl<ItemTypes> implements ItemType
 	}
 
 	@Override
-	public List<ItemTypes> findAll(String code) throws Exception {
+	public List<ItemTypes> findAllFilterByCode(String code) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
 		queryBuilder.append("SELECT id, code, item_type_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM item_types ");

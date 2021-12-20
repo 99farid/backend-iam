@@ -115,7 +115,7 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 	@Override
 	public List<StatusAssets> findAllFilterByCode(String code) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder("");
-		queryBuilder.append("SELECT id, code, status_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active");
+		queryBuilder.append("SELECT id , code, status_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM status_assets ");
 		queryBuilder.append("WHERE code LIKE :code");
 		

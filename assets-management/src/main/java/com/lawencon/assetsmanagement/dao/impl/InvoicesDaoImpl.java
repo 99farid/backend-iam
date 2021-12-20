@@ -37,7 +37,6 @@ public class InvoicesDaoImpl extends BaseDaoImpl<Invoices> implements InvoicesDa
 		StringBuilder queryBuilder = new StringBuilder();
 		queryBuilder.append("SELECT i ");
 		queryBuilder.append("FROM Invoices i ");
-		queryBuilder.append("INNER JOIN FETCH i.invoicePict ");
 		queryBuilder.append("WHERE i.code LIKE :code");
 		
 		String sql = queryBuilder.toString();
