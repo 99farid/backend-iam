@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 @Entity
 public class Employees extends BaseEntity{
 
-	private static final long serialVersionUID = 7600468914814562970L;
+	private static final long serialVersionUID = 403814334269503860L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_company", nullable = false)
@@ -27,6 +27,18 @@ public class Employees extends BaseEntity{
 	
 	@Column(length = 32, nullable = false)
 	private String department;
+	
+	@Column(length = 32, nullable = false)
+	private String email;
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Companies getCompany() {
 		return company;

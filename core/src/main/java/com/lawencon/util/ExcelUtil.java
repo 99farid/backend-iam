@@ -21,19 +21,22 @@ public class ExcelUtil {
 	public String getCellData(int rowNumber, int cellNumber) {
 		try {
 			cell = sheet.getRow(rowNumber).getCell(cellNumber);
-
-			CellType type = cell.getCellType();
-			if (type == CellType.STRING) {
-				return cell.getRichStringCellValue().toString();
-			} else if (type == CellType.NUMERIC) {
-				return String.valueOf(cell.getNumericCellValue());
-			} else if (type == CellType.BOOLEAN) {
-				return String.valueOf(cell.getBooleanCellValue());
-			} else if (type == CellType.BLANK) {
+			if(cell != null) {
+				CellType type = cell.getCellType();
+				if (type == CellType.STRING) {
+					return cell.getRichStringCellValue().toString();
+				} else if (type == CellType.NUMERIC) {
+					return String.valueOf(cell.getNumericCellValue());
+				} else if (type == CellType.BOOLEAN) {
+					return String.valueOf(cell.getBooleanCellValue());
+				} else if (type == CellType.BLANK) {
+					return null;
+				}
+				return cell.getStringCellValue();
+			}else {
 				return null;
 			}
-
-			return cell.getStringCellValue();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
