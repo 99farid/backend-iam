@@ -22,7 +22,7 @@ import com.lawencon.assetsmanagement.service.CompaniesService;
 
 @RestController
 @RequestMapping("companies")
-public class CompaniesController {
+public class CompaniesController extends BaseIamController{
 	
 	@Autowired
 	private CompaniesService companiesService;

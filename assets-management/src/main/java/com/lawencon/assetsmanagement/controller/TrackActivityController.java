@@ -21,7 +21,7 @@ import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @RequestMapping("track-activities")
-public class TrackActivityController {
+public class TrackActivityController extends BaseIamController {
 
 	@Autowired
 	private TrackActivityService trackActivityService;

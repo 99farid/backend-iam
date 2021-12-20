@@ -23,7 +23,7 @@ import com.lawencon.assetsmanagement.service.RolesService;
 
 @RestController
 @RequestMapping("roles")
-public class RolesController {
+public class RolesController extends BaseIamController{
 
 	@Autowired
 	private RolesService rolesService;

@@ -22,7 +22,7 @@ import com.lawencon.assetsmanagement.service.InvoicesService;
 
 @RestController
 @RequestMapping("invoices")
-public class InvoiceController {
+public class InvoiceController extends BaseIamController{
 	@Autowired
 	private InvoicesService invoicesService;
 	

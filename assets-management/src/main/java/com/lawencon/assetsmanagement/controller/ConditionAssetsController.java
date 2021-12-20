@@ -23,7 +23,7 @@ import com.lawencon.assetsmanagement.service.ConditionAssetsService;
 
 @RestController
 @RequestMapping("condition-assets")
-public class ConditionAssetsController {
+public class ConditionAssetsController extends BaseIamController{
 
 	@Autowired
 	private ConditionAssetsService conditonService;

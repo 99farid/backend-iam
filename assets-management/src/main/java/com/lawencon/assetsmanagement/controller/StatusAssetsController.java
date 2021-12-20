@@ -22,7 +22,7 @@ import com.lawencon.assetsmanagement.service.StatusAssetsService;
 
 @RestController
 @RequestMapping("status-assets")
-public class StatusAssetsController {
+public class StatusAssetsController extends BaseIamController{
 	@Autowired
 	private StatusAssetsService statusService;
 	

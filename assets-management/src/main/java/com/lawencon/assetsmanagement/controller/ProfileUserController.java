@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -28,7 +27,7 @@ import com.lawencon.assetsmanagement.service.ProfileUsersService;
 
 @RestController
 @RequestMapping("profile-users")
-public class ProfileUserController {
+public class ProfileUserController extends BaseIamController{
 
 	@Autowired
 	private ProfileUsersService profileUsersService;
@@ -62,8 +61,8 @@ public class ProfileUserController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody ProfileUsers data) throws Exception {
-		UpdateResDto profileUsers = profileUsersService.update(data);
+	public ResponseEntity<?> update(@RequestPart String data, MultipartFile file) throws Exception {
+		UpdateResDto profileUsers = profileUsersService.update(new ObjectMapper().readValue(data, ProfileUsers.class), file);
 //		UpdateResDataDto ver = new UpdateResDataDto();
 //		ver.setVersion(user.getVersion());
 //		

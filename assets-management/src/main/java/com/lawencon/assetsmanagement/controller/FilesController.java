@@ -11,7 +11,7 @@ import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.files.FindByIdResFilesDto;
 import com.lawencon.assetsmanagement.service.FilesService;
 
-public class FilesController {
+public class FilesController extends BaseIamController {
 	@Autowired
 	private FilesService filesService;
 	

@@ -22,7 +22,7 @@ import com.lawencon.assetsmanagement.service.UsersService;
 
 @RestController
 @RequestMapping("users")
-public class UsersController {
+public class UsersController extends BaseIamController{
 
 	@Autowired
 	private UsersService usersService;
