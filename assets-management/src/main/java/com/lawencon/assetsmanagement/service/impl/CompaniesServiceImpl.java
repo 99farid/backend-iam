@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -13,10 +14,9 @@ import com.lawencon.assetsmanagement.dto.companies.FindAllResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindByIdResCompaniesDto;
 import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.service.CompaniesService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class CompaniesServiceImpl extends BaseServiceImpl implements CompaniesService {
+public class CompaniesServiceImpl extends BaseIamServiceImpl implements CompaniesService {
 
 	@Autowired
 	private CompaniesDao companiesDao;
@@ -42,14 +42,14 @@ public class CompaniesServiceImpl extends BaseServiceImpl implements CompaniesSe
 		try {
 			InsertResDto insertResDto = new InsertResDto();
 			InsertResDataDto insertResDataDto = new InsertResDataDto();
-			
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Companies companiesSave = companiesDao.saveOrUpdate(data);
 			commit();
 			
 			insertResDataDto.setId(companiesSave.getId());
 			insertResDto.setData(insertResDataDto);
-			insertResDto.setMsg(".....");
+			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 
 			return insertResDto;
 			
@@ -65,14 +65,14 @@ public class CompaniesServiceImpl extends BaseServiceImpl implements CompaniesSe
 		try {
 			UpdateResDto updateResDto = new UpdateResDto();
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
-
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Companies companiesUpdate = companiesDao.saveOrUpdate(data);
 			commit();
 
 			updateResDataDto.setVersion(companiesUpdate.getVersion());
 			updateResDto.setData(updateResDataDto);
-			updateResDto.setMsg("....");
+			updateResDto.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 
 			return updateResDto;
 			
@@ -94,9 +94,9 @@ public class CompaniesServiceImpl extends BaseServiceImpl implements CompaniesSe
 			commit();
 			
 			if (resultDelete) {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			} else {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 
 			return deleteResDataDto;

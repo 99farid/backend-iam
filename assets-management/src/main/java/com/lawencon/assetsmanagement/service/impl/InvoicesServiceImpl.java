@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.InvoicesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -13,10 +14,9 @@ import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
 import com.lawencon.assetsmanagement.model.Invoices;
 import com.lawencon.assetsmanagement.service.InvoicesService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesService{
+public class InvoicesServiceImpl extends BaseIamServiceImpl implements InvoicesService{
 	@Autowired
 	private InvoicesDao invoicesDao;
 	
@@ -40,6 +40,7 @@ public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesServ
 	@Override
 	public InsertResDto insert(Invoices data) throws Exception {
 		try {
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Invoices invoice = invoicesDao.saveOrUpdate(data);
 			commit();
@@ -48,7 +49,7 @@ public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesServ
 			
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return result;
 		} catch (Exception e) {
@@ -62,6 +63,7 @@ public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesServ
 	@Override
 	public UpdateResDto update(Invoices data) throws Exception {
 		try {
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Invoices invoice = invoicesDao.saveOrUpdate(data);
 			commit();
@@ -71,7 +73,7 @@ public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesServ
 			
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			
 			return result;
 		} catch (Exception e) {
@@ -88,10 +90,10 @@ public class InvoicesServiceImpl extends BaseServiceImpl implements InvoicesServ
 			DeleteResDataDto result = new DeleteResDataDto();
 			begin();
 			if (!invoicesDao.removeById(id)) {
-				result.setMsg("");
+				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			commit();
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

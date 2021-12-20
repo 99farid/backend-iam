@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.ItemTypesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -13,10 +14,9 @@ import com.lawencon.assetsmanagement.dto.itemtypes.FindAllResItemTypesDto;
 import com.lawencon.assetsmanagement.dto.itemtypes.FindByIdResItemTypesDto;
 import com.lawencon.assetsmanagement.model.ItemTypes;
 import com.lawencon.assetsmanagement.service.ItemTypesService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class ItemTypesServiceImpl extends BaseServiceImpl implements ItemTypesService{
+public class ItemTypesServiceImpl extends BaseIamServiceImpl implements ItemTypesService{
 	@Autowired	
 	ItemTypesDao itemTypesDao;
 	
@@ -39,6 +39,7 @@ public class ItemTypesServiceImpl extends BaseServiceImpl implements ItemTypesSe
 	@Override
 	public InsertResDto insert(ItemTypes data) throws Exception {
 		try {
+			data.setCreatedBy(getIdAuth());
 			begin();
 			ItemTypes type = itemTypesDao.saveOrUpdate(data);
 			commit();
@@ -47,7 +48,7 @@ public class ItemTypesServiceImpl extends BaseServiceImpl implements ItemTypesSe
 			
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return result;
 		} catch (Exception e) {
@@ -61,6 +62,7 @@ public class ItemTypesServiceImpl extends BaseServiceImpl implements ItemTypesSe
 	@Override
 	public UpdateResDto update(ItemTypes data) throws Exception {
 		try {
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			ItemTypes type = itemTypesDao.saveOrUpdate(data);
 			commit();
@@ -69,7 +71,7 @@ public class ItemTypesServiceImpl extends BaseServiceImpl implements ItemTypesSe
 			
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			
 			return result;
 		} catch (Exception e) {
@@ -86,10 +88,10 @@ public class ItemTypesServiceImpl extends BaseServiceImpl implements ItemTypesSe
 			DeleteResDataDto result = new DeleteResDataDto();
 			begin();
 			if (!itemTypesDao.removeById(id)) {
-				result.setMsg("");
+				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			commit();
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

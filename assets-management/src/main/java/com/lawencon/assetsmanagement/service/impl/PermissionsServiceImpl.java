@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.PermissionsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -14,10 +15,9 @@ import com.lawencon.assetsmanagement.dto.permissions.FindAllResPemissionsDto;
 import com.lawencon.assetsmanagement.dto.permissions.FindByIdResPermissionsDto;
 import com.lawencon.assetsmanagement.model.Permissions;
 import com.lawencon.assetsmanagement.service.PermissionsService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class PermissionsServiceImpl extends BaseServiceImpl implements PermissionsService {
+public class PermissionsServiceImpl extends BaseIamServiceImpl implements PermissionsService {
 
 	@Autowired
 	private PermissionsDao permissionsDao;
@@ -53,14 +53,14 @@ public class PermissionsServiceImpl extends BaseServiceImpl implements Permissio
 		try {
 			InsertResDto insertResDto = new InsertResDto();
 			InsertResDataDto insertResDataDto = new InsertResDataDto();
-
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Permissions permissionsSave = permissionsDao.saveOrUpdate(data);
 			commit();
 
 			insertResDataDto.setId(permissionsSave.getId());
 			insertResDto.setData(insertResDataDto);
-			insertResDto.setMsg(null);
+			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 
 			return insertResDto;
 
@@ -76,14 +76,14 @@ public class PermissionsServiceImpl extends BaseServiceImpl implements Permissio
 		try {
 			UpdateResDto updateResDto = new UpdateResDto();
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
-
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Permissions permissionsUpdate = permissionsDao.saveOrUpdate(data);
 			commit();
 
 			updateResDataDto.setVersion(permissionsUpdate.getVersion());
 			updateResDto.setData(updateResDataDto);
-			updateResDto.setMsg(".....");
+			updateResDto.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 
 			return updateResDto;
 			
@@ -104,9 +104,9 @@ public class PermissionsServiceImpl extends BaseServiceImpl implements Permissio
 			commit();
 
 			if (resultDelete) {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			} else {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 
 			return deleteResDataDto;

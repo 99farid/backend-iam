@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -13,10 +14,9 @@ import com.lawencon.assetsmanagement.dto.conditionassets.FindAllResConditionAsse
 import com.lawencon.assetsmanagement.dto.conditionassets.FindByIdResConditionAssetsDto;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.assetsmanagement.service.ConditionAssetsService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class ConditionAssetsServiceImpl extends BaseServiceImpl implements ConditionAssetsService{
+public class ConditionAssetsServiceImpl extends BaseIamServiceImpl implements ConditionAssetsService{
 	
 	@Autowired
 	private ConditionAssetsDao conditionAssetsDao;
@@ -42,6 +42,7 @@ public class ConditionAssetsServiceImpl extends BaseServiceImpl implements Condi
 	@Override
 	public InsertResDto insert(ConditionAssets data) throws Exception {
 		try {
+			data.setCreatedBy(getIdAuth());
 			begin();
 			ConditionAssets condition = conditionAssetsDao.saveOrUpdate(data);
 			commit();
@@ -50,7 +51,7 @@ public class ConditionAssetsServiceImpl extends BaseServiceImpl implements Condi
 			
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +64,7 @@ public class ConditionAssetsServiceImpl extends BaseServiceImpl implements Condi
 	@Override
 	public UpdateResDto update(ConditionAssets data) throws Exception {
 		try {
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			ConditionAssets condition = conditionAssetsDao.saveOrUpdate(data);
 			commit();
@@ -72,7 +74,7 @@ public class ConditionAssetsServiceImpl extends BaseServiceImpl implements Condi
 			
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,10 +90,10 @@ public class ConditionAssetsServiceImpl extends BaseServiceImpl implements Condi
 			DeleteResDataDto result = new DeleteResDataDto();
 			begin();
 			if (!conditionAssetsDao.removeById(id)) {
-				result.setMsg("");
+				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			commit();
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,12 +1,17 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.constant.ActivityTrack;
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dao.FilesDao;
@@ -36,11 +41,11 @@ import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TrackActivity;
 import com.lawencon.assetsmanagement.service.AssetsService;
-import com.lawencon.base.BaseServiceImpl;
 import com.lawencon.util.ExcelUtil;
 
+
 @Service
-public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService {
+public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsService {
 
 	@Autowired
 	private AssetsDao assetsDao;
@@ -102,7 +107,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			item.setSerial(data.getItem().getSerial());
 			item.setPrice(data.getItem().getPrice());
 			item.setItemType(type);
-			item.setCreatedBy("1");
+			item.setCreatedBy(getIdAuth());
 			item.setIsActive(true);
 			begin();
 			item = itemsDao.saveOrUpdate(item);
@@ -122,13 +127,13 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 				Files newInvoicePict = new Files();
 				newInvoicePict.setDataFile(invoicePict.getBytes());
 				newInvoicePict.setExtention(extention);
-				newInvoicePict.setCreatedBy("1");
+				newInvoicePict.setCreatedBy(getIdAuth());
 				newInvoicePict.setIsActive(true);
 				newInvoicePict = filesDao.saveOrUpdate(newInvoicePict);
 
 				invoice.setInvoicePict(newInvoicePict);
 				invoice.setIsActive(true);
-				invoice.setCreatedBy("1");
+				invoice.setCreatedBy(getIdAuth());
 				invoice = invoicesDao.saveOrUpdate(invoice);
 			}
 			asset.setInvoice(invoice);
@@ -136,7 +141,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
 			asset.setStatusAsset(status);
 
-			asset.setCreatedBy("1");
+			asset.setCreatedBy(getIdAuth());
 			asset.setExpiredDate(data.getExpiredDate());
 
 			
@@ -145,7 +150,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			Files newDisplay = new Files();
 			newDisplay.setDataFile(display.getBytes());
 			newDisplay.setExtention(extention);
-			newDisplay.setCreatedBy("1");
+			newDisplay.setCreatedBy(getIdAuth());
 			newDisplay.setIsActive(true);
 
 			newDisplay = filesDao.saveOrUpdate(newDisplay);
@@ -159,7 +164,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
-			track.setCreatedBy("1");
+			track.setCreatedBy(getIdAuth());
 			track.setIsActive(track.getIsActive());
 			
 			trackActivityDao.saveOrUpdate(track);
@@ -171,7 +176,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 
 			return result;
 		} catch (Exception e) {
@@ -183,17 +188,23 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 	}
 
 	@Override
-	public UpdateResDto update(Assets data) throws Exception {
+	public UpdateResDto update(Assets data, MultipartFile display) throws Exception {
 		try {
 			begin();
+			String extention = display.getOriginalFilename();
+			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+			Files newDisplay = new Files();
+			newDisplay.setDataFile(display.getBytes());
+			newDisplay.setExtention(extention);
+			newDisplay.setCreatedBy(getIdAuth());
+			newDisplay.setIsActive(true);
+
+			newDisplay = filesDao.saveOrUpdate(newDisplay);
+			data.setUpdatedBy(getIdAuth());
+			data.setDisplay(newDisplay);
 			Assets asset = assetsDao.saveOrUpdate(data);
 			
-			/*
-			 * code,
-			 * nama asset (asset.item.getDesx)
-			 * status (asset.getStatus.getName)
-			 * activity (enumActivity.updateasset)
-			 */
+		
 			TrackActivity track = new TrackActivity();
 			track.setCode(asset.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
@@ -207,7 +218,7 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -223,9 +234,9 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			DeleteResDataDto result = new DeleteResDataDto();
 			begin();
 			if (!assetsDao.removeById(id)) {
-				result.setMsg("");
+				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			commit();
 			return result;
 		} catch (Exception e) {
@@ -270,15 +281,49 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 
 	@Override
 	public InsertResDto insertFromExcel(MultipartFile data) throws Exception {
+		InsertResDto result = new InsertResDto();
+		InsertResDataDto resData = new InsertResDataDto();
 		excelUtil.init("Sheet1", data.getInputStream());
-		for(int i = 0; i< excelUtil.getRowCountInSheet(); i++) {
-			for (int j = 0; j<excelUtil.getColCountInRow(i); j++) {
-				System.out.print(excelUtil.getCellData(i, j)+ " - ");
-				
+		for(int i = 1; i< excelUtil.getRowCountInSheet(); i++) {
+			Assets asset = new Assets();
+			asset.setCode(excelUtil.getCellData(i, 0));
+			Items item = new Items();
+			item.setDescription(excelUtil.getCellData(i, 1));
+			item.setBrand(excelUtil.getCellData(i, 2));
+			item.setSerial(excelUtil.getCellData(i, 3));
+			List<ItemTypes> type = new ArrayList<ItemTypes>();
+			String codeType = excelUtil.getCellData(i, 4);
+			type = typeDao.findAllFilterByCode(codeType);
+			item.setItemType(type.get(0));
+			item.setPrice(new BigDecimal(excelUtil.getCellData(i, 5)));
+			item.setCreatedBy(getIdAuth());
+			begin();
+			item = itemsDao.saveOrUpdate(item);
+			asset.setItem(item);
+			
+			List<Companies> company = companiesDao.findAllFilterByCode(excelUtil.getCellData(i, 6));
+			asset.setCompany(company.get(0));
+			if(excelUtil.getCellData(i, 7) != null) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				LocalDate date = LocalDate.parse(excelUtil.getCellData(i, 7), formatter);
+				asset.setExpiredDate(date);
 			}
-			System.out.println();
+			String invoiceCode = excelUtil.getCellData(i, 8);
+			List<Invoices> invoice = new ArrayList<Invoices>();
+			invoice = invoicesDao.findAllFilterByCode(invoiceCode);
+			asset.setInvoice(invoice.get(0));
+			List<StatusAssets> status = statusAssetsDao.findAllFilterByCode(excelUtil.getCellData(i, 9));
+			asset.setStatusAsset(status.get(0));
+			asset.setCreatedBy(getIdAuth());
+			asset = assetsDao.saveOrUpdate(asset);
+			resData.setId(asset.getId());
+			commit();
 		}
-		return null;
+		if(resData != null) {
+			result.setData(resData);
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
+		}
+		return result;
 	}
 
 }

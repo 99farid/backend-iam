@@ -19,9 +19,9 @@ public interface ProfileUsersService {
 	
 	FindByResUserIdDto findByUser(String userId) throws Exception;
 	
-	InsertResDto insert(InsertReqDataProfileUsersDto data, MultipartFile file) throws Exception;
+	InsertResDto insert(InsertReqDataProfileUsersDto data, MultipartFile profilePict) throws Exception;
 	
-	UpdateResDto update(ProfileUsers data)throws Exception;
+	UpdateResDto update(ProfileUsers data, MultipartFile profilePict)throws Exception;
 	
 	DeleteResDataDto removeById(String id) throws Exception;
 }
