@@ -120,6 +120,8 @@ public class ProfileUsersServiceImpl extends BaseIamServiceImpl implements Profi
 			fileInsert.setDataFile(file.getBytes());
 			fileInsert.setExtention(extention);
 			fileInsert.setCreatedBy(getIdAuth());
+			fileInsert = filesDao.saveOrUpdate(fileInsert);
+			
 			data.setProfilePict(fileInsert);
 			ProfileUsers profileUsersUpdate = profileUsersDao.saveOrUpdate(data);
 			commit();

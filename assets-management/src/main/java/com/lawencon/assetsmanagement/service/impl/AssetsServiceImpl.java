@@ -211,12 +211,14 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			data.setDisplay(newDisplay);
 			Assets asset = assetsDao.saveOrUpdate(data);
 			
-		
 			TrackActivity track = new TrackActivity();
-			track.setCode(asset.getItem().getDescription());
+			track.setCode("generate-code");
+			track.setNameAsset(asset.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.UPDATE_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
+			track.setCreatedBy(getIdAuth());
+			track.setUpdatedBy(getIdAuth());
 			
 			trackActivityDao.saveOrUpdate(track);
 			commit();
