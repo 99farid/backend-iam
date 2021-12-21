@@ -61,14 +61,8 @@ public class ProfileUserController extends BaseIamController{
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update(@RequestPart String data, MultipartFile file) throws Exception {
-		UpdateResDto profileUsers = profileUsersService.update(new ObjectMapper().readValue(data, ProfileUsers.class), file);
-//		UpdateResDataDto ver = new UpdateResDataDto();
-//		ver.setVersion(user.getVersion());
-//		
-//		UpdateResDto result = new UpdateResDto();
-//		result.setData(ver);
-//		result.setMsg(MessageEnum.UPDATED.getMsg());
+	public ResponseEntity<?> update(@RequestPart String data, @RequestPart(required = false) MultipartFile file) throws Exception {
+		UpdateResDto profileUsers = profileUsersService.update(convertToModel(data, ProfileUsers.class), file);
 		
 		return new ResponseEntity<>(profileUsers, HttpStatus.OK);
 	}
