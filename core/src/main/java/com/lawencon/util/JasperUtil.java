@@ -28,11 +28,12 @@ public class JasperUtil {
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(datas);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasper, mapParams, ds);
 			JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+			
+			return out.toByteArray();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		return out.toByteArray();
 	}
 
 }
