@@ -88,7 +88,7 @@ public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService
 			String newPass = generatePassword();
 			String encodePass = bCryptEncoder.encode(newPass);
 			data.setPass(encodePass);
-			data.setCreatedBy(getIdAuth());
+			data.setCreatedBy("1");
 			begin();
 			Users usersSave = usersDao.saveOrUpdate(data);
 			commit();

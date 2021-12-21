@@ -36,7 +36,7 @@ public class TransactionsInDaoImpl extends BaseDaoImpl<TransactionsIn> implement
 		String sql = "SElECT count(id) FROM transactions_in";
 		Object result = createNativeQuery(sql).getSingleResult();
 				
-		return (Integer) result;
+		return Integer.valueOf(result.toString());
 	}
 
 	@Override
@@ -76,7 +76,4 @@ public class TransactionsInDaoImpl extends BaseDaoImpl<TransactionsIn> implement
 		
 		return resultTransactionIn;
 	}
-	
-	
-	
 }

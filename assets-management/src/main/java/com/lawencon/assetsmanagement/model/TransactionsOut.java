@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,13 +13,8 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "transactions_out")
 public class TransactionsOut extends BaseEntity {
-	
-	
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6377906156681298363L;
+	private static final long serialVersionUID = -8709568140469885377L;
 
 	@Column(length = 32, unique = true, nullable = false)
 	private String code;
@@ -33,6 +30,9 @@ public class TransactionsOut extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "id_general_item", nullable = true)
 	private Assets generalItem;
+	
+	@Column(name = "check_out_date", nullable = false)
+	private LocalDate checkOutDate;
 
 	public String getCode() {
 		return code;
@@ -64,5 +64,13 @@ public class TransactionsOut extends BaseEntity {
 
 	public void setGeneralItem(Assets generalItem) {
 		this.generalItem = generalItem;
+	}
+
+	public LocalDate getCheckOutDate() {
+		return checkOutDate;
+	}
+
+	public void setCheckOutDate(LocalDate checkOutDate) {
+		this.checkOutDate = checkOutDate;
 	}
 }

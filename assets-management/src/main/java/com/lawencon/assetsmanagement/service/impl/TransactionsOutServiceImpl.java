@@ -7,11 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.HeaderCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dao.LocationsDao;
+import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -27,6 +29,7 @@ import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Locations;
+import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsOutService;
 
@@ -44,6 +47,9 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 
 	@Autowired
 	private AssetsDao assetsDao;
+	
+	@Autowired
+	private StatusAssetsDao statusAssetsDao;
 
 	@Autowired
 	private DetailTransactionsOutDao detailTransactionsOutDao;
@@ -116,6 +122,9 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				transactionsOut.setGeneralItem(generalItem);
 			}
 
+			DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			LocalDate checkOutDate = LocalDate.parse(data.getCheckOutDate(), dateTimeFormat);
+			transactionsOut.setCheckOutDate(checkOutDate);
 			transactionsOut.setCreatedBy(getIdAuth());
 			transactionsOut.setIsActive(data.getIsActive());
 
@@ -123,20 +132,25 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 			TransactionsOut transactionsOutSave = transactionsOutDao.saveOrUpdate(transactionsOut);
 			for (InsertReqDataDetailTransactionsOutDto detailTransactionsOutId : data.getDataDetail()) {
 				DetailTransactionsOut detailTransactionsOut = new DetailTransactionsOut();
+				detailTransactionsOut.setTransactionOut(transactionsOutSave);
 				
 				Assets assets = new Assets();
 				assets.setId(detailTransactionsOutId.getIdAsset());
 				detailTransactionsOut.setAsset(assets);
 				
-				DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				LocalDate checkOutDate = LocalDate.parse(detailTransactionsOutId.getCheckOutDate(), dateTimeFormat);
-				detailTransactionsOut.setCheckOutDate(checkOutDate);
-				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
+				DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dtFormatter);
+				detailTransactionsOut.setDueDate(dueDate);
 				detailTransactionsOut.setCreatedBy(getIdAuth());
+				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
-				//findByIdAsset(id)
-				//asset.setStatus(statusDao.getStatusOnAssign())
-				//assetDao.saveOrUpdate();
+				
+				Assets updateAsset = assetsDao.findById(assets.getId());
+				
+				StatusAssets statusAsset = statusAssetsDao.findOnAssignStatus();
+				
+				updateAsset.setStatusAsset(statusAsset);
+				updateAsset = assetsDao.saveOrUpdate(updateAsset);
 			}
 
 			commit();
@@ -154,8 +168,8 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 		}
 	}
 
-	private String generateCode() {
-		return null;
+	private String generateCode() throws Exception{
+		return HeaderCode.TRANSACTIONOUT.getCode() + (transactionsOutDao.countData() + 1);
 	}
 
 	@Override

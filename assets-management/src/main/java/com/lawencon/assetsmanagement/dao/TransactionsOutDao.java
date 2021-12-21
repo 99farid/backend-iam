@@ -20,4 +20,6 @@ public interface TransactionsOutDao {
 	
 	List<TransactionsOut> findAllForPdf() throws Exception;
 	
+	Integer countData() throws Exception;
+	
 }

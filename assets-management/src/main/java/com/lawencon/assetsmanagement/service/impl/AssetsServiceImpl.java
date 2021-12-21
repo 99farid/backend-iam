@@ -2,6 +2,7 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -263,12 +264,13 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			
 			Assets asset = assetsDao.saveOrUpdate(data);
 			
-		
 			TrackActivity track = new TrackActivity();
-			track.setCode(asset.getItem().getDescription());
+			track.setCode("generate-code");
+			track.setNameAsset(asset.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.UPDATE_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
+			track.setCreatedBy(getIdAuth());
 			
 			trackActivityDao.saveOrUpdate(track);
 			commit();

@@ -3,12 +3,16 @@ package com.lawencon.assetsmanagement.dto.transactionsin;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class InsertReqDataHeaderTransactionsInDto {
 	
 	private String idTransactionOut;
-	private LocalDate checkInDate;
-	private List<InsertReqDataDetailTransactionsInDto> detailData;
 	
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private LocalDate checkInDate;
+	
+	private List<InsertReqDataDetailTransactionsInDto> detailData;
 	
 	public List<InsertReqDataDetailTransactionsInDto> getDetailData() {
 		return detailData;

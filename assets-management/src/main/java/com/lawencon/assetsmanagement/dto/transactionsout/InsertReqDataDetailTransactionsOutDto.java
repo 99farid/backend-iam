@@ -4,7 +4,7 @@ public class InsertReqDataDetailTransactionsOutDto {
 	
 	private String idAsset;
 	
-	private String checkOutDate;
+	private String dueDate;
 	
 	private Boolean isActive;
 
@@ -16,12 +16,12 @@ public class InsertReqDataDetailTransactionsOutDto {
 		this.idAsset = idAsset;
 	}
 
-	public String getCheckOutDate() {
-		return checkOutDate;
+	public String getDueDate() {
+		return dueDate;
 	}
 
-	public void setCheckOutDate(String checkOutDate) {
-		this.checkOutDate = checkOutDate;
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	public Boolean getIsActive() {

@@ -21,6 +21,7 @@ import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataHeaderTrans
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsIn;
+import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TransactionsIn;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsInService;
@@ -73,9 +74,9 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 			header.setCode(generateCode());
 			header.setCreatedBy(getIdAuth());
 			header.setIsActive(true);
+			
 			begin();
 			header = transactionsInDao.saveOrUpdate(header);
-			
 			for (InsertReqDataDetailTransactionsInDto detailInsert : data.getDetailData()) {
 				DetailTransactionsIn detail = new DetailTransactionsIn();
 				Assets asset = new Assets();
@@ -90,15 +91,16 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 				detail.setIsActive(true);
 				detail.setTransactionIn(header);
 				detail = detailDao.saveOrUpdate(detail);
-				//update status asset
 				
 				Assets updateAssets = assetsDao.findById(detailInsert.getIdAsset());
 				ConditionAssets newCondition = conditonDao.findById(detailInsert.getIdConditionAsset());
-				updateAssets.setStatusAsset(statusDao.findById(newCondition.getStatusAsset().getId()));
-				updateAssets.setUpdatedBy(getIdAuth());				
+				StatusAssets newStatus = statusDao.findById(newCondition.getStatusAsset().getId());
+				updateAssets.setStatusAsset(newStatus);
+				updateAssets.setUpdatedBy(getIdAuth());	
 				updateAssets = assetsDao.saveOrUpdate(updateAssets);
 			}
 			commit();
+			
 			InsertResDataDto dataResult = new InsertResDataDto();
 			dataResult.setId(header.getId());
 			
@@ -112,8 +114,6 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 			rollback();
 			throw new Exception(e);
 		}
-			
-		
 	}
 	
 	private String generateCode() throws Exception{
@@ -128,6 +128,4 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 		
 		return result;
 	}
-
-	
 }

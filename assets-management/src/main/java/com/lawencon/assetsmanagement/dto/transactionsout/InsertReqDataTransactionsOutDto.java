@@ -10,6 +10,8 @@ public class InsertReqDataTransactionsOutDto {
 	
 	private String idGeneralItem;
 	
+	private String checkOutDate;
+	
 	private List<InsertReqDataDetailTransactionsOutDto> dataDetail;
 
 	private Boolean isActive;
@@ -36,6 +38,14 @@ public class InsertReqDataTransactionsOutDto {
 
 	public void setIdGeneralItem(String idGeneralItem) {
 		this.idGeneralItem = idGeneralItem;
+	}
+
+	public String getCheckOutDate() {
+		return checkOutDate;
+	}
+
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
 	}
 
 	public List<InsertReqDataDetailTransactionsOutDto> getDataDetail() {
