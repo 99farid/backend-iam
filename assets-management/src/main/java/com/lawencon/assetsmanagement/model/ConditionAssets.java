@@ -12,7 +12,7 @@ public class ConditionAssets extends BaseEntity{
 	
 	private static final long serialVersionUID = 8802233957966662402L;
 
-	@Column(length = 12, unique = true, nullable = false)
+	@Column(length = 32, unique = true, nullable = false)
 	private String code;
 	
 	@ManyToOne

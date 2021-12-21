@@ -14,7 +14,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "transactions_in")
 public class TransactionsIn extends BaseEntity{
 	
-	private static final long serialVersionUID = 8134524064915827681L;
+	private static final long serialVersionUID = -3782658003583979184L;
 
 	@Column(length = 32, unique = true, nullable = false)
 	private String code;
@@ -25,7 +25,7 @@ public class TransactionsIn extends BaseEntity{
 	
 	@Column(nullable = false)
 	private LocalDate checkInDate;
-	
+
 	public String getCode() {
 		return code;
 	}
@@ -49,6 +49,7 @@ public class TransactionsIn extends BaseEntity{
 	public void setCheckInDate(LocalDate checkInDate) {
 		this.checkInDate = checkInDate;
 	}
+	
 
 	
 }
