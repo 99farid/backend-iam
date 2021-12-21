@@ -93,6 +93,12 @@ public class AssetsController {
 		CountAssetByStatusResAssetsDto result =   assetsService.countAssetByStatus(code);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+//	public ResponseEntity<?> update(@RequestPart String data, MultipartFile file) throws Exception {
+//		UpdateResDto profileUsers = assetsService.update(new ObjectMapper().readValue(data, ProfileUsers.class), file);
+//		
+//		return new ResponseEntity<>(profileUsers, HttpStatus.OK);
+//	}
 
 	@GetMapping(value = "pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getPic(@PathVariable("id") String id) throws Exception {

@@ -1,5 +1,10 @@
 eclipse.preferences.version=1
-encoding//src/main/resources/reports/asset-history.jrxml=UTF-8
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/resources/reports/asset-expired.jrxml=UTF-8
+encoding//src/main/resources/reports/track-activity.jrxml=UTF-8
+encoding//src/main/resources/reports/transactions-in.jrxml=UTF-8
+encoding//src/main/resources/reports/transactions-out.jrxml=UTF-8
 encoding//src/test/java=UTF-8
 encoding//src/test/resources=UTF-8
 encoding/<project>=UTF-8
