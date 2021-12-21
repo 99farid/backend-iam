@@ -219,4 +219,14 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		
 		return resultTransactionOut;
 	}
+
+	@Override
+	public Integer countData() throws Exception {
+		String sql = "SELECT count(id) FROM transactions_out";
+		Object result = createNativeQuery(sql).getSingleResult();
+				
+		return Integer.valueOf(result.toString());
+	}
+	
+	
 }

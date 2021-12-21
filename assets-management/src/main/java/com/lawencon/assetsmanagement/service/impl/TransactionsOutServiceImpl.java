@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.HeaderCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
@@ -121,6 +122,9 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				transactionsOut.setGeneralItem(generalItem);
 			}
 
+			DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			LocalDate checkOutDate = LocalDate.parse(data.getCheckOutDate(), dateTimeFormat);
+			transactionsOut.setCheckOutDate(checkOutDate);
 			transactionsOut.setCreatedBy(getIdAuth());
 			transactionsOut.setIsActive(data.getIsActive());
 
@@ -128,16 +132,17 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 			TransactionsOut transactionsOutSave = transactionsOutDao.saveOrUpdate(transactionsOut);
 			for (InsertReqDataDetailTransactionsOutDto detailTransactionsOutId : data.getDataDetail()) {
 				DetailTransactionsOut detailTransactionsOut = new DetailTransactionsOut();
+				detailTransactionsOut.setTransactionOut(transactionsOutSave);
 				
 				Assets assets = new Assets();
 				assets.setId(detailTransactionsOutId.getIdAsset());
 				detailTransactionsOut.setAsset(assets);
 				
-				DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dateTimeFormat);
+				DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dtFormatter);
 				detailTransactionsOut.setDueDate(dueDate);
-				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
 				detailTransactionsOut.setCreatedBy(getIdAuth());
+				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
 				
 				Assets updateAsset = assetsDao.findById(assets.getId());
@@ -163,8 +168,8 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 		}
 	}
 
-	private String generateCode() {
-		return null;
+	private String generateCode() throws Exception{
+		return HeaderCode.TRANSACTIONOUT.getCode() + (transactionsOutDao.countData() + 1);
 	}
 
 	@Override
