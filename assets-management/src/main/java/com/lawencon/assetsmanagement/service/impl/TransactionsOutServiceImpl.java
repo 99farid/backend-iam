@@ -2,7 +2,6 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dao.LocationsDao;
+import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -27,6 +27,7 @@ import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Locations;
+import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsOutService;
 import com.lawencon.base.BaseServiceImpl;
@@ -45,6 +46,9 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 
 	@Autowired
 	private AssetsDao assetsDao;
+	
+	@Autowired
+	private StatusAssetsDao statusAssetsDao;
 
 	@Autowired
 	private DetailTransactionsOutDao detailTransactionsOutDao;
@@ -130,14 +134,18 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 				detailTransactionsOut.setAsset(assets);
 				
 				DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				LocalDate checkOutDate = LocalDate.parse(detailTransactionsOutId.getCheckOutDate(), dateTimeFormat);
-				detailTransactionsOut.setCheckOutDate(checkOutDate);
+				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dateTimeFormat);
+				detailTransactionsOut.setDueDate(dueDate);
 				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
 			
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
-				//findByIdAsset(id)
-				//asset.setStatus(statusDao.getStatusOnAssign())
-				//assetDao.saveOrUpdate();
+				
+				Assets updateAsset = assetsDao.findById(assets.getId());
+				
+				StatusAssets statusAsset = statusAssetsDao.findOnAssignStatus();
+				
+				updateAsset.setStatusAsset(statusAsset);
+				updateAsset = assetsDao.saveOrUpdate(updateAsset);
 			}
 
 			commit();
