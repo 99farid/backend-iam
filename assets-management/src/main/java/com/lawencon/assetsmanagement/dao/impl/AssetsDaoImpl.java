@@ -1,7 +1,5 @@
 package com.lawencon.assetsmanagement.dao.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -9,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.assetsmanagement.constant.StatusCode;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.model.Assets;
-import com.lawencon.assetsmanagement.model.Employees;
-import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.base.BaseDaoImpl;
 
 @Repository

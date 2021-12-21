@@ -1,6 +1,5 @@
 package com.lawencon.assetsmanagement.dao.impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -77,7 +76,4 @@ public class TransactionsInDaoImpl extends BaseDaoImpl<TransactionsIn> implement
 		
 		return resultTransactionIn;
 	}
-	
-	
-	
 }
