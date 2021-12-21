@@ -22,5 +22,7 @@ public interface UsersService extends UserDetailsService{
 	
 	UpdateResDto update(Users data) throws Exception;
 	
+	UpdateResDto updatePassword(String data) throws Exception;
+	
 	DeleteResDataDto removeById(String id) throws Exception;
 }

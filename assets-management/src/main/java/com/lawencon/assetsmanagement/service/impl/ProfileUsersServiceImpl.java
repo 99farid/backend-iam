@@ -113,14 +113,17 @@ public class ProfileUsersServiceImpl extends BaseIamServiceImpl implements Profi
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
 			data.setUpdatedBy(getIdAuth());
 			begin();
-			String extention = file.getOriginalFilename();
-			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+			if(file != null) {
+				String extention = file.getOriginalFilename();
+				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+				
+				Files fileInsert = new Files();
+				fileInsert.setDataFile(file.getBytes());
+				fileInsert.setExtention(extention);
+				fileInsert.setCreatedBy(getIdAuth());
+				data.setProfilePict(fileInsert);
+			}
 			
-			Files fileInsert = new Files();
-			fileInsert.setDataFile(file.getBytes());
-			fileInsert.setExtention(extention);
-			fileInsert.setCreatedBy(getIdAuth());
-			data.setProfilePict(fileInsert);
 			ProfileUsers profileUsersUpdate = profileUsersDao.saveOrUpdate(data);
 			commit();
 			

@@ -33,6 +33,7 @@ import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
+import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.model.Files;
@@ -90,10 +91,48 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		result.setMsg(null);
 		return result;
 	}
+	private void validationsInsert(InsertReqDataAssetsDto data) throws Exception{
+		
+		if(data.getIdCompany() == null) {
+			throw new ValidationIamException("Company not found");
+		}else {
+			Companies company = companiesDao.findById(data.getIdCompany());
+			if(company == null) {
+				throw new ValidationIamException("Company not found");
+			}
+		}
+		
+		if(data.getIdStatusAsset() == null) {
+			throw new ValidationIamException("Status Asset not found");
+		}else {
+			StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
+			if(status == null) {
+				throw new ValidationIamException("Status Asset not found");
+			}
+		}
+		if(data.getItem() == null) {
+			throw new ValidationIamException("Item not found");
+		}else {
+			if(data.getItem().getIdItemType() == null) {
+				throw new ValidationIamException("Item Type not found");
+			}else {
+				ItemTypes type = typeDao.findById(data.getItem().getIdItemType());
+				if(type == null) {
+					throw new ValidationIamException("Item Type not found");
+				}
+			}
+			if(data.getItem().getBrand() == null || data.getItem().getDescription() == null 
+					|| data.getItem().getPrice() == null || data.getItem().getSerial() == null) {
+				throw new ValidationIamException("Item not found");
+			}
+		}		
+	}
 
 	@Override
 	public InsertResDto insert(InsertReqDataAssetsDto data, MultipartFile display, MultipartFile invoicePict) throws Exception {
 		try {
+			validationsInsert(data);
+			
 			Assets asset = new Assets();
 			asset.setCode(data.getCode());
 
@@ -192,22 +231,36 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		}
 		
 	}
-
+	private void validationUpdate(Assets data) throws Exception {
+		if(data.getId() == null) {
+			throw new ValidationIamException("Assets not found");
+		}else {
+			Assets asset = assetsDao.findById(data.getId());
+			if(asset == null) {
+				throw new ValidationIamException("Assets not found");
+			}
+		}
+	}
 	@Override
 	public UpdateResDto update(Assets data, MultipartFile display) throws Exception {
 		try {
+			validationUpdate(data);
 			begin();
-			String extention = display.getOriginalFilename();
-			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
-			Files newDisplay = new Files();
-			newDisplay.setDataFile(display.getBytes());
-			newDisplay.setExtention(extention);
-			newDisplay.setCreatedBy(getIdAuth());
-			newDisplay.setIsActive(true);
+			if(display != null) {
+				String extention = display.getOriginalFilename();
+				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+				Files newDisplay = new Files();
+				newDisplay.setDataFile(display.getBytes());
+				newDisplay.setExtention(extention);
+				newDisplay.setCreatedBy(getIdAuth());
+				newDisplay.setIsActive(true);
 
-			newDisplay = filesDao.saveOrUpdate(newDisplay);
+				newDisplay = filesDao.saveOrUpdate(newDisplay);
+				data.setDisplay(newDisplay);
+			}
+			
 			data.setUpdatedBy(getIdAuth());
-			data.setDisplay(newDisplay);
+			
 			Assets asset = assetsDao.saveOrUpdate(data);
 			
 		
