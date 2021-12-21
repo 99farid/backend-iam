@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -13,10 +14,9 @@ import com.lawencon.assetsmanagement.dto.locations.FindAllResLocationsDto;
 import com.lawencon.assetsmanagement.dto.locations.FindByIdResLocationsDto;
 import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.service.LocationsService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class LocationsServiceImpl extends BaseServiceImpl implements LocationsService{
+public class LocationsServiceImpl extends BaseIamServiceImpl implements LocationsService{
 
 	@Autowired
 	LocationsDao locationsDao;
@@ -40,6 +40,7 @@ public class LocationsServiceImpl extends BaseServiceImpl implements LocationsSe
 	@Override
 	public InsertResDto insert(Locations data) throws Exception {
 		try {
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Locations location = locationsDao.saveOrUpdate(data);
 			commit();
@@ -49,7 +50,7 @@ public class LocationsServiceImpl extends BaseServiceImpl implements LocationsSe
 			
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,6 +63,7 @@ public class LocationsServiceImpl extends BaseServiceImpl implements LocationsSe
 	@Override
 	public UpdateResDto update(Locations data) throws Exception {
 		try {
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Locations location = locationsDao.saveOrUpdate(data);
 			commit();
@@ -71,7 +73,7 @@ public class LocationsServiceImpl extends BaseServiceImpl implements LocationsSe
 			
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,10 +89,10 @@ public class LocationsServiceImpl extends BaseServiceImpl implements LocationsSe
 			DeleteResDataDto result = new DeleteResDataDto();
 			begin();
 			if (!locationsDao.removeById(id)) {
-				result.setMsg("");
+				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			commit();
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

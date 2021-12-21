@@ -22,7 +22,7 @@ import com.lawencon.assetsmanagement.service.ItemTypesService;
 
 @RestController
 @RequestMapping("item-types")
-public class ItemTypesController {
+public class ItemTypesController extends BaseIamController{
 	@Autowired
 	private ItemTypesService typeService;
 	

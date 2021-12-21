@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.RolePermissionsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResRolePermissionsDto;
@@ -52,9 +53,9 @@ public class RolePermissionsServiceImpl extends BaseServiceImpl implements RoleP
 			commit();
 			
 			if (resultDelete) {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			} else {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			
 			return deleteResDataDto;

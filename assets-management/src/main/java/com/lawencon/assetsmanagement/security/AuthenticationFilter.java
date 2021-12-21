@@ -1,4 +1,4 @@
-package com.lawencon.assetsmanagement.sercurity;
+package com.lawencon.assetsmanagement.security;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.assetsmanagement.dto.LoginReqDto;
 import com.lawencon.assetsmanagement.dto.LoginResDto;
 import com.lawencon.assetsmanagement.model.Users;
-import com.lawencon.assetsmanagement.sercurity.jwt.JwtComponent;
+import com.lawencon.assetsmanagement.security.jwt.JwtComponent;
 import com.lawencon.assetsmanagement.service.UsersService;
 
 import io.jsonwebtoken.io.IOException;

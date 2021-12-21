@@ -32,5 +32,18 @@ public class InvoicesDaoImpl extends BaseDaoImpl<Invoices> implements InvoicesDa
 		return deleteById(id);
 	}
 
+	@Override
+	public List<Invoices> findAllFilterByCode(String code) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append("SELECT i ");
+		queryBuilder.append("FROM Invoices i ");
+		queryBuilder.append("WHERE i.code LIKE :code");
+		
+		String sql = queryBuilder.toString();
+		
+		return createQuery(sql, Invoices.class).setParameter("code", code).getResultList();
+	}
+	
+
 	
 }

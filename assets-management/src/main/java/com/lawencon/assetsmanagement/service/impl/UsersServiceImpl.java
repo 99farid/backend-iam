@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -18,12 +19,12 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.users.FindAllResUsersDto;
 import com.lawencon.assetsmanagement.dto.users.FindByIdResUsersDto;
 import com.lawencon.assetsmanagement.dto.users.FindByResEmailDto;
+import com.lawencon.assetsmanagement.email.EmailHandler;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.UsersService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
+public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService {
 
 	@Autowired
 	private UsersDao usersDao;
@@ -31,11 +32,12 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptEncoder;
 	
+	@Autowired
+	private EmailHandler emailHandler;
 	public FindAllResUsersDto findAll() throws Exception {
 		FindAllResUsersDto result = new FindAllResUsersDto();
 		result.setData(usersDao.findAll());
 		result.setMsg(null);
-		
 		return result;
 	}
 	
@@ -55,20 +57,30 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 		
 		return result;
 	}
+	private String generatePassword() {
+		int upperBound = 99999;
+		int lowerBound = 10000;
+		int number = lowerBound + (int)(Math.random() * ((upperBound - lowerBound) + 1));
+		return String.valueOf(number);
+	}
 	
 	@Override
 	public InsertResDto insert(Users data) throws Exception {
 		try {
 			InsertResDto insertResDto = new InsertResDto();
 			InsertResDataDto insertResDataDto = new InsertResDataDto();
-			data.setPass(bCryptEncoder.encode(data.getPass()));
+			String newPass = generatePassword();
+			String encodePass = bCryptEncoder.encode(newPass);
+			data.setPass(encodePass);
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Users usersSave = usersDao.saveOrUpdate(data);
 			commit();
-			
+
+			emailHandler.sendSimpleMessage(data.getEmail(), "Your new password", newPass);
 			insertResDataDto.setId(usersSave.getId());
 			insertResDto.setData(insertResDataDto);
-			insertResDto.setMsg("....");
+			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return insertResDto;
 			
@@ -84,14 +96,14 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 		try {
 			UpdateResDto updateResDto = new UpdateResDto();
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
-			
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Users usersUpdate = usersDao.saveOrUpdate(data);
 			commit();
 			
 			updateResDataDto.setVersion(usersUpdate.getVersion());
 			updateResDto.setData(updateResDataDto);
-			updateResDto.setMsg(".....");
+			updateResDto.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			
 			return updateResDto;
 			
@@ -112,9 +124,9 @@ public class UsersServiceImpl extends BaseServiceImpl implements UsersService {
 			commit();
 			
 			if (resultDelete) {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			} else {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 
 			return deleteResDataDto;

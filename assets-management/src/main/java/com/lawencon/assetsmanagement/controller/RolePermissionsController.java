@@ -16,7 +16,7 @@ import com.lawencon.assetsmanagement.service.RolePermissionsService;
 
 @RestController
 @RequestMapping("role-permissions")
-public class RolePermissionsController {
+public class RolePermissionsController extends BaseIamController{
 
 	@Autowired
 	private RolePermissionsService rolePermissionsService;

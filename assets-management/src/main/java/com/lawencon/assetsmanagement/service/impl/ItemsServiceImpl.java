@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.ItemsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -15,10 +16,9 @@ import com.lawencon.assetsmanagement.dto.items.FindAllResItemsDto;
 import com.lawencon.assetsmanagement.dto.items.FindByIdResItemsDto;
 import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.service.ItemsService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class ItemsServiceImpl extends BaseServiceImpl implements ItemsService {
+public class ItemsServiceImpl extends BaseIamServiceImpl implements ItemsService {
 
 	@Autowired
 	private ItemsDao itemsDao;
@@ -42,6 +42,7 @@ public class ItemsServiceImpl extends BaseServiceImpl implements ItemsService {
 	@Override
 	public InsertResDto insert(Items data) throws Exception {
 		try {
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Items item =  itemsDao.saveOrUpdate(data);
 			commit();
@@ -51,7 +52,7 @@ public class ItemsServiceImpl extends BaseServiceImpl implements ItemsService {
 			
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return result;
 		} catch (Exception e) {
@@ -65,6 +66,7 @@ public class ItemsServiceImpl extends BaseServiceImpl implements ItemsService {
 	@Override
 	public UpdateResDto update(Items data) throws Exception {
 		try {
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Items item =  itemsDao.saveOrUpdate(data);
 			commit();
@@ -74,7 +76,7 @@ public class ItemsServiceImpl extends BaseServiceImpl implements ItemsService {
 			
 			UpdateResDto result = new UpdateResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			
 			return result;
 		} catch (Exception e) {
@@ -91,10 +93,10 @@ public class ItemsServiceImpl extends BaseServiceImpl implements ItemsService {
 			DeleteResDataDto result = new DeleteResDataDto();
 			begin();
 			if (!itemsDao.removeById(id)) {
-				result.setMsg("");
+				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			commit();
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

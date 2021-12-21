@@ -23,7 +23,7 @@ public interface AssetsService {
 
 	InsertResDto insert(InsertReqDataAssetsDto data, MultipartFile display, MultipartFile invoicePict) throws Exception;
 
-	UpdateResDto update(Assets data) throws Exception;
+	UpdateResDto update(Assets data, MultipartFile display) throws Exception;
 
 	DeleteResDataDto removeById(String id) throws Exception;
 
@@ -34,6 +34,8 @@ public interface AssetsService {
 	FindAllFilterByTypeResAssetsDto findAllFilterByType(String typeCode) throws Exception;
 
 	FindAllFilterBySearchResAssetsDto findAllFilterBySearch(String input) throws Exception;
+	
+	InsertResDto insertFromExcel (MultipartFile data) throws Exception;
 	
 	FindAllForPdfAssetsExpiredDto findAllForPdf() throws Exception;
 

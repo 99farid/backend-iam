@@ -3,7 +3,6 @@ package com.lawencon.assetsmanagement.dao;
 import java.util.List;
 
 import com.lawencon.assetsmanagement.model.Assets;
-import com.lawencon.assetsmanagement.model.TransactionsOut;
 
 public interface AssetsDao {
 	

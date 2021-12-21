@@ -21,7 +21,7 @@ import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.service.LocationsService;
 @RestController
 @RequestMapping("locations")
-public class LocationsController {
+public class LocationsController extends BaseIamController{
 	@Autowired
 	private LocationsService locationsService;
 	

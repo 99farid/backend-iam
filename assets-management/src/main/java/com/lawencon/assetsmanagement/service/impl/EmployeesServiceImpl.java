@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -14,10 +15,9 @@ import com.lawencon.assetsmanagement.dto.employees.FindByIdResEmployeesDto;
 import com.lawencon.assetsmanagement.dto.employees.FindByResNipDto;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.service.EmployeesService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class EmployeesServiceImpl extends BaseServiceImpl implements EmployeesService {
+public class EmployeesServiceImpl extends BaseIamServiceImpl implements EmployeesService {
 
 	@Autowired
 	private EmployeesDao employeesDao;
@@ -53,14 +53,14 @@ public class EmployeesServiceImpl extends BaseServiceImpl implements EmployeesSe
 		try {
 			InsertResDto insertResDto = new InsertResDto();
 			InsertResDataDto insertResDataDto = new InsertResDataDto();
-
+			data.setCreatedBy(getIdAuth());
 			begin();
 			Employees employee = employeesDao.saveOrUpdate(data);
 			commit();
 			
 			insertResDataDto.setId(employee.getId());
 			insertResDto.setData(insertResDataDto);
-			insertResDto.setMsg("....");
+			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return insertResDto;
 			
@@ -76,14 +76,14 @@ public class EmployeesServiceImpl extends BaseServiceImpl implements EmployeesSe
 		try {
 			UpdateResDto updateResDto = new UpdateResDto();
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
-			
+			data.setUpdatedBy(getIdAuth());
 			begin();
 			Employees employeesUpdate = employeesDao.saveOrUpdate(data);
 			commit();
 			
 			updateResDataDto.setVersion(employeesUpdate.getVersion());
 			updateResDto.setData(updateResDataDto);
-			updateResDto.setMsg("....");
+			updateResDto.setMsg(ResponseMsg.SUCCESS_UPDATE.getMsg());
 			
 			return updateResDto;
 			
@@ -104,9 +104,9 @@ public class EmployeesServiceImpl extends BaseServiceImpl implements EmployeesSe
 			commit();
 			
 			if (resultDelete) {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			} else {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			
 			return deleteResDataDto;

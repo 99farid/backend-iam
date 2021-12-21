@@ -14,7 +14,7 @@ public class Items extends BaseEntity{
 	
 	private static final long serialVersionUID = 330696244128438788L;
 
-	@Column(length = 32, nullable = false)
+	@Column(name = "description", length = 32, nullable = false)
 	private String description;
 	
 	@ManyToOne

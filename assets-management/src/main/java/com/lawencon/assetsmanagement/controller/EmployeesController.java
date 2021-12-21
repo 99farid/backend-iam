@@ -24,7 +24,7 @@ import com.lawencon.assetsmanagement.service.EmployeesService;
 
 @RestController
 @RequestMapping("employees")
-public class EmployeesController {
+public class EmployeesController extends BaseIamController{
 
 	@Autowired
 	private EmployeesService employeesService;

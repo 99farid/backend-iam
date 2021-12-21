@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.dto;
 public class LoginReqDto {
 	private String email;
 	private String password;
+	
 	public String getEmail() {
 		return email;
 	}

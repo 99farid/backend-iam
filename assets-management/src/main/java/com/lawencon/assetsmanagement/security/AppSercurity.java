@@ -1,4 +1,4 @@
-package com.lawencon.assetsmanagement.sercurity;
+package com.lawencon.assetsmanagement.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawencon.assetsmanagement.sercurity.jwt.JwtComponent;
+import com.lawencon.assetsmanagement.security.jwt.JwtComponent;
 import com.lawencon.assetsmanagement.service.UsersService;
 
 @Profile("test")
@@ -45,8 +45,7 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 		.antMatchers(HttpMethod.POST, "/users/**","/profiles-users/**")
-		.antMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/assets/**", "/track-activities/**")
-		;
+		.antMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/assets/**", "/track-activities/**");
 		
 	}
 

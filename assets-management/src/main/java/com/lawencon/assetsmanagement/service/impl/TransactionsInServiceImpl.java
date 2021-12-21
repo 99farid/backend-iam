@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.constant.HeaderCode;
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsInDao;
@@ -23,10 +24,9 @@ import com.lawencon.assetsmanagement.model.DetailTransactionsIn;
 import com.lawencon.assetsmanagement.model.TransactionsIn;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsInService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class TransactionsInServiceImpl extends BaseServiceImpl implements TransactionsInService {
+public class TransactionsInServiceImpl extends BaseIamServiceImpl implements TransactionsInService {
 	
 	@Autowired
 	TransactionsInDao transactionsInDao;
@@ -71,7 +71,7 @@ public class TransactionsInServiceImpl extends BaseServiceImpl implements Transa
 			header.setTransactionOut(out);
 			header.setCheckInDate(data.getCheckInDate());
 			header.setCode(generateCode());
-			header.setCreatedBy("1");
+			header.setCreatedBy(getIdAuth());
 			header.setIsActive(true);
 			begin();
 			header = transactionsInDao.saveOrUpdate(header);
@@ -86,7 +86,7 @@ public class TransactionsInServiceImpl extends BaseServiceImpl implements Transa
 				
 				detail.setAsset(asset);
 				detail.setConditionAsset(conditon);
-				detail.setCreatedBy("1");
+				detail.setCreatedBy(getIdAuth());
 				detail.setIsActive(true);
 				detail.setTransactionIn(header);
 				detail = detailDao.saveOrUpdate(detail);
@@ -95,6 +95,7 @@ public class TransactionsInServiceImpl extends BaseServiceImpl implements Transa
 				Assets updateAssets = assetsDao.findById(detailInsert.getIdAsset());
 				ConditionAssets newCondition = conditonDao.findById(detailInsert.getIdConditionAsset());
 				updateAssets.setStatusAsset(statusDao.findById(newCondition.getStatusAsset().getId()));
+				updateAssets.setUpdatedBy(getIdAuth());				
 				updateAssets = assetsDao.saveOrUpdate(updateAssets);
 			}
 			commit();
@@ -103,7 +104,7 @@ public class TransactionsInServiceImpl extends BaseServiceImpl implements Transa
 			
 			InsertResDto result = new InsertResDto();
 			result.setData(dataResult);
-			result.setMsg("");
+			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return result;
 		}catch(Exception e) {

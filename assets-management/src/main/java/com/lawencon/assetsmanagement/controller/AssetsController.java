@@ -13,26 +13,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
-import com.lawencon.assetsmanagement.dto.trackactivity.FindAllResTrackActivityDto;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.service.AssetsService;
 import com.lawencon.util.JasperUtil;
@@ -41,7 +38,7 @@ import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @RequestMapping("assets")
-public class AssetsController {
+public class AssetsController extends BaseIamController{
 	
 	@Autowired
 	private AssetsService assetsService;
@@ -57,23 +54,22 @@ public class AssetsController {
 		FindByIdResAssetsDto result = assetsService.findById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	private <T> T convertToModel (String src, Class<T> clazz) throws Exception{
-		JavaTimeModule javaTimeModule = new JavaTimeModule();
-		return new ObjectMapper()
-				.registerModule(javaTimeModule)
-				.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-				.readValue(src, clazz);
-	}
+
 	
 	@PostMapping
 	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart MultipartFile display, @RequestPart MultipartFile invoicePict ) throws Exception{
 		InsertResDto result = assetsService.insert(convertToModel(data, InsertReqDataAssetsDto.class), display, invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
+	@PostMapping("excel")
+	public ResponseEntity<?> insertFromExcel(@RequestPart MultipartFile data ) throws Exception{
+		InsertResDto result = assetsService.insertFromExcel(data);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
+	}
 	
 	@PutMapping
-	public ResponseEntity<?> update (@RequestBody Assets data) throws Exception{
-		UpdateResDto result = assetsService.update(data);
+	public ResponseEntity<?> update (@RequestPart String data, @RequestPart MultipartFile display) throws Exception{
+		UpdateResDto result = assetsService.update(convertToModel(data, Assets.class), display);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
@@ -89,16 +85,23 @@ public class AssetsController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@GetMapping ("count-by-status")
-	public ResponseEntity<?> countAssetByStatus(@RequestParam String code) throws Exception{
+	public ResponseEntity<?> countAssetByStatus(@RequestParam("q") String code) throws Exception{
 		CountAssetByStatusResAssetsDto result =   assetsService.countAssetByStatus(code);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-//	public ResponseEntity<?> update(@RequestPart String data, MultipartFile file) throws Exception {
-//		UpdateResDto profileUsers = assetsService.update(new ObjectMapper().readValue(data, ProfileUsers.class), file);
-//		
-//		return new ResponseEntity<>(profileUsers, HttpStatus.OK);
-//	}
+	@GetMapping ("type")
+	public ResponseEntity<?> findAllFilterByType(@RequestParam("q") String typeCode) throws Exception{
+		FindAllFilterByTypeResAssetsDto result =   assetsService.findAllFilterByType(typeCode);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping ("search")
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("q") String input) throws Exception{
+		FindAllFilterBySearchResAssetsDto result =   assetsService.findAllFilterBySearch(input);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 	@GetMapping(value = "pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getPic(@PathVariable("id") String id) throws Exception {

@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.RolePermissionsDao;
 import com.lawencon.assetsmanagement.dao.RolesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
@@ -18,10 +19,9 @@ import com.lawencon.assetsmanagement.model.Permissions;
 import com.lawencon.assetsmanagement.model.RolePermissions;
 import com.lawencon.assetsmanagement.model.Roles;
 import com.lawencon.assetsmanagement.service.RolesService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
+public class RolesServiceImpl extends BaseIamServiceImpl implements RolesService {
 
 	@Autowired
 	private RolesDao rolesDao;
@@ -53,7 +53,7 @@ public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
 			Roles role = new Roles();
 			role.setCode(data.getCode());
 			role.setRoleName(data.getRoleName());
-			role.setCreatedBy(".....");
+			role.setCreatedBy(getIdAuth());
 			role.setIsActive(data.getIsActive());
 		
 			begin();
@@ -62,7 +62,7 @@ public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
 			for(String permissionId: data.getIdPermission()) {
 				RolePermissions rolepermission = new RolePermissions();
 				rolepermission.setRole(rolesSave);
-				rolepermission.setCreatedBy("1");
+				rolepermission.setCreatedBy(getIdAuth());
 				
 				Permissions permission = new Permissions();
 				permission.setId(permissionId);
@@ -75,7 +75,7 @@ public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
 			
 			insertResDataDto.setId(rolesSave.getId());
 			insertResDto.setData(insertResDataDto);
-			insertResDto.setMsg("....");
+			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 			
 			return insertResDto;
 			
@@ -92,11 +92,11 @@ public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
 		try {
 			UpdateResDto updateResDto = new UpdateResDto();
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
-			
+				
 			Roles role = rolesDao.findById(data.getId());
 			
 			role.setRoleName(data.getRoleName());
-			role.setUpdatedBy(null);
+			role.setUpdatedBy(getIdAuth());
 			role.setIsActive(role.getIsActive());
 			role.setVersion(data.getVersion());
 			
@@ -128,9 +128,9 @@ public class RolesServiceImpl extends BaseServiceImpl implements RolesService {
 			commit();
 			
 			if (resultDelete) {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.SUCCESS_DELETE.getMsg());
 			} else {
-				deleteResDataDto.setMsg("");
+				deleteResDataDto.setMsg(ResponseMsg.FAILED_DELETE.getMsg());
 			}
 			
 			return deleteResDataDto;

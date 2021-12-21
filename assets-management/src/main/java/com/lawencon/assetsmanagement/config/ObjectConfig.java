@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.lawencon.util.ExcelUtil;
+
 @Configuration
 public class ObjectConfig {
 //	@Bean
@@ -22,6 +24,11 @@ public class ObjectConfig {
 	@Bean
 	public BCryptPasswordEncoder bcriptEndcoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public ExcelUtil excelUtil() {
+		return new ExcelUtil();
 	}
 
 	@Bean

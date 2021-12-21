@@ -32,7 +32,7 @@ public class EmployeesDaoImpl extends BaseDaoImpl<Employees> implements Employee
 		try {
 			
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT e.id AS id_employee, c.id, c.code, c.company_name, e.nip, e.full_name, e.phone_no, e.department, ");
+			queryBuilder.append("SELECT e.id AS id_employee, c.id, c.code, c.company_name, e.nip, e.full_name, e.phone_no, e.department, e.email ");
 			queryBuilder.append("e.ver, e.created_by, e.created_date, e.updated_by, e.updated_date, e.is_active  ");
 			queryBuilder.append("FROM employees AS e ");
 			queryBuilder.append("INNER JOIN companies AS c ON c.id = e.id_company ");
@@ -58,16 +58,17 @@ public class EmployeesDaoImpl extends BaseDaoImpl<Employees> implements Employee
 				employee.setFullName(objArr[5].toString());
 				employee.setPhoneNo(objArr[6].toString());
 				employee.setDepartment(objArr[7].toString());
-				employee.setVersion(Long.valueOf(objArr[8].toString()));
-				employee.setCreatedBy(objArr[9].toString());
-				employee.setCreatedDate(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
-				if (objArr[11] != null) {
-					employee.setUpdatedBy(objArr[11].toString());
-				}
+				employee.setEmail(objArr[8].toString());
+				employee.setVersion(Long.valueOf(objArr[9].toString()));
+				employee.setCreatedBy(objArr[10].toString());
+				employee.setCreatedDate(Timestamp.valueOf(objArr[11].toString()).toLocalDateTime());
 				if (objArr[12] != null) {
-					employee.setUpdatedDate(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
+					employee.setUpdatedBy(objArr[12].toString());
 				}
-				employee.setIsActive(Boolean.valueOf(objArr[13].toString()));
+				if (objArr[13] != null) {
+					employee.setUpdatedDate(Timestamp.valueOf(objArr[13].toString()).toLocalDateTime());
+				}
+				employee.setIsActive(Boolean.valueOf(objArr[14].toString()));
 			}
 		} catch (NoResultException e) {
 			throw new NoResultException("Nip Not Found");

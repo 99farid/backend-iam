@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
@@ -30,10 +31,9 @@ import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsOutService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
-public class TransactionsOutServiceImpl extends BaseServiceImpl implements TransactionsOutService {
+public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements TransactionsOutService {
 
 	@Autowired
 	private TransactionsOutDao transactionsOutDao;
@@ -121,7 +121,7 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 				transactionsOut.setGeneralItem(generalItem);
 			}
 
-			transactionsOut.setCreatedBy("....");
+			transactionsOut.setCreatedBy(getIdAuth());
 			transactionsOut.setIsActive(data.getIsActive());
 
 			begin();
@@ -137,7 +137,7 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dateTimeFormat);
 				detailTransactionsOut.setDueDate(dueDate);
 				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
-			
+				detailTransactionsOut.setCreatedBy(getIdAuth());
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
 				
 				Assets updateAsset = assetsDao.findById(assets.getId());
@@ -152,7 +152,7 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 
 			insertResDataDto.setId(transactionsOutSave.getId());
 			insertResDto.setData(insertResDataDto);
-			insertResDto.setMsg(".....");
+			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
 
 			return insertResDto;
 			
