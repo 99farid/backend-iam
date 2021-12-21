@@ -3,12 +3,14 @@ package com.lawencon.assetsmanagement.email;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("kkk")
 public class EmailHandler {
 	@Autowired
     protected JavaMailSender mailSender;

@@ -57,7 +57,7 @@ public class AssetsController extends BaseIamController{
 
 	
 	@PostMapping
-	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart MultipartFile display, @RequestPart MultipartFile invoicePict ) throws Exception{
+	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart MultipartFile display, @RequestPart(required = false) MultipartFile invoicePict ) throws Exception{
 		InsertResDto result = assetsService.insert(convertToModel(data, InsertReqDataAssetsDto.class), display, invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}

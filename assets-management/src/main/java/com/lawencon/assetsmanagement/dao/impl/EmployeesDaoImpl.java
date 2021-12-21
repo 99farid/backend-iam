@@ -32,8 +32,8 @@ public class EmployeesDaoImpl extends BaseDaoImpl<Employees> implements Employee
 		try {
 			
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT e.id AS id_employee, c.id, c.code, c.company_name, e.nip, e.full_name, e.phone_no, e.department, e.email ");
-			queryBuilder.append("e.ver, e.created_by, e.created_date, e.updated_by, e.updated_date, e.is_active  ");
+			queryBuilder.append("SELECT e.id AS id_employee, c.id, c.code, c.company_name, e.nip, e.full_name, e.phone_no, e.department, e.email, ");
+			queryBuilder.append("e.ver, e.created_by, e.created_date, e.updated_by, e.updated_date, e.is_active ");
 			queryBuilder.append("FROM employees AS e ");
 			queryBuilder.append("INNER JOIN companies AS c ON c.id = e.id_company ");
 			queryBuilder.append("WHERE e.nip = :nip ");

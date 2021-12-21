@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,6 +52,14 @@ public class UsersController extends BaseIamController{
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Users data) throws Exception {
 		UpdateResDto users = usersService.update(data);
+		
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
+	@PatchMapping("password")
+	public ResponseEntity<?> updatePassword(@PathVariable("password") String data) throws Exception {
+		
+		UpdateResDto users = usersService.updatePassword(data);
 		
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
