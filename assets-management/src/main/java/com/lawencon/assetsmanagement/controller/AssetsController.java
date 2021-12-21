@@ -1,7 +1,12 @@
 package com.lawencon.assetsmanagement.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +26,15 @@ import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.service.AssetsService;
+import com.lawencon.util.JasperUtil;
+
+import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @RequestMapping("assets")
@@ -93,4 +102,24 @@ public class AssetsController extends BaseIamController{
 		FindAllFilterBySearchResAssetsDto result =   assetsService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+	@GetMapping(value = "pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] getPic(@PathVariable("id") String id) throws Exception {
+		return assetsService.findById(id).getData().getDisplay().getDataFile();
+	}
+	
+	@GetMapping("/pdf")
+    public ResponseEntity<byte[]> generatePdf() throws Exception, JRException {
+    	Map<String, Object> map = new HashMap<>();
+		map.put("company", "PT. Lawencon Internasional");
+        
+        FindAllForPdfAssetsExpiredDto result = assetsService.findAllForPdf();
+        byte[] data = JasperUtil.responseToByteArray(result.getData(), "asset-expired", map);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=asset-expired.pdf");
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
+    }
 }

@@ -14,4 +14,6 @@ public interface TransactionsInDao {
 	
 	Integer countData() throws Exception;
 	
+	List<TransactionsIn> findAllForPdf() throws Exception;
+	
 }

@@ -22,4 +22,6 @@ public interface AssetsDao {
 	
 	List<Assets> findAllFilterBySearch(String input) throws Exception;
 	
+	List<Assets> findAllForPdf() throws Exception;
+	
 }

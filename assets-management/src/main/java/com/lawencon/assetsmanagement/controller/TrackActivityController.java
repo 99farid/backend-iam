@@ -1,6 +1,7 @@
 package com.lawencon.assetsmanagement.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -42,13 +43,15 @@ public class TrackActivityController extends BaseIamController {
 	
 	@GetMapping("/pdf")
     public ResponseEntity<byte[]> generatePdf() throws Exception, JRException {
-        HashMap<String, Object> map = new HashMap<>();
+    	Map<String, Object> map = new HashMap<>();
+		map.put("company", "PT. Lawencon Internasional");
         
         FindAllResTrackActivityDto result = trackActivityService.findAll();
-        byte[] data = JasperUtil.responseToByteArray(result.getData(), "track-activity", null);
+        byte[] data = JasperUtil.responseToByteArray(result.getData(), "track-activity", map);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=track-activity.pdf");
+        headers.setContentType(MediaType.APPLICATION_PDF);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
     }

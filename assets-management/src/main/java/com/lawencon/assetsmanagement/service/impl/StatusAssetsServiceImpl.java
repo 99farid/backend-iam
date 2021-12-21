@@ -14,7 +14,6 @@ import com.lawencon.assetsmanagement.dto.statusassets.FindAllResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindByIdResStatusAsstesDto;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.service.StatusAssetsService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
 public class StatusAssetsServiceImpl extends BaseIamServiceImpl implements StatusAssetsService {

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "transaction_in")
+@Table(name = "transactions_in")
 public class TransactionsIn extends BaseEntity{
 	
 	private static final long serialVersionUID = 8134524064915827681L;

@@ -17,10 +17,10 @@ public class TrackActivity extends BaseEntity{
 	@Column(length = 32, unique = true, nullable = false)
 	private String code;
 	
-	@Column(length = 64,  nullable = false)
+	@Column(name = "name_asset", length = 64,  nullable = false)
 	private String nameAsset;
 	
-	@Column(length = 64,  nullable = false)   
+	@Column(name = "status_asset", length = 64,  nullable = false)   
 	private String statusAsset;
 	
 	@Column(length = 64,  nullable = false)

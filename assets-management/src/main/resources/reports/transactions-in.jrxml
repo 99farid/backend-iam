@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction-in" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f587557c-e8e6-4ed8-ac26-edbff5c4a4d8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<subDataset name="DataTrxIn" uuid="915de33e-2d2e-498f-b9fa-b3cbd31dc0fa">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+		<field name="_THIS" class="com.lawencon.assetsmanagement.model.TransactionsIn"/>
+		<field name="code" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="code"/>
+			<property name="com.jaspersoft.studio.field.label" value="code"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="transactions_in"/>
+		</field>
+	</subDataset>
+	<field name="code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="code"/>
+		<property name="com.jaspersoft.studio.field.label" value="code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="transactions_in"/>
+	</field>
+	<field name="checkInDate" class="java.time.LocalDate"/>
+	<field name="_THIS" class="com.lawencon.assetsmanagement.model.TransactionsIn"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="170" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="06b80858-2593-4935-8683-634a80c137a1"/>
+			</rectangle>
+			<image>
+				<reportElement x="7" y="11" width="106" height="91" uuid="07651294-5732-4815-9496-cab8bcdff265"/>
+				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="8" y="94" width="100" height="30" uuid="4543b6a1-86fe-4c6b-a5c4-b6fb51355e6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Transaction In Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="43" width="57" height="19" uuid="b9a2f4c3-2d4c-464c-9354-ac284188fc29"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Date       :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="25" width="57" height="19" uuid="5bfc749c-8418-49dc-9976-c615a5fa6b04"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[IAM System]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="60" width="268" height="100" uuid="974279e3-6ee5-4a8b-8c34-fb2a9e255937"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Location : Pakuwon Tower, 
+Jl. Casablanca No.Kav 88,
+RT.6/RW.14, Kb. Baru, 
+Kec. Tebet, Kota Jakarta Selatan,
+Daerah Khusus Ibukota Jakarta 12870]]></text>
+			</staticText>
+			<rectangle radius="2">
+				<reportElement x="0" y="0" width="555" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="4f71ae78-f031-4739-8733-65d82ca5456d"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="128" width="555" height="1" uuid="2acca61b-b4c9-4b72-89f7-ba52ae90c1d4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="377" y="60" width="268" height="100" uuid="7c5ce2dc-f05e-4f32-bd6e-acc12a7a7ce8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Location : Pakuwon Tower, 
+Jl. Casablanca No.Kav 88,
+RT.6/RW.14, Kb. Baru, 
+Kec. Tebet, Kota Jakarta Selatan,
+Daerah Khusus Ibukota Jakarta 12870]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="25" width="57" height="19" uuid="35333e87-958d-4817-8d9a-1cebc7750686"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[IAM System]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="424" y="43" width="131" height="12" uuid="e0afe121-9a3d-4adb-bc65-e6d7d13624c6"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="377" y="43" width="57" height="19" uuid="ad7cddce-722a-46d0-b4a6-ff9fe680fd1b"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Date       :]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="3" width="125" height="99" uuid="177fe6cc-2342-4099-bb26-66e2859b49c0"/>
+				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="12" y="108" width="132" height="19" uuid="508c814d-d41a-4966-bab3-b9fcb2bce377"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[PT. Lawencon Internasional]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="139" y="0" width="240" height="40" uuid="b15b5c93-af28-4baf-bc55-d08c1b3c7346"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction In Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="50" backcolor="#BFE1FF" uuid="1ae08b4f-7581-435a-876b-188bb5f4641c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="120" height="50" backcolor="#BFE1FF" uuid="90116783-acb9-4742-b092-d5ef75ab0051">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="220" y="0" width="170" height="50" backcolor="#BFE1FF" uuid="351ca5be-180c-42c8-9b5d-0c8acb9451c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECEIVER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="390" y="0" width="165" height="50" backcolor="#BFE1FF" uuid="3c28f0c3-42dc-40a3-bb67-b4f855eeff35">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHECK IN DATE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="83b555ce-7e84-462a-812a-6c2b5c946f26">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="120" height="30" uuid="d6395344-8775-466f-8681-93877f3ef805">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="170" height="30" uuid="265067cb-209f-4bea-ab4b-2c70a8b3ff84">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75561a61-48d0-43cc-9403-6c99a37e49d3"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{_THIS}.getTransactionOut() != null ? $F{_THIS}.getTransactionOut().getEmployee().getFullName() : "-"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="165" height="30" uuid="d9365c80-af30-4592-92af-f5b0f052fe6d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{checkInDate}.format( java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy") )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="80" width="215" height="30" uuid="6c66024d-fb11-42f5-97b6-0a5dca64e044"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[@Copyright 2021 IAM System]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

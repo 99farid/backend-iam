@@ -2,7 +2,6 @@ package com.lawencon.assetsmanagement.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 

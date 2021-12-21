@@ -92,5 +92,21 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 				.getResultList();
 	}
 
+	@Override
+	public List<Assets> findAllForPdf() throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");
+		queryBuilder.append("SELECT a ");
+		queryBuilder.append("FROM Assets a ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.item i ");
+		queryBuilder.append("LEFT JOIN FETCH i.itemType ");
+		queryBuilder.append("LEFT JOIN FETCH a.statusAsset ");
+		queryBuilder.append("LEFT JOIN FETCH a.company ");
+		queryBuilder.append("LEFT JOIN FETCH a.invoice ");
+		queryBuilder.append("WHERE a.expiredDate IS NOT NULL ");
 	
+		String sql = queryBuilder.toString();
+		
+		return createQuery(sql, Assets.class).getResultList();
+	}
 }

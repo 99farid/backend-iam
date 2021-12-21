@@ -12,21 +12,26 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "transactions_out")
 public class TransactionsOut extends BaseEntity {
 	
+	
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -6377906156681298363L;
 
 	@Column(length = 32, unique = true, nullable = false)
 	private String code;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_employee")
+	@JoinColumn(name = "id_employee", nullable = true)
 	private Employees employee;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_location")
+	@JoinColumn(name = "id_location", nullable = true)
 	private Locations location;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_general_item")
+	@JoinColumn(name = "id_general_item", nullable = true)
 	private Assets generalItem;
 
 	public String getCode() {
