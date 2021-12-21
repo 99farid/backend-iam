@@ -17,4 +17,7 @@ public interface TransactionsOutDao {
 	List<TransactionsOut> findAllFilterByIdGeneralItem() throws Exception;
 	
 	TransactionsOut saveOrUpdate(TransactionsOut data) throws Exception;
+	
+	List<TransactionsOut> findAllForPdf() throws Exception;
+	
 }
