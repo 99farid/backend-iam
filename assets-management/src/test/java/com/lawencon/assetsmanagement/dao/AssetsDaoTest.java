@@ -14,7 +14,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.Companies;
@@ -24,7 +24,7 @@ import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.base.ConnHandler;
 
-@SpringBootTest
+@DataJpaTest
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class AssetsDaoTest {
@@ -92,7 +92,7 @@ public class AssetsDaoTest {
 		company = companiesDao.saveOrUpdate(company);
 
 		Assets asset = new Assets();
-		asset.setCode("LWN-GNL-2xAAS");
+		asset.setCode("LWN-GNL-2xA");
 		asset.setCompany(company);
 		asset.setCreatedBy("1");
 		asset.setInvoice(invoice);
