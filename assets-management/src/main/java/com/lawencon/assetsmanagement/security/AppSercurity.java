@@ -15,6 +15,7 @@ import com.lawencon.assetsmanagement.security.jwt.JwtComponent;
 import com.lawencon.assetsmanagement.service.UsersService;
 
 @Profile("test")
+//@Profile("none")
 @EnableWebSecurity
 public class AppSercurity extends WebSecurityConfigurerAdapter{
 	@Autowired
