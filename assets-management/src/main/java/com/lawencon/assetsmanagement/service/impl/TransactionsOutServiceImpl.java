@@ -27,7 +27,6 @@ import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsOutService;
-import com.lawencon.base.BaseServiceImpl;
 
 @Service
 public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements TransactionsOutService {

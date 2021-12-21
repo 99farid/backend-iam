@@ -160,12 +160,11 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			asset = assetsDao.saveOrUpdate(asset);
 			
 			TrackActivity track = new TrackActivity();
-			track.setCode(item.getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
 			track.setCreatedBy(getIdAuth());
-			track.setIsActive(track.getIsActive());
+			track.setIsActive(true);
 			
 			trackActivityDao.saveOrUpdate(track);
 			
@@ -317,6 +316,16 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			asset.setCreatedBy(getIdAuth());
 			asset = assetsDao.saveOrUpdate(asset);
 			resData.setId(asset.getId());
+			
+			TrackActivity track = new TrackActivity();
+			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
+			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
+			track.setDateActivity(LocalDate.now());
+			track.setCreatedBy(getIdAuth());
+			track.setIsActive(true);
+			
+			trackActivityDao.saveOrUpdate(track);
+			
 			commit();
 		}
 		if(resData != null) {

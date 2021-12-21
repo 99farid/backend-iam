@@ -42,9 +42,10 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 	@Override
 	public Integer countAssetByStatus(String statusCode) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder("");
-		queryBuilder.append("SELECT count(id) as total ");
+		queryBuilder.append("SELECT count(a.id) as total ");
 		queryBuilder.append("FROM assets a ");
-		queryBuilder.append("INNER JOIN status_assets ON a.id_status_assets = (SELECT id FROM status_assets WHERE code = :code)");
+		queryBuilder.append("INNER JOIN status_assets sa ON a.id_status_asset = sa.id ");
+		queryBuilder.append("WHERE sa.code = :code");
 		String sql = queryBuilder.toString();
 		
 		Object result = createNativeQuery(sql)
@@ -61,10 +62,11 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 		StringBuilder queryBuilder = new StringBuilder("");
 		queryBuilder.append("SELECT a ");
 		queryBuilder.append("FROM Assets a ");
-		queryBuilder.append("INNER JOIN FETCH a.display ");
-		queryBuilder.append("INNER JOIN FETCH a.item AS i ");
-		queryBuilder.append("INNER JOIN FETCH i.itemType ");
-		queryBuilder.append("WHERE a.item.itemType.code = :code");
+//		queryBuilder.append("INNER JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.item AS i ");
+		queryBuilder.append("LEFT JOIN FETCH i.itemType AS it ");
+		
+		queryBuilder.append("WHERE it.code = :code ");
 		
 		String sql = queryBuilder.toString();
 		
@@ -76,9 +78,10 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 		StringBuilder queryBuilder = new StringBuilder("");
 		queryBuilder.append("SELECT a ");
 		queryBuilder.append("FROM Assets a ");
-		queryBuilder.append("INNER JOIN FETCH a.item  i");
-		queryBuilder.append("INNER JOIN FETCH a.display ");
-		queryBuilder.append("WHERE a.item.description LIKE :input OR a.item.brand LIKE :input AND a.statusAsset.code = :statusCode");
+		queryBuilder.append("LEFT JOIN FETCH a.item AS i ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.statusAsset AS sa ");
+		queryBuilder.append("WHERE i.description LIKE :input OR i.brand LIKE :input AND sa.code = :statusCode");
 		
 		String sql = queryBuilder.toString();
 		
