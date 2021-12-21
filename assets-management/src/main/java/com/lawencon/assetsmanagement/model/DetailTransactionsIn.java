@@ -20,7 +20,7 @@ public class DetailTransactionsIn extends BaseEntity{
 	private Assets asset;
 	
 	@ManyToOne
-	@JoinColumn(name = "condition_asset", nullable = false)
+	@JoinColumn(name = "id_condition_asset", nullable = false)
 	private ConditionAssets conditionAsset;
 	
 	public TransactionsIn getTransactionIn() {
