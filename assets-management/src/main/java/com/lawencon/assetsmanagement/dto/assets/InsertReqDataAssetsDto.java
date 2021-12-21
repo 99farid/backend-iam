@@ -2,6 +2,8 @@ package com.lawencon.assetsmanagement.dto.assets;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class InsertReqDataAssetsDto {
 	
 	private String code;
@@ -9,6 +11,7 @@ public class InsertReqDataAssetsDto {
 	private String idStatusAsset;
 	private String idCompany;
 	private InsertReqDataInvoicesDto invoice;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate expiredDate;
 	
 	public String getCode() {
