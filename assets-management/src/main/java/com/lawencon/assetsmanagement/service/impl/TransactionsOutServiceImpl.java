@@ -2,6 +2,8 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.transactionsout.FindAllForPdfTrxOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdEmployeeDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdGeneralItemDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdLocationDto;
@@ -49,7 +52,10 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 	@Override
 	public FindAllResTransactionsOutDto findAll() throws Exception {
 		FindAllResTransactionsOutDto result = new FindAllResTransactionsOutDto();
-		result.setData(transactionsOutDao.findAll());
+		
+		List<TransactionsOut> data = transactionsOutDao.findAll();
+		
+		result.setData(data);
 		result.setMsg(null);
 		
 		return result;
@@ -152,4 +158,16 @@ public class TransactionsOutServiceImpl extends BaseServiceImpl implements Trans
 	private String generateCode() {
 		return null;
 	}
+
+	@Override
+	public FindAllForPdfTrxOutDto findAllForPdf() throws Exception {
+		FindAllForPdfTrxOutDto result = new FindAllForPdfTrxOutDto();
+		result.setData(transactionsOutDao.findAllForPdf());
+		result.setMsg(null);
+		
+		return result;
+	}
+	
+	
+	
 }

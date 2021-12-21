@@ -25,6 +25,7 @@ import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
@@ -148,16 +149,17 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 			newDisplay = filesDao.saveOrUpdate(newDisplay);
 
 			asset.setDisplay(newDisplay);
-
+			asset.setIsActive(true);
 			asset = assetsDao.saveOrUpdate(asset);
 			
 			TrackActivity track = new TrackActivity();
-			track.setCode(item.getDescription());
+			track.setCode("SAdwads");
+			track.setNameAsset(data.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
 			track.setCreatedBy("1");
-			track.setIsActive(track.getIsActive());
+			track.setIsActive(true);
 			
 			trackActivityDao.saveOrUpdate(track);
 			
@@ -260,4 +262,14 @@ public class AssetsServiceImpl extends BaseServiceImpl implements AssetsService 
 		return result;
 	}
 
+	@Override
+	public FindAllForPdfAssetsExpiredDto findAllForPdf() throws Exception {
+		FindAllForPdfAssetsExpiredDto result = new FindAllForPdfAssetsExpiredDto();
+		result.setData(assetsDao.findAllForPdf());
+		result.setMsg(null);
+		
+		return result;
+	}
+
+	
 }

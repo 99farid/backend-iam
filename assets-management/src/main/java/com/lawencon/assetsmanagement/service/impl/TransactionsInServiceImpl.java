@@ -12,6 +12,7 @@ import com.lawencon.assetsmanagement.dao.TransactionsInDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.transactionsin.FindAllForPdfTrxInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindAllResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindByIdResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataDetailTransactionsInDto;
@@ -118,4 +119,14 @@ public class TransactionsInServiceImpl extends BaseServiceImpl implements Transa
 		return HeaderCode.TRANSACTIONIN.getCode() + (transactionsInDao.countData() + 1);
 	}
 
+	@Override
+	public FindAllForPdfTrxInDto findAllForPdf() throws Exception {
+		FindAllForPdfTrxInDto result = new FindAllForPdfTrxInDto();
+		result.setData(transactionsInDao.findAllForPdf());
+		result.setMsg(null);
+		
+		return result;
+	}
+
+	
 }
