@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.trackactivity.FindAllResTrackActivityDto;
 import com.lawencon.assetsmanagement.dto.trackactivity.FindByIdResTrackActivityDto;
 import com.lawencon.assetsmanagement.service.TrackActivityService;
@@ -55,4 +56,11 @@ public class TrackActivityController extends BaseIamController {
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
     }
+    
+    @GetMapping("/send-pdf")
+	public ResponseEntity<?> sendFileToEmail() throws Exception {
+		SendResEmailDto result = trackActivityService.sendFileToEmail();
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

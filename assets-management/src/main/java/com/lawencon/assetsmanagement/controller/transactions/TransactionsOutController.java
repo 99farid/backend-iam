@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllForPdfTrxOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdEmployeeDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdGeneralItemDto;
@@ -91,4 +92,11 @@ public class TransactionsOutController {
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
     }
+    
+    @GetMapping("/send-pdf")
+	public ResponseEntity<?> sendFileToEmail() throws Exception {
+		SendResEmailDto result = transactionsOutService.sendFileToEmail();
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
