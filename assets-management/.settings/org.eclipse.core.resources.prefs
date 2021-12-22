@@ -1,13 +1,14 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=5398c5aa4ea72d1f03757556de2ba7c9c59736e0
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
-<<<<<<< HEAD
 encoding//src/main/resources/reports/asset-expired.jrxml=UTF-8
 encoding//src/main/resources/reports/track-activity.jrxml=UTF-8
+encoding//src/main/resources/reports/transaction-expired.jrxml=UTF-8
 encoding//src/main/resources/reports/transactions-in.jrxml=UTF-8
 encoding//src/main/resources/reports/transactions-out.jrxml=UTF-8
-=======
->>>>>>> 5398c5aa4ea72d1f03757556de2ba7c9c59736e0
 encoding//src/test/java=UTF-8
 encoding//src/test/resources=UTF-8
 encoding/<project>=UTF-8

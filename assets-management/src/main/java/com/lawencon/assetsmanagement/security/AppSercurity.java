@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.assetsmanagement.security.jwt.JwtComponent;
 import com.lawencon.assetsmanagement.service.UsersService;
 
-@Profile("test")
+//@Profile("test")
 //@Profile("none")
 @EnableWebSecurity
 public class AppSercurity extends WebSecurityConfigurerAdapter{
@@ -46,7 +46,7 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 		.antMatchers(HttpMethod.POST, "/users/**","/profiles-users/**")
-		.antMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/assets/**", "/track-activities/**");
+		.antMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/assets/pic/**", "/track-activities/**");
 		
 	}
 
