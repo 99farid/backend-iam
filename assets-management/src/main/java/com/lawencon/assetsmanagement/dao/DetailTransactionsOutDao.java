@@ -14,4 +14,5 @@ public interface DetailTransactionsOutDao {
 	
 	DetailTransactionsOut saveOrUpdate(DetailTransactionsOut data) throws Exception;
 	
+	List<DetailTransactionsOut> findAllForPdf() throws Exception;
 }
