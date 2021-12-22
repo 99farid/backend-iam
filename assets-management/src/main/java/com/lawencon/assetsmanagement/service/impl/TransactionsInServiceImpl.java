@@ -1,5 +1,8 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +14,24 @@ import com.lawencon.assetsmanagement.dao.DetailTransactionsInDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dao.TransactionsInDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
+import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindAllForPdfTrxInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindAllResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindByIdResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataDetailTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataHeaderTransactionsInDto;
+import com.lawencon.assetsmanagement.email.EmailHandler;
+import com.lawencon.assetsmanagement.email.EmailModel;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsIn;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TransactionsIn;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
+import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.TransactionsInService;
 
 @Service
@@ -46,6 +54,12 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 	
 	@Autowired
 	StatusAssetsDao statusDao;
+	
+	@Autowired
+	private EmailHandler emailHandler;
+	
+	@Autowired
+	private UsersDao usersDao;
 	
 	@Override
 	public FindAllResTransactionsInDto findAll() throws Exception {
@@ -128,4 +142,28 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 		
 		return result;
 	}
+
+	@Override
+	public SendResEmailDto sendFileToEmail() throws Exception {
+		SendResEmailDto send = new SendResEmailDto();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("company", "PT. Lawencon Internasional");
+        
+		FindAllForPdfTrxInDto result = findAllForPdf();
+        
+        EmailModel email = new EmailModel();
+        
+        Users users = usersDao.findById(getIdAuth());
+        email.setTo(users.getEmail());
+        email.setSubject("Report Transaction In");
+        email.setText("This is report notification to inform you about report transaction in");
+     
+		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "transactions-in", map);
+		
+		send.setMsg("email sent");	
+		return send;
+	}
+	
+	
 }

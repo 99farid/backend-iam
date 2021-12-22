@@ -2,7 +2,9 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,10 @@ import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
+import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllForPdfTrxOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdEmployeeDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdGeneralItemDto;
@@ -25,12 +29,15 @@ import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResTransactionsO
 import com.lawencon.assetsmanagement.dto.transactionsout.FindByIdResTransactionsOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.InsertReqDataDetailTransactionsOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.InsertReqDataTransactionsOutDto;
+import com.lawencon.assetsmanagement.email.EmailHandler;
+import com.lawencon.assetsmanagement.email.EmailModel;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
+import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.TransactionsOutService;
 
 @Service
@@ -53,6 +60,12 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 
 	@Autowired
 	private DetailTransactionsOutDao detailTransactionsOutDao;
+	
+	@Autowired
+	private EmailHandler emailHandler;
+	
+	@Autowired
+	private UsersDao usersDao;
 
 	@Override
 	public FindAllResTransactionsOutDto findAll() throws Exception {
@@ -179,6 +192,28 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 		result.setMsg(null);
 		
 		return result;
+	}
+
+	@Override
+	public SendResEmailDto sendFileToEmail() throws Exception {
+		SendResEmailDto send = new SendResEmailDto();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("company", "PT. Lawencon Internasional");
+        
+		FindAllForPdfTrxOutDto result = findAllForPdf();
+        
+        EmailModel email = new EmailModel();
+        
+        Users users = usersDao.findById(getIdAuth());
+        email.setTo(users.getEmail());
+        email.setSubject("Report Transaction Out");
+        email.setText("This is report notification to inform you about report transaction out");
+     
+		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "transactions-out", map);
+		
+		send.setMsg("email sent");	
+		return send;
 	}
 	
 	
