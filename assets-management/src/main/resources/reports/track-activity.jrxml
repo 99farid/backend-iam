@@ -90,38 +90,24 @@ FROM track_activity]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="160" splitType="Stretch">
+	<pageHeader>
+		<band height="177">
 			<rectangle radius="2">
-				<reportElement x="0" y="0" width="555" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="4b8ab548-0e5f-4f45-80a4-e6bac121ce4b"/>
+				<reportElement x="38" y="17" width="473" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="4b8ab548-0e5f-4f45-80a4-e6bac121ce4b"/>
 			</rectangle>
 			<image>
-				<reportElement x="6" y="3" width="125" height="103" uuid="83dc614a-a6a3-434d-af3f-2c18215aa555"/>
+				<reportElement x="43" y="20" width="125" height="103" uuid="83dc614a-a6a3-434d-af3f-2c18215aa555"/>
 				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="377" y="25" width="57" height="19" uuid="bbaa581a-190a-4433-a97e-f37cd9639b0b"/>
+				<reportElement x="42" y="123" width="144" height="19" uuid="8152f39f-d35d-46bf-93fa-6c7bbb52b075"/>
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<text><![CDATA[IAM System]]></text>
+				<text><![CDATA[PT. Lawencon Internasional]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="377" y="43" width="57" height="19" uuid="6d4339cf-e838-4325-8606-72ae2aa77173"/>
-				<textElement>
-					<font fontName="Arial" size="10"/>
-				</textElement>
-				<text><![CDATA[Date       :]]></text>
-			</staticText>
-			<textField pattern="dd-MM-yyyy">
-				<reportElement x="424" y="43" width="131" height="12" uuid="e1d3c78e-0649-4a0c-9a6f-d6989d641ec6"/>
-				<textElement>
-					<font fontName="Arial" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="377" y="60" width="268" height="100" uuid="a58c357e-7d3b-4e22-a89e-51014d0bcfa9"/>
+				<reportElement x="343" y="77" width="268" height="100" uuid="a58c357e-7d3b-4e22-a89e-51014d0bcfa9"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial" size="10"/>
 				</textElement>
@@ -131,35 +117,38 @@ RT.6/RW.14, Kb. Baru,
 Kec. Tebet, Kota Jakarta Selatan,
 Daerah Khusus Ibukota Jakarta 12870]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="128" width="555" height="1" uuid="07db9770-f415-4e48-b1d2-65a15c93a996">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-			</line>
 			<staticText>
-				<reportElement x="11" y="106" width="144" height="19" uuid="8152f39f-d35d-46bf-93fa-6c7bbb52b075"/>
+				<reportElement x="343" y="60" width="57" height="19" uuid="6d4339cf-e838-4325-8606-72ae2aa77173"/>
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<text><![CDATA[PT. Lawencon Internasional]]></text>
+				<text><![CDATA[Date       :]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="50">
-			<staticText>
-				<reportElement x="140" y="10" width="270" height="30" uuid="bdd853ad-a8a6-48fb-8219-c0072fc31337"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="18" isBold="true"/>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="390" y="60" width="131" height="12" uuid="e1d3c78e-0649-4a0c-9a6f-d6989d641ec6"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
 				</textElement>
-				<text><![CDATA[Track Activity Report]]></text>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="343" y="42" width="57" height="19" uuid="bbaa581a-190a-4433-a97e-f37cd9639b0b"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[IAM System]]></text>
 			</staticText>
+			<line>
+				<reportElement x="38" y="150" width="475" height="1" uuid="6e6a6fc9-cc8f-4f5f-bf6b-268c025422b8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="60">
+		<band height="163">
 			<staticText>
-				<reportElement mode="Opaque" x="60" y="0" width="120" height="60" backcolor="#BFE1FF" uuid="dbe7d118-5ad0-4e6c-842e-0c1939ae968f">
+				<reportElement mode="Opaque" x="78" y="103" width="90" height="60" backcolor="#BFE1FF" uuid="dbe7d118-5ad0-4e6c-842e-0c1939ae968f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01bee2d8-a785-4f71-b517-ed45360ffc3d"/>
 				</reportElement>
 				<box>
@@ -174,7 +163,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[NAME ASSET]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="180" y="0" width="120" height="60" backcolor="#BFE1FF" uuid="b2ac014c-32f6-48e5-9af9-8f11ce358e1a">
+				<reportElement mode="Opaque" x="168" y="103" width="90" height="60" backcolor="#BFE1FF" uuid="b2ac014c-32f6-48e5-9af9-8f11ce358e1a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9148cd9a-6bf9-4cce-93e4-c6fcdeea2dd0"/>
 				</reportElement>
 				<box>
@@ -189,7 +178,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[STATUS ASSET]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="300" y="0" width="100" height="60" backcolor="#BFE1FF" uuid="4e4d3ff5-6ff4-43c9-ab33-542c1347c225">
+				<reportElement mode="Opaque" x="258" y="103" width="100" height="60" backcolor="#BFE1FF" uuid="4e4d3ff5-6ff4-43c9-ab33-542c1347c225">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21fca3b9-f149-43e0-8645-a8059baa7eea"/>
 				</reportElement>
 				<box>
@@ -204,7 +193,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[ACTIVITY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="400" y="0" width="80" height="60" backcolor="#BFE1FF" uuid="8153a5c6-181e-4f68-9f61-89ca04c545a1">
+				<reportElement mode="Opaque" x="358" y="103" width="80" height="60" backcolor="#BFE1FF" uuid="8153a5c6-181e-4f68-9f61-89ca04c545a1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="02d03a2f-d8b2-4eb1-a6e4-797a6170b2e4"/>
 				</reportElement>
 				<box>
@@ -219,7 +208,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[CODE TRX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="480" y="0" width="75" height="60" backcolor="#BFE1FF" uuid="a05e5eef-ce47-49e7-9b8e-40f1ce6a09fc">
+				<reportElement mode="Opaque" x="438" y="103" width="75" height="60" backcolor="#BFE1FF" uuid="a05e5eef-ce47-49e7-9b8e-40f1ce6a09fc">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efe6151a-a892-44d9-bbe4-7d67e1ea3b58"/>
 				</reportElement>
 				<box>
@@ -234,7 +223,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[DATE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="60" height="60" backcolor="#BFE1FF" uuid="ce74aa45-f6ae-4940-ae92-4127f1f17e1c">
+				<reportElement mode="Opaque" x="38" y="103" width="40" height="60" backcolor="#BFE1FF" uuid="ce74aa45-f6ae-4940-ae92-4127f1f17e1c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01bee2d8-a785-4f71-b517-ed45360ffc3d"/>
 				</reportElement>
 				<box>
@@ -248,17 +237,24 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				</textElement>
 				<text><![CDATA[NO.]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="140" y="60" width="270" height="30" uuid="bdd853ad-a8a6-48fb-8219-c0072fc31337"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Track Activity Report]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="70" splitType="Stretch">
+		<band height="204" splitType="Stretch">
 			<frame>
 				<reportElement x="0" y="0" width="555" height="70" uuid="ec0d2acf-0b51-4933-b1d9-838ba485c2f2">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				</reportElement>
 				<textField>
-					<reportElement x="60" y="0" width="120" height="70" uuid="5771896f-1e9d-4da5-9c1b-e8adbb12ceb8">
+					<reportElement x="78" y="0" width="90" height="70" uuid="5771896f-1e9d-4da5-9c1b-e8adbb12ceb8">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01bee2d8-a785-4f71-b517-ed45360ffc3d"/>
 					</reportElement>
 					<box>
@@ -267,11 +263,13 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nameAsset}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="180" y="0" width="120" height="70" uuid="b067203f-3946-4972-aa8a-87326b921aac">
+					<reportElement x="168" y="0" width="90" height="70" uuid="b067203f-3946-4972-aa8a-87326b921aac">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9148cd9a-6bf9-4cce-93e4-c6fcdeea2dd0"/>
 					</reportElement>
 					<box>
@@ -280,11 +278,13 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{statusAsset}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="300" y="0" width="100" height="70" uuid="b7fd398f-cf6d-435d-a588-f54d8d9c7208">
+					<reportElement x="258" y="0" width="100" height="70" uuid="b7fd398f-cf6d-435d-a588-f54d8d9c7208">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21fca3b9-f149-43e0-8645-a8059baa7eea"/>
 					</reportElement>
 					<box>
@@ -293,11 +293,13 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{activity}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="400" y="0" width="80" height="70" uuid="0a69b08c-ca11-489d-9fee-2964ced9b100">
+					<reportElement x="358" y="0" width="80" height="70" uuid="0a69b08c-ca11-489d-9fee-2964ced9b100">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="02d03a2f-d8b2-4eb1-a6e4-797a6170b2e4"/>
 					</reportElement>
 					<box>
@@ -306,11 +308,13 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{codeTransaction}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="480" y="0" width="75" height="70" uuid="59daa140-c797-4e6b-9d06-af7f0781e064">
+					<reportElement x="438" y="0" width="75" height="70" uuid="59daa140-c797-4e6b-9d06-af7f0781e064">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efe6151a-a892-44d9-bbe4-7d67e1ea3b58"/>
 					</reportElement>
 					<box>
@@ -319,11 +323,13 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{dateActivity}.format( java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy") )]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="0" width="60" height="70" uuid="da2eedaa-53df-4d97-8f9c-c2cf10443a17">
+					<reportElement x="38" y="0" width="40" height="70" uuid="da2eedaa-53df-4d97-8f9c-c2cf10443a17">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01bee2d8-a785-4f71-b517-ed45360ffc3d"/>
 					</reportElement>
 					<box>
@@ -332,7 +338,9 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 				</textField>
 			</frame>
