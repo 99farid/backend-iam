@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
@@ -38,5 +39,7 @@ public interface AssetsService {
 	InsertResDto insertFromExcel (MultipartFile data) throws Exception;
 	
 	FindAllForPdfAssetsExpiredDto findAllForPdf() throws Exception;
+	
+	SendResEmailDto sendFileToEmail() throws Exception;
 
 }

@@ -1,6 +1,7 @@
 package com.lawencon.assetsmanagement.service;
 
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllForPdfTrxOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdEmployeeDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.FindAllResFilterByIdGeneralItemDto;
@@ -24,4 +25,6 @@ public interface TransactionsOutService {
 	InsertResDto insert(InsertReqDataTransactionsOutDto data) throws Exception;
 	
 	FindAllForPdfTrxOutDto findAllForPdf() throws Exception;
+	
+	SendResEmailDto sendFileToEmail() throws Exception;
 }
