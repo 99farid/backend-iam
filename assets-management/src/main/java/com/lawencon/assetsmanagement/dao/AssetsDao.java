@@ -24,4 +24,6 @@ public interface AssetsDao {
 	
 	List<Assets> findAllForPdf() throws Exception;
 	
+	Assets findByCode(String code) throws Exception;
+	
 }

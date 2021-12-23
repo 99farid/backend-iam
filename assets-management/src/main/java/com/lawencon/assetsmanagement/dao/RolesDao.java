@@ -13,4 +13,7 @@ public interface RolesDao {
 	Roles saveOrUpdate(Roles data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;
+	
+	Roles findByCode(String code) throws Exception;
+	
 }

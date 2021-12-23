@@ -14,4 +14,8 @@ public interface LocationsDao {
 	
 	boolean removeById(String id) throws Exception;
 	
+	Locations findByCode (String code) throws Exception;
+	
+	List<Locations> findAllFilterBySearch(String input) throws Exception;
+	
 }

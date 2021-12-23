@@ -25,4 +25,12 @@ public class TrackActivityDaoImpl extends BaseDaoImpl<TrackActivity> implements 
 	public TrackActivity saveOrUpdate(TrackActivity data) throws Exception {
 		return save(data);
 	}
+
+	@Override
+	public Integer countData() throws Exception {
+		String sql = "SELECT count(id) FROM track_activity";
+		Object result = createNativeQuery(sql).getSingleResult();
+				
+		return Integer.valueOf(result.toString());
+	}
 }

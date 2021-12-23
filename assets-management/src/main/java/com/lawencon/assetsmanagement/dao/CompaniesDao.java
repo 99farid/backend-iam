@@ -14,6 +14,8 @@ public interface CompaniesDao {
 	
 	boolean removeById(String id) throws Exception;
 	
-	List<Companies> findAllFilterByCode(String code) throws Exception;
+	List<Companies> findAllFilterBySearch (String input) throws Exception;
+	
+	Companies findByCode (String code) throws Exception;
 	
 }

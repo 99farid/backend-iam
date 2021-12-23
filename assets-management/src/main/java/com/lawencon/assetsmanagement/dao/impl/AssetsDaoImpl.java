@@ -109,4 +109,22 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 		
 		return createQuery(sql, Assets.class).getResultList();
 	}
+
+	@Override
+	public Assets findByCode(String code) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");
+		queryBuilder.append("SELECT a ");
+		queryBuilder.append("FROM Assets a ");
+		queryBuilder.append("LEFT JOIN FETCH a.item AS i ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.statusAsset AS sa ");
+		queryBuilder.append("WHERE a.code = :code");
+		
+		String sql = queryBuilder.toString();
+		
+		
+		return createQuery(sql, Assets.class)
+				.setParameter("input", code)
+				.getSingleResult();
+	}
 }

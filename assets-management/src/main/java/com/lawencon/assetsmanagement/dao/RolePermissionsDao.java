@@ -13,4 +13,6 @@ public interface RolePermissionsDao {
 	RolePermissions saveOrUpdate(RolePermissions data) throws Exception;
 
 	boolean removeById(String id) throws Exception;
+	
+	List<RolePermissions> findAllFilterByRole(String idRole) throws Exception;
 }

@@ -15,4 +15,6 @@ public interface UsersDao {
 	Users saveOrUpdate(Users data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;
+	
+	Users getSystem() throws Exception;
 }

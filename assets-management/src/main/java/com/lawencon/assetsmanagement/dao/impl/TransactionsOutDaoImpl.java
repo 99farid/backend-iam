@@ -227,6 +227,8 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 				
 		return Integer.valueOf(result.toString());
 	}
+
+	
 	
 	
 }

@@ -22,4 +22,5 @@ public interface TransactionsOutDao {
 	
 	Integer countData() throws Exception;
 	
+	
 }

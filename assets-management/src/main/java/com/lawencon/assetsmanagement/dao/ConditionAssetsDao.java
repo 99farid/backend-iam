@@ -15,6 +15,7 @@ public interface ConditionAssetsDao {
 	
 	boolean removeById(String id) throws Exception;
 	
-	List<ConditionAssets> findAllFilterByCode(String code) throws Exception;
+	List<ConditionAssets> findAllFilterBySearch(String input) throws Exception;
 	
+	ConditionAssets findByCode(String code) throws Exception;
 }

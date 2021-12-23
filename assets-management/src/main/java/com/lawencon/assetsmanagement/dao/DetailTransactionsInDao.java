@@ -13,4 +13,6 @@ public interface DetailTransactionsInDao {
 	DetailTransactionsIn saveOrUpdate(DetailTransactionsIn data) throws Exception;
 	
 	List<DetailTransactionsIn> findByIdHeader(String idHeader) throws Exception;
+	
+	
 }

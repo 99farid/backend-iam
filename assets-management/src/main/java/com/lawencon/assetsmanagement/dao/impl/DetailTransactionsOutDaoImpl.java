@@ -43,4 +43,19 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 	public DetailTransactionsOut saveOrUpdate(DetailTransactionsOut data) throws Exception {
 		return save(data);
 	}
+
+	@Override
+	public List<DetailTransactionsOut> findAllForDueReport() throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");		
+		queryBuilder.append("SELECT dti ");
+		queryBuilder.append("FROM DetailTransactionsOut dti ");
+		queryBuilder.append("INNER JOIN FETCH dti.asset a");
+		queryBuilder.append("INNER JOIN FETCH a.display ");
+		queryBuilder.append("INNER JOIN FETCH a.item ");
+		queryBuilder.append("INNER JOIN FETCH dti.conditionAsset");
+		queryBuilder.append("WHERE day(dti.dueDate) - day(current_date()) <= 7 AND dti.statusEmail = false");
+		String sql = queryBuilder.toString();
+		
+		return createQuery(sql, DetailTransactionsOut.class).getResultList();
+	}
 }

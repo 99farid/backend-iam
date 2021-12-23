@@ -18,6 +18,8 @@ public interface StatusAssetsDao {
  	
  	StatusAssets findOnAssignStatus() throws Exception;
  	
- 	List<StatusAssets> findAllFilterByCode(String code) throws Exception;
+ 	List<StatusAssets> findAllFilterBySearch(String input) throws Exception;
+ 	
+ 	StatusAssets findByCode(String code) throws Exception;
  	
 }

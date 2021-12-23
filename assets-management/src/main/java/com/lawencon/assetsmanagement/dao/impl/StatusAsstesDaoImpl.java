@@ -45,8 +45,8 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 		String sql = queryBuilder.toString();
 		
 		List<?> result = createNativeQuery(sql)
-				.setParameter("deployable", "")
-				.setParameter("pending", "")		
+				.setParameter("deployable", StatusCode.DEPLOYABLE.getCode())
+				.setParameter("pending", StatusCode.PENDING.getCode())		
 				.getResultList();
 		List<StatusAssets> resultList = new ArrayList<StatusAssets>();
 		
@@ -113,16 +113,16 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 	}
 
 	@Override
-	public List<StatusAssets> findAllFilterByCode(String code) throws Exception {
+	public List<StatusAssets> findAllFilterBySearch(String input) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder("");
 		queryBuilder.append("SELECT id , code, status_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM status_assets ");
-		queryBuilder.append("WHERE code LIKE :code");
+		queryBuilder.append("WHERE code LIKE :input OR status_asset_name LIKE :input" );
 		
 		String sql = queryBuilder.toString();
 		
 		List<?> result = createNativeQuery(sql)
-				.setParameter("code", code)
+				.setParameter("input", input)
 				.getResultList();
 		List<StatusAssets> resultList = new ArrayList<StatusAssets>();
 		
@@ -148,6 +148,39 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 		});
 		
 		return resultList;
+	}
+
+	@Override
+	public StatusAssets findByCode(String code) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");
+		queryBuilder.append("SELECT id , code, status_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
+		queryBuilder.append("FROM status_assets ");
+		queryBuilder.append("WHERE code = :code" );
+		
+		String sql = queryBuilder.toString();
+		
+		Object result = createNativeQuery(sql)
+				.setParameter("code", code)
+				.getSingleResult();
+		StatusAssets status = null;
+		if(result != null) {
+			Object[] arrObj = (Object[]) result;
+			status = new StatusAssets();
+			status.setId(arrObj[0].toString());
+			status.setCode(arrObj[1].toString());
+			status.setStatusAssetName(arrObj[2].toString());
+			status.setVersion(Long.valueOf(arrObj[3].toString()));
+			status.setCreatedBy(arrObj[4].toString());
+			status.setCreatedDate(((Timestamp) arrObj[5]).toLocalDateTime());
+			if(arrObj[6] != null) {
+				status.setUpdatedBy(arrObj[6].toString());
+			}
+			if(arrObj[7] != null) {
+				status.setUpdatedDate(((Timestamp) arrObj[7]).toLocalDateTime());
+			}
+			status.setIsActive((Boolean) arrObj[8]);
+		}
+		return status;
 	}
 
 }

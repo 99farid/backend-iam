@@ -15,4 +15,6 @@ public interface PermissionsDao {
 	Permissions saveOrUpdate(Permissions data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;
+	
+	Permissions findByCode(String code) throws Exception;
 }
