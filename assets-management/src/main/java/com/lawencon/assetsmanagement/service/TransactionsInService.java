@@ -1,6 +1,7 @@
 package com.lawencon.assetsmanagement.service;
 
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindAllForPdfTrxInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindAllResTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.FindByIdResTransactionsInDto;
@@ -15,4 +16,6 @@ public interface TransactionsInService {
 	InsertResDto insert(InsertReqDataHeaderTransactionsInDto data) throws Exception;
 	
 	FindAllForPdfTrxInDto findAllForPdf() throws Exception;
+	
+	SendResEmailDto sendFileToEmail() throws Exception;
 }

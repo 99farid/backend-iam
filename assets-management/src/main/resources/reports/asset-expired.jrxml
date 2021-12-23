@@ -25,50 +25,50 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="128" splitType="Stretch">
+	<pageHeader>
+		<band height="179">
 			<rectangle radius="2">
-				<reportElement x="0" y="0" width="798" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="90988899-8c4c-4012-ac30-c90e61bc3de9"/>
+				<reportElement x="60" y="0" width="680" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="90988899-8c4c-4012-ac30-c90e61bc3de9"/>
 			</rectangle>
 			<line>
-				<reportElement x="0" y="127" width="792" height="1" uuid="ec06b305-14d3-4d80-a3a4-8ab9139631a0">
+				<reportElement x="60" y="123" width="680" height="1" uuid="ec06b305-14d3-4d80-a3a4-8ab9139631a0">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<image>
-				<reportElement x="5" y="3" width="125" height="99" uuid="e47e119a-3016-43f5-878a-8f9a40d0bc87"/>
+				<reportElement x="79" y="0" width="125" height="99" uuid="e47e119a-3016-43f5-878a-8f9a40d0bc87"/>
 				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="12" y="108" width="132" height="19" uuid="86eb7331-1f9d-4ba0-b2b3-66de4729e659"/>
+				<reportElement x="79" y="108" width="132" height="19" uuid="86eb7331-1f9d-4ba0-b2b3-66de4729e659"/>
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[PT. Lawencon Internasional]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="610" y="21" width="57" height="19" uuid="57b12e4e-1986-46e1-9380-f97f6d0d74a0"/>
+				<reportElement x="560" y="21" width="57" height="19" uuid="57b12e4e-1986-46e1-9380-f97f6d0d74a0"/>
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[IAM System]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="610" y="39" width="57" height="19" uuid="cda86e18-70b8-4e84-8164-7bcba7f848d2"/>
+				<reportElement x="560" y="39" width="57" height="19" uuid="cda86e18-70b8-4e84-8164-7bcba7f848d2"/>
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Date       :]]></text>
 			</staticText>
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="657" y="39" width="131" height="12" uuid="5aadb50d-f410-470d-b7df-bcc4005e1a76"/>
+				<reportElement x="607" y="39" width="93" height="12" uuid="5aadb50d-f410-470d-b7df-bcc4005e1a76"/>
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="610" y="56" width="183" height="67" uuid="1380ea91-533a-40d7-b8dc-a2d4acd13a49"/>
+				<reportElement x="560" y="56" width="183" height="67" uuid="1380ea91-533a-40d7-b8dc-a2d4acd13a49"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial" size="10"/>
 				</textElement>
@@ -79,22 +79,11 @@ Kec. Tebet, Kota Jakarta Selatan,
 Daerah Khusus Ibukota Jakarta 12870]]></text>
 			</staticText>
 		</band>
-	</title>
-	<pageHeader>
-		<band height="61">
-			<staticText>
-				<reportElement x="257" y="20" width="210" height="30" uuid="d279cca2-8972-4525-857e-7537ab4dd2c8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Asset Expired Report]]></text>
-			</staticText>
-		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="80" splitType="Stretch">
+		<band height="145" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="30" height="80" backcolor="#BFE1FF" uuid="6f06aeba-6e3d-46aa-a767-e7da15da9259"/>
+				<reportElement mode="Opaque" x="54" y="64" width="30" height="80" backcolor="#BFE1FF" uuid="6f06aeba-6e3d-46aa-a767-e7da15da9259"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -107,7 +96,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[NO.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="30" y="0" width="70" height="80" backcolor="#BFE1FF" uuid="d85f48a7-26aa-4238-b334-a8b8eca370c4"/>
+				<reportElement mode="Opaque" x="84" y="64" width="70" height="80" backcolor="#BFE1FF" uuid="d85f48a7-26aa-4238-b334-a8b8eca370c4"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -120,7 +109,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[DISPLAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="100" y="0" width="71" height="80" backcolor="#BFE1FF" uuid="7a4b954f-8588-409b-8c52-b5a10d272e3f"/>
+				<reportElement mode="Opaque" x="154" y="64" width="56" height="80" backcolor="#BFE1FF" uuid="7a4b954f-8588-409b-8c52-b5a10d272e3f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -133,7 +122,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[TYPE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="171" y="0" width="78" height="80" backcolor="#BFE1FF" uuid="b631e59d-d602-41d1-9adf-cf40064c1c10"/>
+				<reportElement mode="Opaque" x="210" y="64" width="70" height="80" backcolor="#BFE1FF" uuid="b631e59d-d602-41d1-9adf-cf40064c1c10"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -146,7 +135,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[NAME]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="249" y="0" width="71" height="80" backcolor="#BFE1FF" uuid="7d29a5ed-297c-4c50-9e06-b99bb72a8561"/>
+				<reportElement mode="Opaque" x="280" y="64" width="64" height="80" backcolor="#BFE1FF" uuid="7d29a5ed-297c-4c50-9e06-b99bb72a8561"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -159,7 +148,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[BRAND]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="320" y="0" width="79" height="80" backcolor="#BFE1FF" uuid="754a7d84-bee7-4d44-a265-d16d6683f365"/>
+				<reportElement mode="Opaque" x="344" y="64" width="79" height="80" backcolor="#BFE1FF" uuid="754a7d84-bee7-4d44-a265-d16d6683f365"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -172,7 +161,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[SERIAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="399" y="0" width="91" height="80" backcolor="#BFE1FF" uuid="ac255a08-5a52-4827-a864-2eb91b8fe815"/>
+				<reportElement mode="Opaque" x="423" y="64" width="77" height="80" backcolor="#BFE1FF" uuid="ac255a08-5a52-4827-a864-2eb91b8fe815"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -185,7 +174,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[STATUS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="490" y="0" width="94" height="80" backcolor="#BFE1FF" uuid="e1fa9650-9bba-46db-abfe-e7967fff8097"/>
+				<reportElement mode="Opaque" x="500" y="64" width="86" height="80" backcolor="#BFE1FF" uuid="e1fa9650-9bba-46db-abfe-e7967fff8097"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -198,7 +187,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[COMPANY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="584" y="0" width="86" height="80" backcolor="#BFE1FF" uuid="d11cbc05-80af-41d0-b7ab-500183302e6f"/>
+				<reportElement mode="Opaque" x="586" y="64" width="62" height="80" backcolor="#BFE1FF" uuid="d11cbc05-80af-41d0-b7ab-500183302e6f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -208,11 +197,10 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CODE 
-TRX]]></text>
+				<text><![CDATA[CODE TRX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="670" y="0" width="130" height="80" backcolor="#BFE1FF" uuid="a1f067d6-11c4-4b0b-9d03-0a8c5a8ec37f"/>
+				<reportElement mode="Opaque" x="648" y="64" width="92" height="80" backcolor="#BFE1FF" uuid="a1f067d6-11c4-4b0b-9d03-0a8c5a8ec37f"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -222,15 +210,21 @@ TRX]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[EXPIRED
-DATE]]></text>
+				<text><![CDATA[EXPIRED DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="21" width="210" height="30" uuid="d279cca2-8972-4525-857e-7537ab4dd2c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asset Expired Report]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="80" splitType="Stretch">
+		<band height="128" splitType="Stretch">
 			<textField>
-				<reportElement mode="Transparent" x="0" y="0" width="30" height="80" uuid="59d32dbe-c722-4975-94a9-721f66766a6b"/>
+				<reportElement mode="Transparent" x="54" y="0" width="30" height="80" uuid="59d32dbe-c722-4975-94a9-721f66766a6b"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -243,7 +237,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="100" y="0" width="71" height="80" uuid="8938a74a-9c3e-4ae5-81d6-8cb95a6a855a"/>
+				<reportElement mode="Transparent" x="154" y="0" width="56" height="80" uuid="8938a74a-9c3e-4ae5-81d6-8cb95a6a855a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -256,7 +250,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getItem().getItemType().getItemTypeName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="171" y="0" width="78" height="80" uuid="3d93de22-94b0-4a92-9104-0452106beaa5"/>
+				<reportElement mode="Transparent" x="210" y="0" width="70" height="80" uuid="3d93de22-94b0-4a92-9104-0452106beaa5"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -269,7 +263,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getItem().getDescription()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="249" y="0" width="71" height="80" uuid="03ab0c23-3b04-489a-b31f-ff3128c8658c"/>
+				<reportElement mode="Transparent" x="280" y="0" width="64" height="80" uuid="03ab0c23-3b04-489a-b31f-ff3128c8658c"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -282,7 +276,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getItem().getBrand()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="320" y="0" width="79" height="80" uuid="5896198a-adf1-4fcb-87be-0f3b0080058e"/>
+				<reportElement mode="Transparent" x="344" y="0" width="79" height="80" uuid="5896198a-adf1-4fcb-87be-0f3b0080058e"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -295,7 +289,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getItem().getSerial()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="399" y="0" width="91" height="80" uuid="ebb60b22-9a94-41d6-98b3-3b70a4e868c6"/>
+				<reportElement mode="Transparent" x="423" y="0" width="77" height="80" uuid="ebb60b22-9a94-41d6-98b3-3b70a4e868c6"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -308,7 +302,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getStatusAsset().getStatusAssetName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="490" y="0" width="94" height="80" uuid="a7e34afe-0f1c-4157-b35e-0cb1e75e4bb8"/>
+				<reportElement mode="Transparent" x="500" y="0" width="86" height="80" uuid="a7e34afe-0f1c-4157-b35e-0cb1e75e4bb8"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -321,7 +315,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getCompany().getCompanyName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="584" y="0" width="86" height="80" uuid="3fb7127c-43df-487a-9658-f6c472139930"/>
+				<reportElement mode="Transparent" x="586" y="0" width="62" height="80" uuid="3fb7127c-43df-487a-9658-f6c472139930"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -334,7 +328,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getInvoice() != null ? $F{_THIS}.getInvoice().getCode() : "-"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="670" y="0" width="130" height="80" uuid="e6464b1b-c296-495a-8b1e-e04ec88c090c"/>
+				<reportElement mode="Transparent" x="648" y="0" width="92" height="80" uuid="e6464b1b-c296-495a-8b1e-e04ec88c090c"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -347,7 +341,7 @@ DATE]]></text>
 				<textFieldExpression><![CDATA[$F{expiredDate}.format( java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy") )]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
-				<reportElement x="30" y="0" width="70" height="80" uuid="cf686ffd-2c89-4969-8625-20609451079a"/>
+				<reportElement x="84" y="0" width="70" height="80" uuid="cf686ffd-2c89-4969-8625-20609451079a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>

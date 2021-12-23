@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
@@ -42,6 +43,7 @@ public class AssetsController extends BaseIamController{
 	
 	@Autowired
 	private AssetsService assetsService;
+
 	
 	@GetMapping
 	public ResponseEntity<?> findAll() throws Exception{
@@ -122,4 +124,11 @@ public class AssetsController extends BaseIamController{
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
     }
+    
+	@GetMapping("/send-pdf")
+	public ResponseEntity<?> sendFileToEmail() throws Exception {
+		SendResEmailDto result = assetsService.sendFileToEmail();
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

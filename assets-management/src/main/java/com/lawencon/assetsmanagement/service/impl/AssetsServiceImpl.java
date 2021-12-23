@@ -2,10 +2,11 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,11 @@ import com.lawencon.assetsmanagement.dao.ItemTypesDao;
 import com.lawencon.assetsmanagement.dao.ItemsDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dao.TrackActivityDao;
+import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
+import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
@@ -35,6 +38,8 @@ import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindByIdResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.InsertReqDataAssetsDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
+import com.lawencon.assetsmanagement.email.EmailHandler;
+import com.lawencon.assetsmanagement.email.EmailModel;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.model.Files;
@@ -43,6 +48,7 @@ import com.lawencon.assetsmanagement.model.ItemTypes;
 import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TrackActivity;
+import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.AssetsService;
 import com.lawencon.util.ExcelUtil;
 
@@ -76,6 +82,12 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 
 	@Autowired
 	private ExcelUtil excelUtil;
+
+	@Autowired
+	private EmailHandler emailHandler;
+	
+	@Autowired
+	private UsersDao usersDao;
 	
 	@Override
 	public FindAllResAssetsDto findAll() throws Exception {
@@ -404,5 +416,25 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		return result;
 	}
 
-	
+	@Override
+	public SendResEmailDto sendFileToEmail() throws Exception {
+		SendResEmailDto send = new SendResEmailDto();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("company", "PT. Lawencon Internasional");
+        
+        FindAllForPdfAssetsExpiredDto result = findAllForPdf();
+        
+        EmailModel email = new EmailModel();
+        
+        Users users = usersDao.findById(getIdAuth());
+        email.setTo(users.getEmail());
+        email.setSubject("Report Assets Expired");
+        email.setText("This is report notification to inform you about report assets expired");
+     
+		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "asset-expired", map);
+		
+		send.setMsg("email sent");	
+		return send;
+	}
 }
