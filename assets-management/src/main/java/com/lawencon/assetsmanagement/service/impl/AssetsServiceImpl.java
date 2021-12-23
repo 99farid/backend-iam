@@ -265,7 +265,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			Assets asset = assetsDao.saveOrUpdate(data);
 			
 			TrackActivity track = new TrackActivity();
-			track.setCode("generate-code");
+			track.setCode(generateCodeTrack());
 			track.setNameAsset(asset.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.UPDATE_ASSET.getName());
@@ -352,18 +352,17 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			item.setDescription(excelUtil.getCellData(i, 1));
 			item.setBrand(excelUtil.getCellData(i, 2));
 			item.setSerial(excelUtil.getCellData(i, 3));
-			List<ItemTypes> type = new ArrayList<ItemTypes>();
 			String codeType = excelUtil.getCellData(i, 4);
-			type = typeDao.findAllFilterByCode(codeType);
-			item.setItemType(type.get(0));
+			ItemTypes type = typeDao.findByCode(codeType);
+			item.setItemType(type);
 			item.setPrice(new BigDecimal(excelUtil.getCellData(i, 5)));
 			item.setCreatedBy(getIdAuth());
 			begin();
 			item = itemsDao.saveOrUpdate(item);
 			asset.setItem(item);
 			
-			List<Companies> company = companiesDao.findAllFilterByCode(excelUtil.getCellData(i, 6));
-			asset.setCompany(company.get(0));
+			Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 6));
+			asset.setCompany(company);
 			if(excelUtil.getCellData(i, 7) != null) {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				LocalDate date = LocalDate.parse(excelUtil.getCellData(i, 7), formatter);
@@ -373,8 +372,8 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			List<Invoices> invoice = new ArrayList<Invoices>();
 			invoice = invoicesDao.findAllFilterByCode(invoiceCode);
 			asset.setInvoice(invoice.get(0));
-			List<StatusAssets> status = statusAssetsDao.findAllFilterByCode(excelUtil.getCellData(i, 9));
-			asset.setStatusAsset(status.get(0));
+			StatusAssets status = statusAssetsDao.findByCode(excelUtil.getCellData(i, 9));
+			asset.setStatusAsset(status);
 			asset.setCreatedBy(getIdAuth());
 			asset = assetsDao.saveOrUpdate(asset);
 			resData.setId(asset.getId());

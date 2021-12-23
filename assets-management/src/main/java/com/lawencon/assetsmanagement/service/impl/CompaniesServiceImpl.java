@@ -12,6 +12,7 @@ import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.companies.FindAllResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindByIdResCompaniesDto;
+import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.service.CompaniesService;
 
@@ -36,12 +37,29 @@ public class CompaniesServiceImpl extends BaseIamServiceImpl implements Companie
 		
 		return result;
 	}
-
+	private void validationInsert(Companies data) throws Exception{
+		if(data != null) {
+			if(data.getCode() != null) {
+				Companies company = companiesDao.findByCode(data.getCode());
+				if(company != null) {
+					throw new ValidationIamException("Code already Used");
+				}
+			}else {
+				throw new ValidationIamException("Data is not complete");
+			}
+			if(data.getCompanyName() == null) {
+				throw new ValidationIamException("Data is not complate");
+			}
+		}else {
+			throw new ValidationIamException("Data is not found");
+		}
+	}
 	@Override
 	public InsertResDto insert(Companies data) throws Exception {	
 		try {
 			InsertResDto insertResDto = new InsertResDto();
 			InsertResDataDto insertResDataDto = new InsertResDataDto();
+			validationInsert(data);
 			data.setCreatedBy(getIdAuth());
 			begin();
 			Companies companiesSave = companiesDao.saveOrUpdate(data);
@@ -59,12 +77,31 @@ public class CompaniesServiceImpl extends BaseIamServiceImpl implements Companie
 			throw new Exception(e);
 		}
 	}
+	private void validationUpdate(Companies data) throws Exception{
+		if(data != null) {
+			if(data.getId() != null) {
+				Companies company = companiesDao.findById(data.getId());
+				if(company == null) {
+					throw new ValidationIamException("Data not found");
+				}
+			}else {
+				throw new ValidationIamException("Data not found");
+			}
+			if(data.getCode() == null || data.getCompanyName() == null || data.getCreatedBy() == null || data.getCreatedDate() == null) {
+				throw new ValidationIamException("Data not complete");
+			}
+				
+		}else {
+			throw new ValidationIamException("Data not found");
+		}
+	}
 
 	@Override
 	public UpdateResDto update(Companies data) throws Exception {
 		try {
 			UpdateResDto updateResDto = new UpdateResDto();
 			UpdateResDataDto updateResDataDto = new UpdateResDataDto();
+			validationUpdate(data);
 			data.setUpdatedBy(getIdAuth());
 			begin();
 			Companies companiesUpdate = companiesDao.saveOrUpdate(data);

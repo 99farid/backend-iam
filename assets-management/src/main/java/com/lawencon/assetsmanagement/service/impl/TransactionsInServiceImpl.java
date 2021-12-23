@@ -1,14 +1,18 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ActivityTrack;
 import com.lawencon.assetsmanagement.constant.HeaderCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsInDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
+import com.lawencon.assetsmanagement.dao.TrackActivityDao;
 import com.lawencon.assetsmanagement.dao.TransactionsInDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -22,6 +26,7 @@ import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsIn;
 import com.lawencon.assetsmanagement.model.StatusAssets;
+import com.lawencon.assetsmanagement.model.TrackActivity;
 import com.lawencon.assetsmanagement.model.TransactionsIn;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsInService;
@@ -46,6 +51,9 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 	
 	@Autowired
 	StatusAssetsDao statusDao;
+	
+	@Autowired
+	TrackActivityDao trackDao;
 	
 	@Override
 	public FindAllResTransactionsInDto findAll() throws Exception {
@@ -98,6 +106,16 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 				updateAssets.setStatusAsset(newStatus);
 				updateAssets.setUpdatedBy(getIdAuth());	
 				updateAssets = assetsDao.saveOrUpdate(updateAssets);
+				
+				TrackActivity track = new TrackActivity();
+				track.setCode(generateCodeTrack());
+				track.setNameAsset(updateAssets.getItem().getDescription());
+				track.setStatusAsset(updateAssets.getStatusAsset().getStatusAssetName());
+				track.setActivity(ActivityTrack.UPDATE_ASSET.getName());
+				track.setDateActivity(LocalDate.now());
+				track.setCreatedBy(getIdAuth());
+				
+				trackDao.saveOrUpdate(track);
 			}
 			commit();
 			

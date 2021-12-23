@@ -33,7 +33,7 @@ public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService
 	@Autowired
 	private BCryptPasswordEncoder bCryptEncoder;
 	
-//	@Autowired
+	@Autowired
 	private EmailHandler emailHandler;
 	
 	public FindAllResUsersDto findAll() throws Exception {

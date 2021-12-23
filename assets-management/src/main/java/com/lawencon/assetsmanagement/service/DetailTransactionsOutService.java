@@ -11,4 +11,6 @@ public interface DetailTransactionsOutService {
 	FindByIdResDetailTransactionsOutDto findById(String id) throws Exception;
 	
 	FindByIdResHeaderDto findByIdHeader(String idHeader) throws Exception;
+	
+	void sendReportDueDate() throws Exception;
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.ActivityTrack;
 import com.lawencon.assetsmanagement.constant.HeaderCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
@@ -14,6 +15,7 @@ import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
+import com.lawencon.assetsmanagement.dao.TrackActivityDao;
 import com.lawencon.assetsmanagement.dao.TransactionsOutDao;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -30,6 +32,7 @@ import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.model.StatusAssets;
+import com.lawencon.assetsmanagement.model.TrackActivity;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.assetsmanagement.service.TransactionsOutService;
 
@@ -53,6 +56,9 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 
 	@Autowired
 	private DetailTransactionsOutDao detailTransactionsOutDao;
+	
+	@Autowired
+	private TrackActivityDao trackDao;
 
 	@Override
 	public FindAllResTransactionsOutDto findAll() throws Exception {
@@ -151,8 +157,18 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				
 				updateAsset.setStatusAsset(statusAsset);
 				updateAsset = assetsDao.saveOrUpdate(updateAsset);
+				
+				TrackActivity track = new TrackActivity();
+				track.setCode(generateCodeTrack());
+				track.setNameAsset(updateAsset.getItem().getDescription());
+				track.setStatusAsset(updateAsset.getStatusAsset().getStatusAssetName());
+				track.setActivity(ActivityTrack.UPDATE_ASSET.getName());
+				track.setDateActivity(LocalDate.now());
+				track.setCreatedBy(getIdAuth());
+				
+				trackDao.saveOrUpdate(track);
 			}
-
+			
 			commit();
 
 			insertResDataDto.setId(transactionsOutSave.getId());
