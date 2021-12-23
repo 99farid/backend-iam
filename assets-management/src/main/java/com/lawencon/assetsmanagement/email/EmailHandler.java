@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("kkk")
+//@Profile("kkk")
 public class EmailHandler {
 	@Autowired
     protected JavaMailSender mailSender;

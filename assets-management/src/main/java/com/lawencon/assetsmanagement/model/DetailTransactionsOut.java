@@ -14,7 +14,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "detail_transactions_out")
 public class DetailTransactionsOut extends BaseEntity{
 
-	private static final long serialVersionUID = 8405397429773033323L;
+	private static final long serialVersionUID = -5753674000518808026L;
 
 	@ManyToOne
 	@JoinColumn(name = "id_transaction_out", nullable = false)
@@ -26,6 +26,9 @@ public class DetailTransactionsOut extends BaseEntity{
 
 	@Column(name = "due_date", nullable = false)
 	private LocalDate dueDate;
+	
+	@Column(name = "status_email", nullable = false)
+	private Boolean statusEmail;
 
 	public TransactionsOut getTransactionOut() {
 		return transactionOut;
@@ -50,4 +53,14 @@ public class DetailTransactionsOut extends BaseEntity{
 	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
+
+	public Boolean getStatusEmail() {
+		return statusEmail;
+	}
+
+	public void setStatusEmail(Boolean statusEmail) {
+		this.statusEmail = statusEmail;
+	}
+	
+	
 }
