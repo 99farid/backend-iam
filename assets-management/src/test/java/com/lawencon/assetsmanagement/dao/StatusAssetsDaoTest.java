@@ -54,6 +54,15 @@ public class StatusAssetsDaoTest {
 		
 		assertEquals(result.getId(), idInserted);
 	}
+	
+	@Test
+	@Order(3)
+	public void shouldSuccessGetByCode() throws Exception {
+		
+		StatusAssets result = statusDao.findByCode("DPL");
+		
+		assertEquals(result.getId(), idInserted);
+	}
 
 	@Test
 	@Order(3)
@@ -73,6 +82,13 @@ public class StatusAssetsDaoTest {
 	@Order(4)
 	public void shouldSuccessFindAll() throws Exception{
 		List<StatusAssets> result = statusDao.findAll();
+		
+		assertEquals(result.size(), 1);
+	}
+	@Test
+	@Order(4)
+	public void shouldSuccessFindAllFilterBySearch() throws Exception{
+		List<StatusAssets> result = statusDao.findAllFilterBySearch("DPL");
 		
 		assertEquals(result.size(), 1);
 	}

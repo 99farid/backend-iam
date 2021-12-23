@@ -51,6 +51,14 @@ public class PermissionDaoTest {
 		
 		assertEquals(result.getId(), idInserted);
 	}
+	@Test
+	@Order(2)
+	public void shouldSuccessGetByCode() throws Exception {
+		
+		Permissions result = permissionDao.findByCode("CTR");
+		
+		assertNotNull(result);
+	}
 
 	@Test
 	@Order(3)
@@ -73,8 +81,16 @@ public class PermissionDaoTest {
 		
 		assertEquals(result.size(), 1);
 	}
+	
 	@Test
 	@Order(5)
+	public void shouldSuccessFindAllFilterBySearch() throws Exception{
+		List<Permissions> result = permissionDao.findAllFilterByName("Create");
+		
+		assertEquals(result.size(), 1);
+	}
+	@Test
+	@Order(6)
 	public void shouldSuccesDelete() throws Exception{
 		ConnHandler.begin();
 		Boolean result = permissionDao.removeById(idInserted);

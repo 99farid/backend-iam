@@ -51,6 +51,14 @@ public class RolesDaoTest {
 		
 		assertNotNull(result);
 	}
+	@Test
+	@Order(2)
+	public void shouldSuccessGetByCOde() throws Exception {
+		
+		Roles result = rolesDao.findByCode("adm");
+		
+		assertNotNull(result);
+	}
 
 	@Test
 	@Order(3)

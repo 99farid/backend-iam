@@ -34,6 +34,7 @@ public class RolePermissionsDaoTest {
 
 	private String idInserted = "";
 
+	private String idRole = "";
 	@Test
 	@Order(1)
 	public void shouldSuccessInsert() throws Exception {
@@ -44,7 +45,7 @@ public class RolePermissionsDaoTest {
 		role.setIsActive(true);
 		role.setRoleName("ADMIN");
 		role = rolesDao.saveOrUpdate(role);
-		
+		idRole = role.getId();
 		Permissions permission = new Permissions();
 		permission.setCode("CTR");
 		permission.setCreatedBy("1");
@@ -71,6 +72,16 @@ public class RolePermissionsDaoTest {
 	public void shouldSuccessGetById() throws Exception {
 		
 		RolePermissions result = rolePermissionsDao.findById(idInserted);
+		
+		assertNotNull(result);
+	}
+	@Test
+	@Order(2)
+	public void shouldSuccessFindAllFilterByRole() throws Exception {
+		
+		List<RolePermissions> result = rolePermissionsDao.findAllFilterByRole(idRole);
+		
+		assertEquals(result.size(), 1);
 		
 		assertNotNull(result);
 	}

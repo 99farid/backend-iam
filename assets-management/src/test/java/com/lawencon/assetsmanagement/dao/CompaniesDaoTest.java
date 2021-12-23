@@ -52,7 +52,7 @@ public class CompaniesDaoTest {
 		
 		Companies result = companiesDao.findById(idInserted);
 		
-		assertEquals(result.getId(), idInserted);
+		assertNotNull(result);
 	}
 
 	@Test
@@ -71,21 +71,29 @@ public class CompaniesDaoTest {
 	}
 	@Test
 	@Order(4)
+	public void shouldSuccessGetByCode() throws Exception {
+		
+		Companies result = companiesDao.findByCode("LWN");
+		
+		assertNotNull(result);
+	}
+	@Test
+	@Order(5)
 	public void shouldSuccessFindAll() throws Exception{
 		List<Companies> result = companiesDao.findAll();
 		
 		assertEquals(result.size(), 1);
 	}
 	@Test
-	@Order(5)
-	public void shouldSuccesfindAllFilterByCode() throws Exception{
-		List<Companies> result = companiesDao.findAllFilterByCode("LWN");
+	@Order(6)
+	public void shouldSuccesfindAllFilterBySearch() throws Exception{
+		List<Companies> result = companiesDao.findAllFilterBySearch("LWN");
 		
 		assertEquals(result.size(), 1);
 	}
 	
 	@Test
-	@Order(6)
+	@Order(7)
 	public void shouldSuccesDelete() throws Exception{
 		ConnHandler.begin();
 		Boolean result = companiesDao.removeById(idInserted);

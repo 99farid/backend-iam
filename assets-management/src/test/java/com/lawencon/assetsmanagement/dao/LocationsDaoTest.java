@@ -65,9 +65,17 @@ public class LocationsDaoTest {
 		
 		assertNotNull(result);
 	}
-
 	@Test
 	@Order(3)
+	public void shouldSuccessGetByCode() throws Exception {
+		
+		Locations result = locationsDao.findByCode("R-001");
+		
+		assertNotNull(result);
+	}
+
+	@Test
+	@Order(4)
 	public void shouldSuccesUpdate() throws Exception{
 		String name = "Ruang Rapat";
 		Locations location = locationsDao.findById(idInserted);
@@ -81,14 +89,21 @@ public class LocationsDaoTest {
 		
 	}
 	@Test
-	@Order(4)
+	@Order(5)
 	public void shouldSuccessFindAll() throws Exception{
 		List<Locations> result = locationsDao.findAll();
 		
 		assertEquals(result.size(), 1);
 	}
 	@Test
-	@Order(5)
+	@Order(6)
+	public void shouldSuccessFindAllFilterBySearch() throws Exception{
+		List<Locations> result = locationsDao.findAllFilterBySearch("R-001");
+		
+		assertEquals(result.size(), 1);
+	}
+	@Test
+	@Order(7)
 	public void shouldSuccesDelete() throws Exception{
 		ConnHandler.begin();
 		Boolean result = locationsDao.removeById(idInserted);

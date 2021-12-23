@@ -54,6 +54,14 @@ public class ItemTypesDaoTest {
 		
 		assertNotNull(result);
 	}
+	@Test
+	@Order(2)
+	public void shouldSuccessGetByCode() throws Exception {
+		
+		ItemTypes result = typesDao.findByCode("GNL");
+		
+		assertNotNull(result);
+	}
 
 	@Test
 	@Order(3)
@@ -79,8 +87,8 @@ public class ItemTypesDaoTest {
 	}
 	@Test
 	@Order(5)
-	public void shouldSuccessFindAllFilterByCode() throws Exception{
-		List<ItemTypes> result = typesDao.findAllFilterByCode("GNL");
+	public void shouldSuccessFindAllFilterBySearch() throws Exception{
+		List<ItemTypes> result = typesDao.findAllFilterBySearch("GNL");
 		
 		assertEquals(result.size(), 1);
 	}

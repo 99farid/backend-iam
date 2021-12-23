@@ -65,11 +65,19 @@ public class ConditionAssetsDaoTest {
 		
 		ConditionAssets result = conditionDao.findById(idInserted);
 		
-		assertEquals(result.getId(), idInserted);
+		assertNotNull(result);
+	}
+	@Test
+	@Order(3)
+	public void shouldSuccessGetByCode() throws Exception {
+		
+		ConditionAssets result = conditionDao.findByCode("RDPL");
+		
+		assertNotNull(result);
 	}
 
 	@Test
-	@Order(3)
+	@Order(4)
 	public void shouldSuccesUpdate() throws Exception{
 		String newName = "Ready";
 		ConditionAssets condition = conditionDao.findById(idInserted);
@@ -83,7 +91,7 @@ public class ConditionAssetsDaoTest {
 		
 	}
 	@Test
-	@Order(4)
+	@Order(5)
 	public void shouldSuccessFindAll() throws Exception{
 		List<ConditionAssets> result = conditionDao.findAll();
 		
@@ -92,6 +100,14 @@ public class ConditionAssetsDaoTest {
 	
 	@Test
 	@Order(5)
+	public void shouldSuccessFindAllFilterBySearch() throws Exception{
+		List<ConditionAssets> result = conditionDao.findAllFilterBySearch("RDPL");
+		
+		assertEquals(result.size(), 1);
+	}
+	
+	@Test
+	@Order(6)
 	public void shouldSuccesDelete() throws Exception{
 		ConnHandler.begin();
 		Boolean result = conditionDao.removeById(idInserted);
