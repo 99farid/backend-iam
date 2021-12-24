@@ -27,7 +27,7 @@ import com.lawencon.assetsmanagement.dto.transactionsin.FindByIdResTransactionsI
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataDetailTransactionsInDto;
 import com.lawencon.assetsmanagement.dto.transactionsin.InsertReqDataHeaderTransactionsInDto;
 import com.lawencon.assetsmanagement.email.EmailHandler;
-import com.lawencon.assetsmanagement.email.EmailModel;
+import com.lawencon.assetsmanagement.helper.EmailModel;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsIn;

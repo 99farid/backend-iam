@@ -16,7 +16,7 @@ import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllResDetailT
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindByIdResDetailTransactionsOutDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindByIdResHeaderDto;
 import com.lawencon.assetsmanagement.email.EmailHandler;
-import com.lawencon.assetsmanagement.email.EmailModel;
+import com.lawencon.assetsmanagement.helper.EmailModel;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.Users;
@@ -73,10 +73,10 @@ public class DetailTransactionsOutServiceImpl extends BaseIamServiceImpl impleme
 				if(detail.getTransactionOut().getEmployee() != null) {
 					Employees reciever = employeesDao.findById(detail.getTransactionOut().getEmployee().getId());
 					Users sender = usersDao.findById(detail.getCreatedBy());
-					
-					emailHandler.sendSimpleMessage(reciever.getEmail(), "Reminder Due Date Asset", detail.getDueDate().toString());
-					
-					emailHandler.sendSimpleMessage(sender.getEmail(), "Reminder Due Date Asset", detail.getDueDate().toString());
+//					
+//					emailHandler.sendEmail(reciever.getEmail(), "Reminder Due Date Asset", detail.getDueDate().toString());
+//					
+//					emailHandler.sendEmail(sender.getEmail(), "Reminder Due Date Asset", detail.getDueDate().toString());
 					Users system = usersDao.getSystem();
 					detail.setUpdatedBy(system.getId());
 					detail.setStatusEmail(true);

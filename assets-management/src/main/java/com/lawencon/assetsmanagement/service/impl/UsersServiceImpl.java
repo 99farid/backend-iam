@@ -1,6 +1,7 @@
 package com.lawencon.assetsmanagement.service.impl;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
+import com.lawencon.assetsmanagement.dao.GeneralTemplateDao;
 import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -21,8 +23,11 @@ import com.lawencon.assetsmanagement.dto.users.FindByIdResUsersDto;
 import com.lawencon.assetsmanagement.dto.users.FindByResEmailDto;
 import com.lawencon.assetsmanagement.email.EmailHandler;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
+import com.lawencon.assetsmanagement.helper.EmailModel;
+import com.lawencon.assetsmanagement.model.GeneralTemplate;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.UsersService;
+import com.lawencon.assetsmanagement.util.TemplateEmailUtil;
 
 @Service
 public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService {
@@ -36,10 +41,17 @@ public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService
 	@Autowired
 	private EmailHandler emailHandler;
 	
+	@Autowired
+	private GeneralTemplateDao templateDao;
+	
+	@Autowired
+	private TemplateEmailUtil templateEmailUtil;
+	
 	public FindAllResUsersDto findAll() throws Exception {
 		FindAllResUsersDto result = new FindAllResUsersDto();
 		result.setData(usersDao.findAll());
 		result.setMsg(null);
+		
 		return result;
 	}
 	
@@ -88,12 +100,21 @@ public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService
 			String newPass = generatePassword();
 			String encodePass = bCryptEncoder.encode(newPass);
 			data.setPass(encodePass);
-			data.setCreatedBy("1");
+			Users system = usersDao.getSystem();
+			data.setCreatedBy(system.getId());
 			begin();
 			Users usersSave = usersDao.saveOrUpdate(data);
 			commit();
 
-			emailHandler.sendSimpleMessage(data.getEmail(), "Your new password", newPass);
+			EmailModel emailData = new EmailModel();
+			emailData.setSubject("New Password");
+			emailData.setTo(usersSave.getEmail());
+			GeneralTemplate template = templateDao.findByCode("SEND_PASSWORD");
+			Map<String, Object> mapReplace =  templateEmailUtil.setKey("@password@").setValue(newPass).build();
+			
+			String text = templateEmailUtil.replacteTextTemplate(template.getDataTemplate(), mapReplace );
+			emailData.setText(text);
+			emailHandler.sendEmail(emailData);
 			insertResDataDto.setId(usersSave.getId());
 			insertResDto.setData(insertResDataDto);
 			insertResDto.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());

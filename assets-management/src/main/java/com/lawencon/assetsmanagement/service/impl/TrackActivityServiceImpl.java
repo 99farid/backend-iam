@@ -12,7 +12,7 @@ import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.trackactivity.FindAllResTrackActivityDto;
 import com.lawencon.assetsmanagement.dto.trackactivity.FindByIdResTrackActivityDto;
 import com.lawencon.assetsmanagement.email.EmailHandler;
-import com.lawencon.assetsmanagement.email.EmailModel;
+import com.lawencon.assetsmanagement.helper.EmailModel;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.TrackActivityService;
 

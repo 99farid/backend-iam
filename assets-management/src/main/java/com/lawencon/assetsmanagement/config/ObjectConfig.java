@@ -1,12 +1,15 @@
 package com.lawencon.assetsmanagement.config;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.lawencon.assetsmanagement.util.TemplateEmailUtil;
 import com.lawencon.util.ExcelUtil;
 
 @Configuration
@@ -29,6 +32,12 @@ public class ObjectConfig {
 	@Bean
 	public ExcelUtil excelUtil() {
 		return new ExcelUtil();
+	}
+	
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public TemplateEmailUtil templateEmailUtil() {
+		return new TemplateEmailUtil();
 	}
 
 	@Bean

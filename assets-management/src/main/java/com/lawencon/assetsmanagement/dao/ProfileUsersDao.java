@@ -15,4 +15,5 @@ public interface ProfileUsersDao {
 	ProfileUsers saveOrUpdate(ProfileUsers data) throws Exception;
 	
 	boolean removeById(String id) throws Exception;
+	
 }

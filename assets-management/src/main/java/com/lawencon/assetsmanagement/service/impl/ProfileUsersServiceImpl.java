@@ -49,9 +49,9 @@ public class ProfileUsersServiceImpl extends BaseIamServiceImpl implements Profi
 	}
 	
 	@Override
-	public FindByResUserIdDto findByUser(String userId) throws Exception {
+	public FindByResUserIdDto findByUser() throws Exception {
 		FindByResUserIdDto result = new FindByResUserIdDto();
-		result.setData(profileUsersDao.findByUser(userId));
+		result.setData(profileUsersDao.findByUser(getIdAuth()));
 		result.setMsg(null);
 		
 		return result;

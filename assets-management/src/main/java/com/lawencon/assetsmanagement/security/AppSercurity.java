@@ -43,7 +43,6 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-		.antMatchers(HttpMethod.POST, "/users/**","/profiles-users/**")
 		.antMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/assets/pic/**", "/track-activities/**");
 		
 	}

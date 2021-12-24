@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.lawencon.assetsmanagement.helper.EmailModel;
 import com.lawencon.util.JasperUtil;
 
 @Component
@@ -21,17 +22,17 @@ public class EmailHandler {
     protected JavaMailSender mailSender;
 
     @Async
-    public void sendSimpleMessage(String to, String subject, String text) throws Exception{
+    public void sendEmail(EmailModel data) throws Exception{
 
 
         MimeMessage message = mailSender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        helper.setFrom("noreply@baeldung.com");
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText("<b>"+text+"</b>",true);
+        helper.setFrom("i.assetsmanagementlawencon@gmail.com");
+        helper.setTo(data.getTo());
+        helper.setSubject(data.getSubject());
+        helper.setText(data.getText(),true);
        
         mailSender.send(message);
     }

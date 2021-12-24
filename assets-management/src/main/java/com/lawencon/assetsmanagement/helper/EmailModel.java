@@ -1,4 +1,4 @@
-package com.lawencon.assetsmanagement.email;
+package com.lawencon.assetsmanagement.helper;
 
 public class EmailModel {
 

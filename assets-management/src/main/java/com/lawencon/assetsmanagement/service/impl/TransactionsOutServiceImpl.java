@@ -32,7 +32,7 @@ import com.lawencon.assetsmanagement.dto.transactionsout.FindByIdResTransactions
 import com.lawencon.assetsmanagement.dto.transactionsout.InsertReqDataDetailTransactionsOutDto;
 import com.lawencon.assetsmanagement.dto.transactionsout.InsertReqDataTransactionsOutDto;
 import com.lawencon.assetsmanagement.email.EmailHandler;
-import com.lawencon.assetsmanagement.email.EmailModel;
+import com.lawencon.assetsmanagement.helper.EmailModel;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
