@@ -10,6 +10,7 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.invoices.FindAllFilterByCodeResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
 import com.lawencon.assetsmanagement.model.Invoices;
@@ -101,6 +102,14 @@ public class InvoicesServiceImpl extends BaseIamServiceImpl implements InvoicesS
 			throw new Exception(e);
 		}
 		
+	}
+
+	@Override
+	public FindAllFilterByCodeResInvoicesDto findAllFilterByCode(String code) throws Exception {
+		FindAllFilterByCodeResInvoicesDto result = new FindAllFilterByCodeResInvoicesDto();
+		result.setData(invoicesDao.findAllFilterByCode(code));
+		result.setMsg(null);
+		return result;
 	}
 
 }

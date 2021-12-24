@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.statusassets.FindAllFilterBySearchResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindAllResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindByIdResStatusAsstesDto;
 import com.lawencon.assetsmanagement.model.StatusAssets;
@@ -35,6 +37,12 @@ public class StatusAssetsController extends BaseIamController{
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
 		FindByIdResStatusAsstesDto result = statusService.findById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("search")
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam String input) throws Exception{
+		FindAllFilterBySearchResStatusAsstesDto result = statusService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	

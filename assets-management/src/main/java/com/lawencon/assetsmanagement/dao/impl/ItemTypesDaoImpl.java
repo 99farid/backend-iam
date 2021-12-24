@@ -38,7 +38,7 @@ public class ItemTypesDaoImpl extends BaseDaoImpl<ItemTypes> implements ItemType
 		StringBuilder queryBuilder = new StringBuilder();
 		queryBuilder.append("SELECT id, code, item_type_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM item_types ");
-		queryBuilder.append("WHERE code LIKE :input OR item_type_name LIKE :input" );
+		queryBuilder.append("WHERE code LIKE '%"+input+"%' OR item_type_name LIKE '%"+input+"%'" );
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql).setParameter("input", input).getResultList();

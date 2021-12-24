@@ -10,6 +10,7 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.itemtypes.FindAllFilterBySearchResItemTypesDto;
 import com.lawencon.assetsmanagement.dto.itemtypes.FindAllResItemTypesDto;
 import com.lawencon.assetsmanagement.dto.itemtypes.FindByIdResItemTypesDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
@@ -135,6 +136,18 @@ public class ItemTypesServiceImpl extends BaseIamServiceImpl implements ItemType
 			throw new Exception(e);
 		}
 		
+	}
+
+	@Override
+	public FindAllFilterBySearchResItemTypesDto findAllFilterBySearch(String input) throws Exception {
+		FindAllFilterBySearchResItemTypesDto result = new FindAllFilterBySearchResItemTypesDto();
+		if(input.equals("") || input ==null) {
+			return result;
+		}else {
+			result.setData(itemTypesDao.findAllFilterBySearch(input));
+			result.setMsg(null);
+			return result;
+		}
 	}
 
 }

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.companies.FindAllFilterBySearchResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindAllResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindByIdResCompaniesDto;
 import com.lawencon.assetsmanagement.model.Companies;
@@ -37,6 +39,12 @@ public class CompaniesController extends BaseIamController{
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception {
 		FindByIdResCompaniesDto result = companiesService.findById(id);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	@GetMapping("search")
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("query") String input) throws Exception {
+		FindAllFilterBySearchResCompaniesDto result = companiesService.findAllFilterBySearch(input);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

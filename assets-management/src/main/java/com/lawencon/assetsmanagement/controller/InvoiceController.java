@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.invoices.FindAllFilterByCodeResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
 import com.lawencon.assetsmanagement.model.Invoices;
@@ -35,6 +37,12 @@ public class InvoiceController extends BaseIamController{
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
 		FindByIdResInvoicesDto result = invoicesService.findById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("search")
+	public ResponseEntity<?> findAllFilterByCode(@RequestParam("query") String code) throws Exception{
+		FindAllFilterByCodeResInvoicesDto result = invoicesService.findAllFilterByCode(code);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	

@@ -10,6 +10,7 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.companies.FindAllFilterBySearchResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindAllResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindByIdResCompaniesDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
@@ -143,6 +144,19 @@ public class CompaniesServiceImpl extends BaseIamServiceImpl implements Companie
 			rollback();
 			throw new Exception(e);
 		}
+	}
+
+	@Override
+	public FindAllFilterBySearchResCompaniesDto findAllFilterBySearch(String input) throws Exception {
+		FindAllFilterBySearchResCompaniesDto result = new FindAllFilterBySearchResCompaniesDto();
+		if(input.equals("") || input ==null) {
+			return result;
+		}else {
+			result.setData(companiesDao.findAllFilterBySearch(input));
+			result.setMsg(null);
+			return result;
+		}
+		
 	}
 
 }

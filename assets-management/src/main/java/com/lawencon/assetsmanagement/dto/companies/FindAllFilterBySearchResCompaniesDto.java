@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.lawencon.assetsmanagement.model.Companies;
 
-public class FindAllFilterByCodeResCompaniesDto {
+public class FindAllFilterBySearchResCompaniesDto {
 
 	private List<Companies> data;
 	

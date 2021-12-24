@@ -10,6 +10,7 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.statusassets.FindAllFilterBySearchResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindAllResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindByIdResStatusAsstesDto;
 import com.lawencon.assetsmanagement.model.StatusAssets;
@@ -100,6 +101,14 @@ public class StatusAssetsServiceImpl extends BaseIamServiceImpl implements Statu
 			throw new Exception(e);
 		}
 		
+	}
+
+	@Override
+	public FindAllFilterBySearchResStatusAsstesDto findAllFilterBySearch(String input) throws Exception {
+		FindAllFilterBySearchResStatusAsstesDto result = new FindAllFilterBySearchResStatusAsstesDto();
+		result.setData(statusAssetsDao.findAllFilterBySearch(input));
+		result.setMsg(null);
+		return result;
 	}
 
 }

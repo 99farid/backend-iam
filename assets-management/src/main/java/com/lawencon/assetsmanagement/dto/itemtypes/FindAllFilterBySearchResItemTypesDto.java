@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.lawencon.assetsmanagement.model.ItemTypes;
 
-public class FindAllFilterByCodeResItemTypesDto {
+public class FindAllFilterBySearchResItemTypesDto {
 	private List<ItemTypes> data;
 	private String msg;
 	public List<ItemTypes> getData() {

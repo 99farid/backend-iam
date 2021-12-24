@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.lawencon.assetsmanagement.model.StatusAssets;
 
-public class FindAllFilterByCodeResStatusAsstesDto {
+public class FindAllFilterBySearchResStatusAsstesDto {
 	private List<StatusAssets> data;
 	private String msg;
 	public List<StatusAssets> getData() {
