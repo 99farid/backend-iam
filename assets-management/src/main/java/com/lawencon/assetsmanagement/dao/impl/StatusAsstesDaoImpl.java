@@ -117,12 +117,11 @@ public class StatusAsstesDaoImpl extends BaseDaoImpl<StatusAssets> implements St
 		StringBuilder queryBuilder = new StringBuilder("");
 		queryBuilder.append("SELECT id , code, status_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM status_assets ");
-		queryBuilder.append("WHERE code LIKE :input OR status_asset_name LIKE :input" );
+		queryBuilder.append("WHERE code LIKE '%"+input+"%' OR status_asset_name LIKE '%"+input+"%'" );
 		
 		String sql = queryBuilder.toString();
 		
 		List<?> result = createNativeQuery(sql)
-				.setParameter("input", input)
 				.getResultList();
 		List<StatusAssets> resultList = new ArrayList<StatusAssets>();
 		

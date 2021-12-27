@@ -41,7 +41,7 @@ public class StatusAssetsController extends BaseIamController{
 	}
 	
 	@GetMapping("search")
-	public ResponseEntity<?> findAllFilterBySearch(@RequestParam String input) throws Exception{
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResStatusAsstesDto result = statusService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

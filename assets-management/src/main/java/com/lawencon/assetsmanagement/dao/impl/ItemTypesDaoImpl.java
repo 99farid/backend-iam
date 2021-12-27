@@ -41,7 +41,7 @@ public class ItemTypesDaoImpl extends BaseDaoImpl<ItemTypes> implements ItemType
 		queryBuilder.append("WHERE code LIKE '%"+input+"%' OR item_type_name LIKE '%"+input+"%'" );
 		
 		String sql = queryBuilder.toString();
-		List<?> result = createNativeQuery(sql).setParameter("input", input).getResultList();
+		List<?> result = createNativeQuery(sql).getResultList();
 		List<ItemTypes> resultList = new ArrayList<>();
 		
 		result.forEach(rs -> {
