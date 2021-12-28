@@ -71,7 +71,7 @@ public class EmployeesDaoImpl extends BaseDaoImpl<Employees> implements Employee
 				employee.setIsActive(Boolean.valueOf(objArr[14].toString()));
 			}
 		} catch (NoResultException e) {
-			throw new NoResultException("Nip Not Found");
+			return null;
 		} catch (NonUniqueResultException e) {
 			throw new NonUniqueResultException("Nip Found More Than One");
 		}
