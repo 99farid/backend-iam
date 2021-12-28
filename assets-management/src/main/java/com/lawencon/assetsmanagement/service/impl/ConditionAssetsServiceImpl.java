@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
+import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -14,6 +15,7 @@ import com.lawencon.assetsmanagement.dto.conditionassets.FindAllResConditionAsse
 import com.lawencon.assetsmanagement.dto.conditionassets.FindByIdResConditionAssetsDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.ConditionAssets;
+import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.service.ConditionAssetsService;
 
 @Service
@@ -21,6 +23,9 @@ public class ConditionAssetsServiceImpl extends BaseIamServiceImpl implements Co
 	
 	@Autowired
 	private ConditionAssetsDao conditionAssetsDao;
+	
+	@Autowired
+	private StatusAssetsDao statusDao;
 
 	@Override
 	public FindAllResConditionAssetsDto findAll() throws Exception {

@@ -2,6 +2,7 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.InvoicesDao;
@@ -39,7 +40,7 @@ public class InvoicesServiceImpl extends BaseIamServiceImpl implements InvoicesS
 	}
 
 	@Override
-	public InsertResDto insert(Invoices data) throws Exception {
+	public InsertResDto insert(Invoices data, MultipartFile invoicePict) throws Exception {
 		try {
 			data.setCreatedBy(getIdAuth());
 			begin();
@@ -62,7 +63,7 @@ public class InvoicesServiceImpl extends BaseIamServiceImpl implements InvoicesS
 	}
 
 	@Override
-	public UpdateResDto update(Invoices data) throws Exception {
+	public UpdateResDto update(Invoices data, MultipartFile invoicePict) throws Exception {
 		try {
 			data.setUpdatedBy(getIdAuth());
 			begin();
