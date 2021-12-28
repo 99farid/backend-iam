@@ -38,8 +38,11 @@ public class RolePermissionsDaoImpl extends BaseDaoImpl<RolePermissions> impleme
 	@Override
 	public List<RolePermissions> findAllFilterByRole(String idRole) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT id, id_role, id_permission, ver, created_by, created_date, updated_by, updated_date, is_active ");
-		queryBuilder.append("FROM role_permissions ");
+		queryBuilder.append("SELECT rp.id, id_role, r.code, id_permission, p.permission_name, ");
+		queryBuilder.append("rp.ver, rp.created_by, rp.created_date, rp.updated_by, rp.updated_date, rp.is_active ");
+		queryBuilder.append("FROM role_permissions rp ");
+		queryBuilder.append("INNER JOIN permissions p ON p.id =  rp.id_permission ");
+		queryBuilder.append("INNER JOIN roles r ON r.id = rp.id_role ");
 		queryBuilder.append("WHERE id_role = :idRole ");
 		
 		String sql = queryBuilder.toString();
@@ -54,23 +57,25 @@ public class RolePermissionsDaoImpl extends BaseDaoImpl<RolePermissions> impleme
 			
 			Roles role = new Roles();
 			role.setId(arrObj[1].toString());
+			role.setCode(arrObj[2].toString());
 			rolePermissions.setRole(role);
 			
 			Permissions permissions = new Permissions();
-			permissions.setId(arrObj[2].toString());
+			permissions.setId(arrObj[3].toString());
+			permissions.setPermissionName(arrObj[4].toString());
 			rolePermissions.setPermission(permissions);
 			
-			rolePermissions.setVersion(Long.valueOf(arrObj[3].toString()));
-			rolePermissions.setCreatedBy(arrObj[4].toString());
-			rolePermissions.setCreatedDate(((Timestamp)arrObj[5]).toLocalDateTime());
+			rolePermissions.setVersion(Long.valueOf(arrObj[5].toString()));
+			rolePermissions.setCreatedBy(arrObj[6].toString());
+			rolePermissions.setCreatedDate(((Timestamp)arrObj[7]).toLocalDateTime());
 			
-			if(arrObj[6] != null) {
-				rolePermissions.setUpdatedBy(arrObj[6].toString());
+			if(arrObj[8] != null) {
+				rolePermissions.setUpdatedBy(arrObj[8].toString());
 			}
-			if(arrObj[7] != null) {
-				rolePermissions.setUpdatedDate(((Timestamp)arrObj[7]).toLocalDateTime());
+			if(arrObj[9] != null) {
+				rolePermissions.setUpdatedDate(((Timestamp)arrObj[9]).toLocalDateTime());
 			}
-			rolePermissions.setIsActive((Boolean)arrObj[8]);
+			rolePermissions.setIsActive((Boolean)arrObj[10]);
 			
 			resultList.add(rolePermissions);
 		});
