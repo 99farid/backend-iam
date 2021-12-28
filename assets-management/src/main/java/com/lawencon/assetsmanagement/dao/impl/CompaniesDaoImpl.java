@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
@@ -71,35 +73,43 @@ public class CompaniesDaoImpl extends BaseDaoImpl<Companies> implements Companie
 
 	@Override
 	public Companies findByCode(String code) throws Exception {
-		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append(
-				"SELECT id, code, company_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
-		queryBuilder.append("FROM companies ");
-		queryBuilder.append("WHERE code = :code");
+		try {
+			StringBuilder queryBuilder = new StringBuilder();
+			queryBuilder.append(
+					"SELECT id, code, company_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
+			queryBuilder.append("FROM companies ");
+			queryBuilder.append("WHERE code = :code");
 
-		String sql = queryBuilder.toString();
-		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
-		Companies company = null;
+			String sql = queryBuilder.toString();
+			Object result = createNativeQuery(sql)
+					.setParameter("code", code)
+					.getSingleResult();
+			Companies company = null;
 
-		if (result != null) {
-			Object[] arrObj = (Object[]) result;
-			company = new Companies();
-			company.setId(arrObj[0].toString());
-			company.setCode(arrObj[1].toString());
-			company.setCompanyName(arrObj[2].toString());
-			company.setVersion(Long.valueOf(arrObj[3].toString()));
-			company.setCreatedBy(arrObj[4].toString());
-			company.setCreatedDate(((Timestamp) arrObj[5]).toLocalDateTime());
-			if (arrObj[6] != null) {
-				company.setUpdatedBy(arrObj[6].toString());
+			if (result != null) {
+				Object[] arrObj = (Object[]) result;
+				company = new Companies();
+				company.setId(arrObj[0].toString());
+				company.setCode(arrObj[1].toString());
+				company.setCompanyName(arrObj[2].toString());
+				company.setVersion(Long.valueOf(arrObj[3].toString()));
+				company.setCreatedBy(arrObj[4].toString());
+				company.setCreatedDate(((Timestamp) arrObj[5]).toLocalDateTime());
+				if (arrObj[6] != null) {
+					company.setUpdatedBy(arrObj[6].toString());
+				}
+				if (arrObj[7] != null) {
+					company.setUpdatedDate(((Timestamp) arrObj[7]).toLocalDateTime());
+				}
+				company.setIsActive((Boolean) arrObj[8]);
+
 			}
-			if (arrObj[7] != null) {
-				company.setUpdatedDate(((Timestamp) arrObj[7]).toLocalDateTime());
-			}
-			company.setIsActive((Boolean) arrObj[8]);
-
+			return company;
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
 		}
-		return company;
+		
 	}
 
 }
