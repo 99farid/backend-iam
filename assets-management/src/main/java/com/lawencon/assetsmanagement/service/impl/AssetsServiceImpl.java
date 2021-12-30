@@ -32,6 +32,8 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResComponentDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResGeneralItemDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
@@ -335,6 +337,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 	@Override
 	public CountAssetByStatusResAssetsDto countAssetByStatus(String statusCode) throws Exception {
 		CountAssetByStatusResAssetsDto result = new CountAssetByStatusResAssetsDto();
+		
 		result.setData(assetsDao.countAssetByStatus(statusCode));
 		result.setMsg(null);
 		return result;
@@ -343,6 +346,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 	@Override
 	public FindAllFilterByTypeResAssetsDto findAllFilterByType(String typeCode) throws Exception {
 		FindAllFilterByTypeResAssetsDto result = new FindAllFilterByTypeResAssetsDto();
+		
 		result.setData(assetsDao.findAllFilterByType(typeCode));
 		result.setMsg(null);
 		return result;
@@ -351,11 +355,38 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 	@Override
 	public FindAllFilterBySearchResAssetsDto findAllFilterBySearch(String input) throws Exception {
 		FindAllFilterBySearchResAssetsDto result = new FindAllFilterBySearchResAssetsDto();
+		if(input.equals("") || input ==null) {
+			return result;
+		}
 		result.setData(assetsDao.findAllFilterBySearch(input));
 		result.setMsg(null);
 		return result;
 	}
 
+	@Override
+	public FindAllFilterBySearchResGeneralItemDto findAllFilterBySearchForGeneralItem(String input) throws Exception {
+		FindAllFilterBySearchResGeneralItemDto result = new FindAllFilterBySearchResGeneralItemDto();
+		if(input.equals("") || input ==null) {
+			return result;
+		}
+		result.setData(assetsDao.findAllFilterBySearchForGeneralItem(input));
+		result.setMsg(null);
+		
+		return result;
+	}
+	
+	@Override
+	public FindAllFilterBySearchResComponentDto findAllFilterBySearchForComponent(String input) throws Exception {
+		FindAllFilterBySearchResComponentDto result = new FindAllFilterBySearchResComponentDto();
+		if(input.equals("") || input ==null) {
+			return result;
+		}
+		result.setData(assetsDao.findAllFilterBySearchForComponent(input));
+		result.setMsg(null);
+		
+		return result;
+	}
+	
 	@Override
 	public InsertResDto insertFromExcel(MultipartFile data) throws Exception {
 		InsertResDto result = new InsertResDto();

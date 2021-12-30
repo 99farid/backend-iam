@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
+import com.lawencon.assetsmanagement.dto.companies.FindAllFilterBySearchResCompaniesDto;
+import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResRolePermissionsDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindByIdResRolePermissionsDto;
 import com.lawencon.assetsmanagement.service.RolePermissionsService;
@@ -31,6 +34,13 @@ public class RolePermissionsController extends BaseIamController{
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception {
 		FindByIdResRolePermissionsDto result = rolePermissionsService.findById(id);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("role")
+	public ResponseEntity<?> findAllFilterByRole(@RequestParam("q") String idRole) throws Exception {
+		FindAllResFilterByRoleDto result = rolePermissionsService.findAllFilterByRole(idRole);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

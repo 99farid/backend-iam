@@ -9,6 +9,8 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResComponentDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResGeneralItemDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
@@ -35,6 +37,10 @@ public interface AssetsService {
 	FindAllFilterByTypeResAssetsDto findAllFilterByType(String typeCode) throws Exception;
 
 	FindAllFilterBySearchResAssetsDto findAllFilterBySearch(String input) throws Exception;
+	
+	FindAllFilterBySearchResGeneralItemDto findAllFilterBySearchForGeneralItem(String input) throws Exception;
+	
+	FindAllFilterBySearchResComponentDto findAllFilterBySearchForComponent(String input) throws Exception;
 	
 	InsertResDto insertFromExcel (MultipartFile data) throws Exception;
 	

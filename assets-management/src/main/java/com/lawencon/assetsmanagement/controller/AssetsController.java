@@ -26,6 +26,8 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetByStatusResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.CountAssetResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResAssetsDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResComponentDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllFilterBySearchResGeneralItemDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllFilterByTypeResAssetsDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.assets.FindAllResAssetsDto;
@@ -100,10 +102,23 @@ public class AssetsController extends BaseIamController{
 	
 	
 	@GetMapping ("search")
-	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("q") String input) throws Exception{
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResAssetsDto result =   assetsService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping ("general")
+	public ResponseEntity<?> findAllFilterBySearchForGeneralItem(@RequestParam("query") String input) throws Exception{
+		FindAllFilterBySearchResGeneralItemDto result = assetsService.findAllFilterBySearchForGeneralItem(input);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping ("component")
+	public ResponseEntity<?> findAllFilterBySearchForComponent(@RequestParam("query") String input) throws Exception{
+		FindAllFilterBySearchResComponentDto result = assetsService.findAllFilterBySearchForComponent(input);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 	@GetMapping(value = "pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getPic(@PathVariable("id") String id) throws Exception {
