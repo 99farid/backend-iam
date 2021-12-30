@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
+import com.lawencon.assetsmanagement.dao.FilesDao;
 import com.lawencon.assetsmanagement.dao.InvoicesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -14,6 +15,7 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindAllFilterByCodeResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindAllResInvoicesDto;
 import com.lawencon.assetsmanagement.dto.invoices.FindByIdResInvoicesDto;
+import com.lawencon.assetsmanagement.model.Files;
 import com.lawencon.assetsmanagement.model.Invoices;
 import com.lawencon.assetsmanagement.service.InvoicesService;
 
@@ -21,6 +23,9 @@ import com.lawencon.assetsmanagement.service.InvoicesService;
 public class InvoicesServiceImpl extends BaseIamServiceImpl implements InvoicesService{
 	@Autowired
 	private InvoicesDao invoicesDao;
+	
+	@Autowired
+	private FilesDao filesDao;
 	
 	@Override
 	public FindAllResInvoicesDto findAll() throws Exception {
@@ -43,7 +48,19 @@ public class InvoicesServiceImpl extends BaseIamServiceImpl implements InvoicesS
 	public InsertResDto insert(Invoices data, MultipartFile invoicePict) throws Exception {
 		try {
 			data.setCreatedBy(getIdAuth());
+			String extention = invoicePict.getOriginalFilename();
+			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+			
+			Files fileInsert = new Files();
+			fileInsert.setDataFile(invoicePict.getBytes());
+			fileInsert.setExtention(extention);
+			fileInsert.setCreatedBy(getIdAuth());
+			
+			
 			begin();
+			Files filesSave = new Files();
+			filesSave = filesDao.saveOrUpdate(fileInsert);
+			data.setInvoicePict(filesSave);
 			Invoices invoice = invoicesDao.saveOrUpdate(data);
 			commit();
 			InsertResDataDto dataResult = new InsertResDataDto();

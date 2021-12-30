@@ -70,7 +70,7 @@ public class AssetsController extends BaseIamController{
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update (@RequestPart String data, @RequestPart MultipartFile display) throws Exception{
+	public ResponseEntity<?> update (@RequestPart String data, @RequestPart(required = false) MultipartFile display) throws Exception{
 		UpdateResDto result = assetsService.update(convertToModel(data, Assets.class), display);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

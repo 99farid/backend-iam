@@ -198,19 +198,21 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 
 			asset.setCreatedBy(getIdAuth());
 			asset.setExpiredDate(data.getExpiredDate());
-
-			
-			String extention = display.getOriginalFilename();
-			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
 			Files newDisplay = new Files();
-			newDisplay.setDataFile(display.getBytes());
-			newDisplay.setExtention(extention);
-			newDisplay.setCreatedBy(getIdAuth());
-			newDisplay.setIsActive(true);
+			if(display != null) {
+				String extention = display.getOriginalFilename();
+				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+				
+				newDisplay.setDataFile(display.getBytes());
+				newDisplay.setExtention(extention);
+				newDisplay.setCreatedBy(getIdAuth());
+				newDisplay.setIsActive(true);
 
-			newDisplay = filesDao.saveOrUpdate(newDisplay);
+				newDisplay = filesDao.saveOrUpdate(newDisplay);
 
-			asset.setDisplay(newDisplay);
+				asset.setDisplay(newDisplay);
+			}
+			
 			asset.setIsActive(true);
 			asset = assetsDao.saveOrUpdate(asset);
 			
@@ -219,7 +221,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
 			track.setCreatedBy(getIdAuth());
-			track.setCode("generate-code");
+			track.setCode(generateCodeTrack());
 			track.setNameAsset(data.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
@@ -393,6 +395,8 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			resData.setId(asset.getId());
 			
 			TrackActivity track = new TrackActivity();
+			track.setCode(generateCodeTrack());
+			track.setNameAsset(asset.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
