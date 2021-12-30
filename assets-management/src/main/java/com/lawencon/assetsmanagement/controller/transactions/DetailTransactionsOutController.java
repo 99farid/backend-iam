@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.SendResEmailDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindByIdHeaderResDetailTransactionInDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllForPdfTrxExpiredDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllResDetailTransactionsOutDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindByIdResDetailTransactionsOutDto;
+import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindByIdResHeaderDto;
 import com.lawencon.assetsmanagement.service.DetailTransactionsOutService;
 import com.lawencon.util.JasperUtil;
 
@@ -45,7 +47,7 @@ public class DetailTransactionsOutController {
 	
 	@GetMapping("header/{idHeader}")
 	public ResponseEntity<?> findByIdHeader(@PathVariable("idHeader") String idHeader) throws Exception {
-		FindByIdResDetailTransactionsOutDto result = detailTransactionsOutService.findById(idHeader);
+		FindByIdResHeaderDto result = detailTransactionsOutService.findByIdHeader(idHeader);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
