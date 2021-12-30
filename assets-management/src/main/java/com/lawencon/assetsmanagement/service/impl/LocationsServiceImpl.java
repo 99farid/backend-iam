@@ -10,6 +10,7 @@ import com.lawencon.assetsmanagement.dto.InsertResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDataDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
+import com.lawencon.assetsmanagement.dto.locations.FindAllFilterBySearchResLocationsDto;
 import com.lawencon.assetsmanagement.dto.locations.FindAllResLocationsDto;
 import com.lawencon.assetsmanagement.dto.locations.FindByIdResLocationsDto;
 import com.lawencon.assetsmanagement.model.Locations;
@@ -34,6 +35,15 @@ public class LocationsServiceImpl extends BaseIamServiceImpl implements Location
 		FindByIdResLocationsDto result = new FindByIdResLocationsDto();
 		result.setData(locationsDao.findById(id));
 		result.setMsg(null);
+		return result;
+	}
+	
+	@Override
+	public FindAllFilterBySearchResLocationsDto findAllFilterBySearch(String input) throws Exception {
+		FindAllFilterBySearchResLocationsDto result = new FindAllFilterBySearchResLocationsDto();
+		result.setData(locationsDao.findAllFilterBySearch(input));
+		result.setMsg(null);
+		
 		return result;
 	}
 
@@ -101,5 +111,4 @@ public class LocationsServiceImpl extends BaseIamServiceImpl implements Location
 		}
 		
 	}
-
 }
