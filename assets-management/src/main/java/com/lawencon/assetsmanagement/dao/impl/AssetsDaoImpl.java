@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.lawencon.assetsmanagement.constant.ItemTypesCode;
 import com.lawencon.assetsmanagement.constant.StatusCode;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.model.Assets;
@@ -81,17 +82,56 @@ public class AssetsDaoImpl extends BaseDaoImpl<Assets> implements AssetsDao{
 		queryBuilder.append("LEFT JOIN FETCH a.item AS i ");
 		queryBuilder.append("LEFT JOIN FETCH a.display ");
 		queryBuilder.append("LEFT JOIN FETCH a.statusAsset AS sa ");
-		queryBuilder.append("WHERE i.description LIKE :input OR i.brand LIKE :input AND sa.code = :statusCode");
+		queryBuilder.append("WHERE (i.description LIKE '%" + input + "%' OR i.brand LIKE '%" + input + "%') AND sa.code = :statusCode");
 		
 		String sql = queryBuilder.toString();
 		
 		
 		return createQuery(sql, Assets.class)
-				.setParameter("input", input)
 				.setParameter("statusCode", StatusCode.DEPLOYABLE.getCode())
 				.getResultList();
 	}
+	
+	@Override
+	public List<Assets> findAllFilterBySearchForGeneralItem(String input) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");
+		queryBuilder.append("SELECT a ");
+		queryBuilder.append("FROM Assets a ");
+		queryBuilder.append("LEFT JOIN FETCH a.item AS i ");
+		queryBuilder.append("LEFT JOIN FETCH i.itemType ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.statusAsset AS sa ");
+		queryBuilder.append("WHERE (i.description LIKE '%" + input + "%' OR i.brand LIKE '%" + input + "%') AND sa.code = :statusCode AND i.itemType.code = :itemTypes ");
+		
+		String sql = queryBuilder.toString();
+		
+		
+		return createQuery(sql, Assets.class)
+				.setParameter("statusCode", StatusCode.DEPLOYABLE.getCode())
+				.setParameter("itemTypes", ItemTypesCode.GENERAL.getCode())
+				.getResultList();
+	}
 
+	@Override
+	public List<Assets> findAllFilterBySearchForComponent(String input) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder("");
+		queryBuilder.append("SELECT a ");
+		queryBuilder.append("FROM Assets a ");
+		queryBuilder.append("LEFT JOIN FETCH a.item AS i ");
+		queryBuilder.append("LEFT JOIN FETCH i.itemType ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.statusAsset AS sa ");
+		queryBuilder.append("WHERE (i.description LIKE '%" + input + "%' OR i.brand LIKE '%" + input + "%') AND sa.code = :statusCode AND i.itemType.code = :itemTypes ");
+		
+		String sql = queryBuilder.toString();
+		
+		
+		return createQuery(sql, Assets.class)
+				.setParameter("statusCode", StatusCode.DEPLOYABLE.getCode())
+				.setParameter("itemTypes", ItemTypesCode.COMPONENT.getCode())
+				.getResultList();
+	}
+	
 	@Override
 	public List<Assets> findAllForPdf() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder("");

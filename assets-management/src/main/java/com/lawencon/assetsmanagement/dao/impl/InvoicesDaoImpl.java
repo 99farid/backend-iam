@@ -37,11 +37,11 @@ public class InvoicesDaoImpl extends BaseDaoImpl<Invoices> implements InvoicesDa
 		StringBuilder queryBuilder = new StringBuilder();
 		queryBuilder.append("SELECT i ");
 		queryBuilder.append("FROM Invoices i ");
-		queryBuilder.append("WHERE i.code LIKE :code");
+		queryBuilder.append("WHERE i.code LIKE '%" + code + "%' ");
 		
 		String sql = queryBuilder.toString();
 		
-		return createQuery(sql, Invoices.class).setParameter("code", code).getResultList();
+		return createQuery(sql, Invoices.class).getResultList();
 	}
 	
 

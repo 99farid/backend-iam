@@ -79,11 +79,10 @@ public class LocationsDaoImpl extends BaseDaoImpl<Locations> implements Location
 		StringBuilder queryBuilder = new StringBuilder();
 		queryBuilder.append("SELECT id, id_company, code, locations_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM locations ");
-		queryBuilder.append("WHERE code LIKE :input OR locations_name LIKE :input");
+		queryBuilder.append("WHERE code LIKE '%" + input + "%'OR locations_name LIKE '%" + input + "%' ");
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)
-				.setParameter("input", input)
 				.getResultList();
 		List<Locations> resultList = new ArrayList<Locations>();
 		result.forEach(rs ->{

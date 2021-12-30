@@ -34,11 +34,11 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 	public List<DetailTransactionsOut> findByIdHeader(String idHeader) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
 		queryBuilder.append("SELECT dto FROM DetailTransactionsOut AS dto ");
-		queryBuilder.append("INNER JOIN FETCH dto.transactionOut AS to ");
+		queryBuilder.append("INNER JOIN FETCH dto.transactionOut ");
 		queryBuilder.append("INNER JOIN FETCH dto.asset AS a ");
 		queryBuilder.append("INNER JOIN FETCH a.display ");
 		queryBuilder.append("INNER JOIN FETCH a.item ");
-		queryBuilder.append("WHERE dto.to.id = :idHeader ");
+		queryBuilder.append("WHERE dto.transactionOut.id = :idHeader ");
 
 		String sql = queryBuilder.toString();
 
