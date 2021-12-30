@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.assetsmanagement.dao.ConditionAssetsDao;
@@ -72,36 +74,42 @@ public class ConditionAssetsDaoImpl extends BaseDaoImpl<ConditionAssets> impleme
 
 	@Override
 	public ConditionAssets findByCode(String code) throws Exception {
-		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT id, code, id_status_asset, condition_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
-		queryBuilder.append("FROM condition_assets ");
-		queryBuilder.append("WHERE code = :code");
-		
-		String sql = queryBuilder.toString();
-		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
 		ConditionAssets condition = null;
-		
-		if(result != null) {
-			Object[] arrObj = (Object[]) result;
-			condition = new ConditionAssets();
-			condition.setId(arrObj[0].toString());
-			condition.setCode(arrObj[1].toString());
-			StatusAssets status = new StatusAssets();
-			status.setId(arrObj[2].toString());
-			condition.setStatusAsset(status);
-			condition.setConditionAssetName(arrObj[3].toString());
-			condition.setVersion(Long.valueOf(arrObj[4].toString()));
-			condition.setCreatedBy(arrObj[5].toString());
-			condition.setCreatedDate(((Timestamp)arrObj[6]).toLocalDateTime());
-			if(arrObj[7] != null) {
-				condition.setUpdatedBy(arrObj[7].toString());
+		try {
+			StringBuilder queryBuilder = new StringBuilder();
+			queryBuilder.append("SELECT id, code, id_status_asset, condition_asset_name, ver, created_by, created_date, updated_by, updated_date, is_active ");
+			queryBuilder.append("FROM condition_assets ");
+			queryBuilder.append("WHERE code = :code");
+			
+			String sql = queryBuilder.toString();
+			Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+			
+			
+			if(result != null) {
+				Object[] arrObj = (Object[]) result;
+				condition = new ConditionAssets();
+				condition.setId(arrObj[0].toString());
+				condition.setCode(arrObj[1].toString());
+				StatusAssets status = new StatusAssets();
+				status.setId(arrObj[2].toString());
+				condition.setStatusAsset(status);
+				condition.setConditionAssetName(arrObj[3].toString());
+				condition.setVersion(Long.valueOf(arrObj[4].toString()));
+				condition.setCreatedBy(arrObj[5].toString());
+				condition.setCreatedDate(((Timestamp)arrObj[6]).toLocalDateTime());
+				if(arrObj[7] != null) {
+					condition.setUpdatedBy(arrObj[7].toString());
+				}
+				if(arrObj[8] != null) {
+					condition.setUpdatedDate(((Timestamp)arrObj[8]).toLocalDateTime());
+				}
+				condition.setIsActive((Boolean) arrObj[9]);
 			}
-			if(arrObj[8] != null) {
-				condition.setUpdatedDate(((Timestamp)arrObj[8]).toLocalDateTime());
-			}
-			condition.setIsActive((Boolean) arrObj[9]);
+			return condition;
+		} catch (NoResultException e) {
+			return null;
 		}
-		return condition;
+		
 	}
 	
 

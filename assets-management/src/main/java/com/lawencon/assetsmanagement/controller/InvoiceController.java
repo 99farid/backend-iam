@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -47,14 +49,14 @@ public class InvoiceController extends BaseIamController{
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> insert (@RequestBody Invoices data) throws Exception{
-		InsertResDto result = invoicesService.insert(data);
+	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart MultipartFile invoicePict) throws Exception{
+		InsertResDto result = invoicesService.insert(convertToModel(data, Invoices.class), invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update (@RequestBody Invoices data) throws Exception{
-		UpdateResDto result = invoicesService.update(data);
+	public ResponseEntity<?> update (@RequestPart String data, @RequestPart(required = false) MultipartFile invoicePict ) throws Exception{
+		UpdateResDto result = invoicesService.update(convertToModel(data, Invoices.class), invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	

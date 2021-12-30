@@ -59,7 +59,7 @@ public class AssetsController extends BaseIamController{
 
 	
 	@PostMapping
-	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart MultipartFile display, @RequestPart(required = false) MultipartFile invoicePict ) throws Exception{
+	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart(required = false) MultipartFile display, @RequestPart(required = false) MultipartFile invoicePict ) throws Exception{
 		InsertResDto result = assetsService.insert(convertToModel(data, InsertReqDataAssetsDto.class), display, invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
@@ -70,7 +70,7 @@ public class AssetsController extends BaseIamController{
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update (@RequestPart String data, @RequestPart MultipartFile display) throws Exception{
+	public ResponseEntity<?> update (@RequestPart String data, @RequestPart(required = false) MultipartFile display) throws Exception{
 		UpdateResDto result = assetsService.update(convertToModel(data, Assets.class), display);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

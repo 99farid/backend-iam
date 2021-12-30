@@ -13,8 +13,9 @@ public class BaseIamServiceImpl extends BaseServiceImpl {
 	private TrackActivityDao trackDao;
 
 	@Autowired
-	public void setAuthPrincipal(AuthPrincipal authPrincipal) {
+	public void setAuthPrincipal(AuthPrincipal authPrincipal, TrackActivityDao trackDao) {
 		this.authPrincipal = authPrincipal;
+		this.trackDao = trackDao;
 	}
 
 	protected String getIdAuth() throws Exception {

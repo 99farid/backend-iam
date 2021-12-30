@@ -17,6 +17,7 @@ import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindAllFilterBySearchResStatusAsstesDto;
+import com.lawencon.assetsmanagement.dto.statusassets.FindAllForNewAssetResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindAllResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindByIdResStatusAsstesDto;
 import com.lawencon.assetsmanagement.model.StatusAssets;
@@ -33,6 +34,11 @@ public class StatusAssetsController extends BaseIamController{
 		FindAllResStatusAsstesDto result = statusService.findAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	@GetMapping("for-new-asset")
+	public ResponseEntity<?> findAllForNewAsset() throws Exception{
+		FindAllForNewAssetResStatusAsstesDto result = statusService.findAllForNewAsset();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
@@ -41,7 +47,7 @@ public class StatusAssetsController extends BaseIamController{
 	}
 	
 	@GetMapping("search")
-	public ResponseEntity<?> findAllFilterBySearch(@RequestParam String input) throws Exception{
+	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResStatusAsstesDto result = statusService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

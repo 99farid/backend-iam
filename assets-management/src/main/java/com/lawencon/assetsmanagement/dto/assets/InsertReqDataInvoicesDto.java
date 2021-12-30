@@ -9,7 +9,7 @@ public class InsertReqDataInvoicesDto {
 	
 	private String id;
 	private String code;
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate purchaseDate;
 	private BigDecimal totalPrice;
 	

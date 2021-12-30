@@ -105,40 +105,42 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		return result;
 	}
 	private void validationsInsert(InsertReqDataAssetsDto data) throws Exception{
-		
-		if(data.getIdCompany() == null) {
-			throw new ValidationIamException("Company not found");
-		}else {
-			Companies company = companiesDao.findById(data.getIdCompany());
-			if(company == null) {
+		if(data != null) {
+			if(data.getIdCompany() == null) {
 				throw new ValidationIamException("Company not found");
-			}
-		}
-		
-		if(data.getIdStatusAsset() == null) {
-			throw new ValidationIamException("Status Asset not found");
-		}else {
-			StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
-			if(status == null) {
-				throw new ValidationIamException("Status Asset not found");
-			}
-		}
-		if(data.getItem() == null) {
-			throw new ValidationIamException("Item not found");
-		}else {
-			if(data.getItem().getIdItemType() == null) {
-				throw new ValidationIamException("Item Type not found");
 			}else {
-				ItemTypes type = typeDao.findById(data.getItem().getIdItemType());
-				if(type == null) {
-					throw new ValidationIamException("Item Type not found");
+				Companies company = companiesDao.findById(data.getIdCompany());
+				if(company == null) {
+					throw new ValidationIamException("Company not found");
 				}
 			}
-			if(data.getItem().getBrand() == null || data.getItem().getDescription() == null 
-					|| data.getItem().getPrice() == null || data.getItem().getSerial() == null) {
-				throw new ValidationIamException("Item not found");
+			
+			if(data.getIdStatusAsset() == null) {
+				throw new ValidationIamException("Status Asset not found");
+			}else {
+				StatusAssets status = statusAssetsDao.findById(data.getIdStatusAsset());
+				if(status == null) {
+					throw new ValidationIamException("Status Asset not found");
+				}
 			}
-		}		
+			if(data.getItem() == null) {
+				throw new ValidationIamException("Item not found");
+			}else {
+				if(data.getItem().getIdItemType() == null) {
+					throw new ValidationIamException("Item Type not found");
+				}else {
+					ItemTypes type = typeDao.findById(data.getItem().getIdItemType());
+					if(type == null) {
+						throw new ValidationIamException("Item Type not found");
+					}
+				}
+				if(data.getItem().getBrand() == null || data.getItem().getDescription() == null 
+						|| data.getItem().getPrice() == null || data.getItem().getSerial() == null) {
+					throw new ValidationIamException("Item not found");
+				}
+			}		
+		}
+		
 	}
 
 	@Override
@@ -196,19 +198,21 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 
 			asset.setCreatedBy(getIdAuth());
 			asset.setExpiredDate(data.getExpiredDate());
-
-			
-			String extention = display.getOriginalFilename();
-			extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
 			Files newDisplay = new Files();
-			newDisplay.setDataFile(display.getBytes());
-			newDisplay.setExtention(extention);
-			newDisplay.setCreatedBy(getIdAuth());
-			newDisplay.setIsActive(true);
+			if(display != null) {
+				String extention = display.getOriginalFilename();
+				extention = extention.substring(extention.lastIndexOf(".")+1, extention.length());
+				
+				newDisplay.setDataFile(display.getBytes());
+				newDisplay.setExtention(extention);
+				newDisplay.setCreatedBy(getIdAuth());
+				newDisplay.setIsActive(true);
 
-			newDisplay = filesDao.saveOrUpdate(newDisplay);
+				newDisplay = filesDao.saveOrUpdate(newDisplay);
 
-			asset.setDisplay(newDisplay);
+				asset.setDisplay(newDisplay);
+			}
+			
 			asset.setIsActive(true);
 			asset = assetsDao.saveOrUpdate(asset);
 			
@@ -217,7 +221,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());
 			track.setCreatedBy(getIdAuth());
-			track.setCode("generate-code");
+			track.setCode(generateCodeTrack());
 			track.setNameAsset(data.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
@@ -391,6 +395,8 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			resData.setId(asset.getId());
 			
 			TrackActivity track = new TrackActivity();
+			track.setCode(generateCodeTrack());
+			track.setNameAsset(asset.getItem().getDescription());
 			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
 			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
 			track.setDateActivity(LocalDate.now());

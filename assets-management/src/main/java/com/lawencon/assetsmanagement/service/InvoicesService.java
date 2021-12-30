@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
@@ -13,9 +15,9 @@ public interface InvoicesService {
 	
 	FindByIdResInvoicesDto findById(String id) throws Exception;
 	
-	InsertResDto insert(Invoices data) throws Exception;
+	InsertResDto insert(Invoices data, MultipartFile invoicePict) throws Exception;
 	
-	UpdateResDto update(Invoices data) throws Exception;
+	UpdateResDto update(Invoices data, MultipartFile invoicePict) throws Exception;
 	
 	DeleteResDataDto removeById(String id) throws Exception;
 	
