@@ -279,6 +279,10 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			}
 			
 			data.setUpdatedBy(getIdAuth());
+			Items item = data.getItem();
+			item.setUpdatedBy(getIdAuth());
+			item = itemsDao.saveOrUpdate(item);
+			data.setItem(item);
 			
 			Assets asset = assetsDao.saveOrUpdate(data);
 			
