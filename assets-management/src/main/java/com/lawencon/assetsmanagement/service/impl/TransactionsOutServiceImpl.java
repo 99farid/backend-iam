@@ -139,11 +139,9 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				transactionsOut.setGeneralItem(generalItem);
 			}
 
-			DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDate checkOutDate = LocalDate.parse(data.getCheckOutDate(), dateTimeFormat);
-			transactionsOut.setCheckOutDate(checkOutDate);
+			transactionsOut.setCheckOutDate(LocalDate.now());
 			transactionsOut.setCreatedBy(getIdAuth());
-			transactionsOut.setIsActive(data.getIsActive());
+			transactionsOut.setIsActive(true);
 
 			begin();
 			TransactionsOut transactionsOutSave = transactionsOutDao.saveOrUpdate(transactionsOut);
@@ -155,11 +153,12 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				assets.setId(detailTransactionsOutId.getIdAsset());
 				detailTransactionsOut.setAsset(assets);
 				
-				DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dtFormatter);
 				detailTransactionsOut.setDueDate(dueDate);
 				detailTransactionsOut.setCreatedBy(getIdAuth());
-				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
+				detailTransactionsOut.setIsActive(true);
+				detailTransactionsOut.setStatusEmail(false);
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
 				
 				Assets updateAsset = assetsDao.findById(assets.getId());
