@@ -50,7 +50,7 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)
-				.setParameter("statusCode", StatusCode.DEPLOYABLE.getCode())
+				.setParameter("statusCode", StatusCode.ONASSIGN.getCode())
 				.getResultList();
 		List<TransactionsOut> resultTransactionOut = new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_general_item IS NULL AND sa.code = :statusCode ");
 
 		String sql = queryBuilder.toString();
-		List<?> result = createNativeQuery(sql).getResultList();
+		List<?> result = createNativeQuery(sql).setParameter("statusCode",StatusCode.ONASSIGN.getCode()).getResultList();
 		List<TransactionsOut> resultTransactionOut = new ArrayList<>();
 
 		result.forEach(rs -> {
@@ -142,7 +142,7 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_location IS NULL AND sa.code = :statusCode");
 
 		String sql = queryBuilder.toString();
-		List<?> result = createNativeQuery(sql).getResultList();
+		List<?> result = createNativeQuery(sql).setParameter("statusCode", StatusCode.ONASSIGN.getCode()).getResultList();
 		List<TransactionsOut> resultTransactionOut = new ArrayList<>();
 
 		result.forEach(rs -> {

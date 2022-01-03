@@ -225,7 +225,7 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
      
 		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "transactions-out", map);
 		
-		send.setMsg("email sent");	
+		send.setMsg("Email Sent");	
 		return send;
 	}
 	

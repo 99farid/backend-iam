@@ -2,8 +2,10 @@ package com.lawencon.assetsmanagement.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
+import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDataDto;
@@ -14,14 +16,22 @@ import com.lawencon.assetsmanagement.dto.employees.FindAllResEmployeesDto;
 import com.lawencon.assetsmanagement.dto.employees.FindByIdResEmployeesDto;
 import com.lawencon.assetsmanagement.dto.employees.FindByResNipDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
+import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.service.EmployeesService;
+import com.lawencon.util.ExcelUtil;
 
 @Service
 public class EmployeesServiceImpl extends BaseIamServiceImpl implements EmployeesService {
 
 	@Autowired
 	private EmployeesDao employeesDao;
+	
+	@Autowired
+	private CompaniesDao companiesDao;
+	
+	@Autowired
+	private ExcelUtil excelUtil;
 	
 	public FindAllResEmployeesDto findAll() throws Exception {
 		FindAllResEmployeesDto result = new FindAllResEmployeesDto();
@@ -87,6 +97,24 @@ public class EmployeesServiceImpl extends BaseIamServiceImpl implements Employee
 			rollback();
 			throw new Exception(e);
 		}
+	}
+	
+	public InsertResDto insertExcel(MultipartFile data) throws Exception{
+		excelUtil.init("Sheet1", data.getInputStream());
+		for(int i = 1; i<excelUtil.getRowCountInSheet(); i++) {
+			Employees employee = new Employees();
+			Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 0));
+			employee.setCompany(company);
+			employee.setNip(excelUtil.getCellData(i, 1));
+			employee.setFullName(excelUtil.getCellData(i, 2));
+			employee.setPhoneNo(excelUtil.getCellData(i, 3));
+			employee.setEmail(excelUtil.getCellData(i, 4));
+			employee.setEmail(excelUtil.getCellData(i, 5));
+			
+			employee = employeesDao.saveOrUpdate(employee);
+		}
+		
+		return null;
 	}
 	private void validationUpdate(Employees data) throws Exception{
 		if(data != null) {

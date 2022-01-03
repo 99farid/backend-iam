@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
@@ -17,6 +19,8 @@ public interface EmployeesService {
 	FindByResNipDto findByNip(String nip) throws Exception;
 	
 	InsertResDto insert(Employees data) throws Exception;
+	
+	InsertResDto insertExcel(MultipartFile data) throws Exception;
 	
 	UpdateResDto update(Employees data) throws Exception;
 	

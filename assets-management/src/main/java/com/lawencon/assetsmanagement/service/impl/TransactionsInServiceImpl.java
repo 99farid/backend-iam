@@ -95,6 +95,7 @@ public class TransactionsInServiceImpl extends BaseIamServiceImpl implements Tra
 			header.setCode(generateCode());
 			header.setCreatedBy(getIdAuth());
 			header.setIsActive(true);
+			header.setCheckInDate(LocalDate.now());
 			
 			begin();
 			header = transactionsInDao.saveOrUpdate(header);
