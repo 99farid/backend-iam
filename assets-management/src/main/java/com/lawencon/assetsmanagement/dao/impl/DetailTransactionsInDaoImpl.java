@@ -31,10 +31,10 @@ public class DetailTransactionsInDaoImpl extends BaseDaoImpl<DetailTransactionsI
 		StringBuilder queryBuilder = new StringBuilder("");		
 		queryBuilder.append("SELECT dti ");
 		queryBuilder.append("FROM DetailTransactionsIn dti ");
-		queryBuilder.append("INNER JOIN FETCH dti.asset a");
+		queryBuilder.append("INNER JOIN FETCH dti.asset a ");
 		queryBuilder.append("INNER JOIN FETCH a.display ");
 		queryBuilder.append("INNER JOIN FETCH a.item ");
-		queryBuilder.append("INNER JOIN FETCH dti.conditionAsset");
+		queryBuilder.append("INNER JOIN FETCH dti.conditionAsset ");
 		queryBuilder.append("WHERE dti.transactionIn.id = :idHeader");
 		String sql = queryBuilder.toString();
 		

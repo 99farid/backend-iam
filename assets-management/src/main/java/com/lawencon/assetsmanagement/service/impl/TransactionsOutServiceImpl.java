@@ -159,6 +159,7 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dtFormatter);
 				detailTransactionsOut.setDueDate(dueDate);
 				detailTransactionsOut.setCreatedBy(getIdAuth());
+				detailTransactionsOut.setStatusEmail(false);
 				detailTransactionsOut.setIsActive(transactionsOut.getIsActive());
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
 				
@@ -226,7 +227,7 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
      
 		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "transactions-out", map);
 		
-		send.setMsg("email sent");	
+		send.setMsg("Email Sent");	
 		return send;
 	}
 	
