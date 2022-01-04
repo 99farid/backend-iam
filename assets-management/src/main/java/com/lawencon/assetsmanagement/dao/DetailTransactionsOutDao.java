@@ -12,6 +12,8 @@ public interface DetailTransactionsOutDao {
 	
 	List<DetailTransactionsOut> findByIdHeader(String idHeader) throws Exception;
 	
+	List<DetailTransactionsOut> findByIdHeaderForCheckIn(String idHeader) throws Exception;
+	
 	DetailTransactionsOut saveOrUpdate(DetailTransactionsOut data) throws Exception;
 	
 	List<DetailTransactionsOut> findAllForDueReport() throws Exception;

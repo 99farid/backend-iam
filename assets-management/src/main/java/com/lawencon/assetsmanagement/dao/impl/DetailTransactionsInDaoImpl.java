@@ -32,7 +32,7 @@ public class DetailTransactionsInDaoImpl extends BaseDaoImpl<DetailTransactionsI
 		queryBuilder.append("SELECT dti ");
 		queryBuilder.append("FROM DetailTransactionsIn dti ");
 		queryBuilder.append("INNER JOIN FETCH dti.asset a ");
-		queryBuilder.append("INNER JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
 		queryBuilder.append("INNER JOIN FETCH a.item ");
 		queryBuilder.append("INNER JOIN FETCH dti.conditionAsset ");
 		queryBuilder.append("WHERE dti.transactionIn.id = :idHeader");
@@ -41,5 +41,7 @@ public class DetailTransactionsInDaoImpl extends BaseDaoImpl<DetailTransactionsI
 		
 		return createQuery(sql, DetailTransactionsIn.class).setParameter("idHeader", idHeader).getResultList();
 	}
+
+	
 
 }
