@@ -41,7 +41,7 @@ public class ProfileUsersDaoImpl extends BaseDaoImpl<ProfileUsers> implements Pr
 					.setParameter("userId", userId)
 					.getSingleResult();
 		} catch (NoResultException e) {
-			throw new NoResultException("Profile User Not Found");
+			return null;
 		} catch (NonUniqueResultException e) {
 			throw new NonUniqueResultException("Profile User Found More Than One");
 		}	
