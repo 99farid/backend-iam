@@ -46,7 +46,8 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		queryBuilder.append("INNER JOIN detail_transactions_out dto on t.id = dto.id_transaction_out ");
 		queryBuilder.append("INNER JOIN assets a on a.id = dto.id_asset ");
 		queryBuilder.append("INNER JOIN status_assets sa on sa.id = a.id_status_asset  ");
-		queryBuilder.append("WHERE t.id_location IS NULL AND t.id_general_item IS NULL AND sa.code = :statusCode");
+		queryBuilder.append("WHERE t.id_location IS NULL AND t.id_general_item IS NULL AND sa.code = :statusCode ");
+		queryBuilder.append("GROUP BY (t.id, e.id)");
 
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql)
@@ -94,6 +95,7 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		queryBuilder.append("INNER JOIN assets a on a.id = dto.id_asset ");
 		queryBuilder.append("INNER JOIN status_assets sa on sa.id = a.id_status_asset ");	
 		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_general_item IS NULL AND sa.code = :statusCode ");
+		queryBuilder.append("GROUP BY (t.id, l.id)");
 
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql).setParameter("statusCode",StatusCode.ONASSIGN.getCode()).getResultList();
@@ -137,9 +139,10 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		queryBuilder.append("INNER JOIN assets AS a ON a.id = t.id_general_item ");
 		queryBuilder.append("INNER JOIN items AS i ON i.id = a.id_item ");
 		queryBuilder.append("INNER JOIN detail_transactions_out dto on t.id = dto.id_transaction_out ");
-		queryBuilder.append("INNER JOIN assets a on a.id = dto.id_asset ");
+		queryBuilder.append("INNER JOIN assets a2 on a2.id = dto.id_asset ");
 		queryBuilder.append("INNER JOIN status_assets sa on sa.id = a.id_status_asset ");
-		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_location IS NULL AND sa.code = :statusCode");
+		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_location IS NULL AND sa.code = :statusCode ");
+		queryBuilder.append("GROUP BY (t.id, a.id, i.description)");
 
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql).setParameter("statusCode", StatusCode.ONASSIGN.getCode()).getResultList();

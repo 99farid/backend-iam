@@ -15,4 +15,5 @@ public interface DetailTransactionsInDao {
 	List<DetailTransactionsIn> findByIdHeader(String idHeader) throws Exception;
 	
 	
+	
 }

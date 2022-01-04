@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.lawencon.assetsmanagement.constant.StatusCode;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
@@ -36,7 +37,7 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 		queryBuilder.append("SELECT dto FROM DetailTransactionsOut AS dto ");
 		queryBuilder.append("INNER JOIN FETCH dto.transactionOut ");
 		queryBuilder.append("INNER JOIN FETCH dto.asset AS a ");
-		queryBuilder.append("INNER JOIN FETCH a.display ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
 		queryBuilder.append("INNER JOIN FETCH a.item ");
 		queryBuilder.append("WHERE dto.transactionOut.id = :idHeader ");
 
@@ -125,5 +126,23 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 		});
 		
 		return resultDetailTransactionOut;
+	}
+
+	@Override
+	public List<DetailTransactionsOut> findByIdHeaderForCheckIn(String idHeader) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append("SELECT dto FROM DetailTransactionsOut AS dto ");
+		queryBuilder.append("INNER JOIN FETCH dto.transactionOut ");
+		queryBuilder.append("INNER JOIN FETCH dto.asset AS a ");
+		queryBuilder.append("LEFT JOIN FETCH a.display ");
+		queryBuilder.append("INNER JOIN FETCH a.item ");
+		queryBuilder.append("WHERE dto.transactionOut.id = :idHeader AND a.statusAsset.code = :statusCode");
+
+		String sql = queryBuilder.toString();
+
+		return createQuery(sql, DetailTransactionsOut.class)
+				.setParameter("idHeader", idHeader)
+				.setParameter("statusCode", StatusCode.ONASSIGN)
+				.getResultList();
 	}
 }
