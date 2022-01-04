@@ -157,8 +157,8 @@ public class TransactionsOutServiceImpl extends BaseIamServiceImpl implements Tr
 				LocalDate dueDate = LocalDate.parse(detailTransactionsOutId.getDueDate(), dtFormatter);
 				detailTransactionsOut.setDueDate(dueDate);
 				detailTransactionsOut.setCreatedBy(getIdAuth());
-				detailTransactionsOut.setIsActive(true);
 				detailTransactionsOut.setStatusEmail(false);
+				detailTransactionsOut.setIsActive(true);
 				detailTransactionsOutDao.saveOrUpdate(detailTransactionsOut);
 				
 				Assets updateAsset = assetsDao.findById(assets.getId());
