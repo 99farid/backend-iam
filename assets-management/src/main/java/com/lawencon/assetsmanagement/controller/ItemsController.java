@@ -17,6 +17,7 @@ import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.items.FindAllResItemsDto;
 import com.lawencon.assetsmanagement.dto.items.FindByIdResItemsDto;
+import com.lawencon.assetsmanagement.dto.items.GetItemResTotalPriceDto;
 import com.lawencon.assetsmanagement.model.Items;
 import com.lawencon.assetsmanagement.service.ItemsService;
 
@@ -35,6 +36,12 @@ public class ItemsController extends BaseIamController{
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
 		FindByIdResItemsDto result = itemsService.findById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("total")
+	public ResponseEntity<?> getTotalPrice() throws Exception{
+		GetItemResTotalPriceDto result = itemsService.getTotalPrice();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
