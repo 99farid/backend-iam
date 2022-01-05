@@ -247,7 +247,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="204" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<frame>
 				<reportElement x="0" y="0" width="555" height="70" uuid="ec0d2acf-0b51-4933-b1d9-838ba485c2f2">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
