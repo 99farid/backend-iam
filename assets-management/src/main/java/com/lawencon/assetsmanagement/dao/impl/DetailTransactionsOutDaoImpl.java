@@ -136,14 +136,14 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 		queryBuilder.append("INNER JOIN FETCH dto.transactionOut ");
 		queryBuilder.append("INNER JOIN FETCH dto.asset AS a ");
 		queryBuilder.append("LEFT JOIN FETCH a.display ");
-		queryBuilder.append("INNER JOIN FETCH a.item AS i");
+		queryBuilder.append("INNER JOIN FETCH a.item AS i ");
 		queryBuilder.append("WHERE dto.transactionOut.id = :idHeader AND a.statusAsset.code = :statusCode AND i.itemType.code NOT IN (:lisencesCode, :consumableCode)");
 
 		String sql = queryBuilder.toString();
 
 		return createQuery(sql, DetailTransactionsOut.class)
 				.setParameter("idHeader", idHeader)
-				.setParameter("statusCode", StatusCode.ONASSIGN)
+				.setParameter("statusCode", StatusCode.ONASSIGN.getCode())
 				.setParameter("lisencesCode", ItemTypesCode.LICENSE.getCode())
 				.setParameter("consumableCode", ItemTypesCode.CONSUMABLE.getCode())
 				.getResultList();
