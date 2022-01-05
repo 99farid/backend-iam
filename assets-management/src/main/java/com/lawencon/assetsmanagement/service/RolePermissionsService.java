@@ -3,6 +3,7 @@ package com.lawencon.assetsmanagement.service;
 import java.util.List;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
+import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleCodeDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResRolePermissionsDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindByIdResRolePermissionsDto;
@@ -19,4 +20,6 @@ public interface RolePermissionsService {
 	DeleteResDataDto removeById(String id) throws Exception;
 	
 	FindAllResFilterByRoleDto findAllFilterByRole(String idRole) throws Exception;
+	
+	FindAllResFilterByRoleCodeDto findAllFilterByRoleCode (String roleCode) throws Exception;
 }

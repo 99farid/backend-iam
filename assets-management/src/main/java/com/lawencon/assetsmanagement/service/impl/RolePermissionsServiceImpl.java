@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.RolePermissionsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
+import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleCodeDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResRolePermissionsDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindByIdResRolePermissionsDto;
@@ -75,5 +76,14 @@ public class RolePermissionsServiceImpl extends BaseServiceImpl implements RoleP
 			rollback();
 			throw new Exception(e);
 		}
+	}
+
+	@Override
+	public FindAllResFilterByRoleCodeDto findAllFilterByRoleCode(String roleCode) throws Exception {
+		FindAllResFilterByRoleCodeDto result = new FindAllResFilterByRoleCodeDto();
+		result.setData(permissionsDetailDao.findAllFilterByRoleCode(roleCode));
+		result.setMsg(null);
+		
+		return result;
 	}
 }

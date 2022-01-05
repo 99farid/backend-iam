@@ -1,5 +1,9 @@
 package com.lawencon.assetsmanagement.config;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.concurrent.DelegatingSecurityContextExecutor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,15 +24,15 @@ import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 public class ObjectConfig {
-	@Bean
-	public SpringLiquibase initTabel(@Autowired DataSource dataSource) {
-		SpringLiquibase liquibase = new SpringLiquibase();
-		liquibase.setDataSource(dataSource);
-
-		liquibase.setChangeLog("/db/init_table_and_data.sql");
-		return liquibase;
-
-	}
+//	@Bean
+//	public SpringLiquibase initTabel(@Autowired DataSource dataSource) {
+//		SpringLiquibase liquibase = new SpringLiquibase();
+//		liquibase.setDataSource(dataSource);
+//
+//		liquibase.setChangeLog("/db/init_table_and_data.sql");
+//		return liquibase;
+//
+//	}
 
 	@Bean
 	public BCryptPasswordEncoder bcriptEndcoder() {
@@ -56,5 +61,13 @@ public class ObjectConfig {
 						HttpMethod.PUT.name());
 			}
 		};
+	}
+	
+	@Bean
+	public Executor executor() {
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		DelegatingSecurityContextExecutor delegatingExecutorCustom = new DelegatingSecurityContextExecutor(
+				executorService);
+		return delegatingExecutorCustom;
 	}
 }

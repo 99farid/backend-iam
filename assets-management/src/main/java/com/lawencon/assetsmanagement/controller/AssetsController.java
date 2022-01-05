@@ -2,6 +2,9 @@ package com.lawencon.assetsmanagement.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.Executor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -46,6 +49,8 @@ public class AssetsController extends BaseIamController{
 	@Autowired
 	private AssetsService assetsService;
 
+	@Autowired
+	private Executor executor;
 	
 	@GetMapping
 	public ResponseEntity<?> findAll() throws Exception{
@@ -66,9 +71,17 @@ public class AssetsController extends BaseIamController{
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	@PostMapping("excel")
-	public ResponseEntity<?> insertFromExcel(@RequestPart MultipartFile data ) throws Exception{
-		InsertResDto result = assetsService.insertFromExcel(data);
-		return new ResponseEntity<>(result, HttpStatus.CREATED);
+	public CompletableFuture<?> insertFromExcel(@RequestPart MultipartFile data ) throws Exception{
+		return CompletableFuture.supplyAsync(() ->{
+			InsertResDto result = new InsertResDto();
+			try {
+				result = assetsService.insertFromExcel(data);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new CompletionException(e);
+			}
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}, executor);
 	}
 	
 	@PutMapping
@@ -138,6 +151,17 @@ public class AssetsController extends BaseIamController{
         headers.setContentType(MediaType.APPLICATION_PDF);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
+    }
+    
+    @GetMapping("excel")
+    public ResponseEntity<byte[]> generateExcel() throws Exception, JRException {
+    	
+        byte[] data = assetsService.createTemplateExcel();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=template-data.xls");
+//        headers.setContentType(MediaType.TEXT);
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(data);
     }
     
 	@GetMapping("/send-pdf")
