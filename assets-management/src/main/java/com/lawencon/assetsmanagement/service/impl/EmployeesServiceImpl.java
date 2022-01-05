@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -100,21 +102,34 @@ public class EmployeesServiceImpl extends BaseIamServiceImpl implements Employee
 	}
 	
 	public InsertResDto insertExcel(MultipartFile data) throws Exception{
-		excelUtil.init("Sheet1", data.getInputStream());
-		for(int i = 1; i<excelUtil.getRowCountInSheet(); i++) {
-			Employees employee = new Employees();
-			Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 0));
-			employee.setCompany(company);
-			employee.setNip(excelUtil.getCellData(i, 1));
-			employee.setFullName(excelUtil.getCellData(i, 2));
-			employee.setPhoneNo(excelUtil.getCellData(i, 3));
-			employee.setEmail(excelUtil.getCellData(i, 4));
-			employee.setEmail(excelUtil.getCellData(i, 5));
+		
+		try {
+			InsertResDto insertResDto = new InsertResDto();
+			InsertResDataDto insertResDataDto = new InsertResDataDto();
+			excelUtil.init("data", data.getInputStream());
+			for(int i = 1; i<excelUtil.getRowCountInSheet(); i++) {
+				Employees employee = new Employees();
+				Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 0));
+				employee.setCompany(company);
+				employee.setNip(excelUtil.getCellData(i, 1));
+				employee.setFullName(excelUtil.getCellData(i, 2));
+				employee.setPhoneNo(excelUtil.getCellData(i, 3));
+				employee.setEmail(excelUtil.getCellData(i, 4));
+				employee.setDepartment(excelUtil.getCellData(i, 5));
+				begin();
+				employee = employeesDao.saveOrUpdate(employee);
+				commit();
+				insertResDataDto.setId(employee.getId());
+			}
+			insertResDto.setData(insertResDataDto);
 			
-			employee = employeesDao.saveOrUpdate(employee);
+			return insertResDto;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
 		}
 		
-		return null;
 	}
 	private void validationUpdate(Employees data) throws Exception{
 		if(data != null) {
@@ -180,5 +195,24 @@ public class EmployeesServiceImpl extends BaseIamServiceImpl implements Employee
 			rollback();
 			throw new Exception(e);
 		}
+	}
+
+	@Override
+	public byte[] downloadTemplate() throws Exception {
+		List<Companies> listCompanies = companiesDao.findAll();
+		String[][] companiesData = new String [listCompanies.size()+1][2];
+		companiesData[0][0] = "Company";
+		companiesData[0][1] = "Code";		
+		for(int i = 1 ; i< companiesData.length; i++) {
+			companiesData[i][0] = listCompanies.get(i-1).getCompanyName();
+			companiesData[i][1] = listCompanies.get(i-1).getCode();
+		}
+		String [][] rowName = {{"Kode Perusahaan", "NIP", "Nama Lengkap", "Nomor Telpon", "Email", "Department"}};
+		byte[] result = excelUtil
+							.init()
+							.setSheetAndData("data", rowName)
+							.setSheetAndData("Company Kode", companiesData)
+							.getByteArrayFile();
+		return result;
 	}
 }

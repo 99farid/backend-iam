@@ -25,4 +25,6 @@ public interface EmployeesService {
 	UpdateResDto update(Employees data) throws Exception;
 	
 	DeleteResDataDto removeById(String id) throws Exception;
+	
+	byte[] downloadTemplate() throws Exception;
 }

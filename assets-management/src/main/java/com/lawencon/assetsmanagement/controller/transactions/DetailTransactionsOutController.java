@@ -52,6 +52,13 @@ public class DetailTransactionsOutController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@GetMapping("header-for-check-in/{idHeader}")
+	public ResponseEntity<?> findByIdHeaderForCheckIn(@PathVariable("idHeader") String idHeader) throws Exception {
+		FindByIdResHeaderDto result = detailTransactionsOutService.findByIdHeaderForCheckIn(idHeader);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
 	@GetMapping("/pdf")
     public ResponseEntity<byte[]> generatePdf() throws Exception, JRException {
     	Map<String, Object> map = new HashMap<>();

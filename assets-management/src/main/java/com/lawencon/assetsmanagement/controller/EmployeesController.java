@@ -1,7 +1,13 @@
 package com.lawencon.assetsmanagement.controller;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.Executor;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
@@ -22,12 +29,17 @@ import com.lawencon.assetsmanagement.dto.employees.FindByResNipDto;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.service.EmployeesService;
 
+import net.sf.jasperreports.engine.JRException;
+
 @RestController
 @RequestMapping("employees")
 public class EmployeesController extends BaseIamController{
 
 	@Autowired
 	private EmployeesService employeesService;
+	
+	@Autowired
+	private Executor executor;
 	
 	@GetMapping
 	public ResponseEntity<?> findAll() throws Exception {
@@ -56,6 +68,32 @@ public class EmployeesController extends BaseIamController{
 		
 		return new ResponseEntity<>(employees, HttpStatus.CREATED);
 	}
+	
+	@PostMapping("excel")
+	public CompletableFuture<?> insertExcel(@RequestBody MultipartFile data) throws Exception {
+		return CompletableFuture.supplyAsync(() ->{
+			InsertResDto result = new InsertResDto();
+			try {
+				result = employeesService.insertExcel(data);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new CompletionException(e);
+			}
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}, executor);	
+		
+	}
+	
+	@GetMapping("excel")
+    public ResponseEntity<byte[]> generateExcel() throws Exception, JRException {
+    	
+        byte[] data = employeesService.downloadTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=template-data.xls");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(data);
+    }
 	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Employees data) throws Exception {

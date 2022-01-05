@@ -47,5 +47,7 @@ public interface AssetsService {
 	FindAllForPdfAssetsExpiredDto findAllForPdf() throws Exception;
 	
 	SendResEmailDto sendFileToEmail() throws Exception;
+	
+	byte[] createTemplateExcel() throws Exception;
 
 }

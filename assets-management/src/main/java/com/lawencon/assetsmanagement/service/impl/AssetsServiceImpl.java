@@ -1,5 +1,7 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -393,60 +396,67 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 	
 	@Override
 	public InsertResDto insertFromExcel(MultipartFile data) throws Exception {
-		InsertResDto result = new InsertResDto();
-		InsertResDataDto resData = new InsertResDataDto();
-		excelUtil.init("Sheet1", data.getInputStream());
-		for(int i = 1; i< excelUtil.getRowCountInSheet(); i++) {
-			Assets asset = new Assets();
-			asset.setCode(excelUtil.getCellData(i, 0));
-			Items item = new Items();
-			item.setDescription(excelUtil.getCellData(i, 1));
-			item.setBrand(excelUtil.getCellData(i, 2));
-			item.setSerial(excelUtil.getCellData(i, 3));
-			String codeType = excelUtil.getCellData(i, 4);
-			ItemTypes type = typeDao.findByCode(codeType);
-			item.setItemType(type);
-			item.setPrice(new BigDecimal(excelUtil.getCellData(i, 5)));
-			item.setCreatedBy(getIdAuth());
-			begin();
-			item = itemsDao.saveOrUpdate(item);
-			asset.setItem(item);
-			
-			Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 6));
-			asset.setCompany(company);
-			if(excelUtil.getCellData(i, 7) != null) {
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				LocalDate date = LocalDate.parse(excelUtil.getCellData(i, 7), formatter);
-				asset.setExpiredDate(date);
+		try {
+			InsertResDto result = new InsertResDto();
+			InsertResDataDto resData = new InsertResDataDto();
+			excelUtil.init("data", data.getInputStream());
+			for(int i = 1; i< excelUtil.getRowCountInSheet(); i++) {
+				Assets asset = new Assets();
+				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +excelUtil.getCellData(i, 0));
+				Items item = new Items();
+				item.setDescription(excelUtil.getCellData(i, 1));
+				item.setBrand(excelUtil.getCellData(i, 2));
+				item.setSerial(excelUtil.getCellData(i, 3));
+				String codeType = excelUtil.getCellData(i, 4);
+				ItemTypes type = typeDao.findByCode(codeType);
+				item.setItemType(type);
+				item.setPrice(new BigDecimal(excelUtil.getCellData(i, 5)));
+				item.setCreatedBy(getIdAuth());
+				begin();
+				item = itemsDao.saveOrUpdate(item);
+				asset.setItem(item);
+				
+				Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 6));
+				asset.setCompany(company);
+				if(excelUtil.getCellData(i, 7) != null) {
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+					LocalDate date = LocalDate.parse(excelUtil.getCellData(i, 7), formatter);
+					asset.setExpiredDate(date);
+				}
+				String invoiceCode = excelUtil.getCellData(i, 8);
+				List<Invoices> invoice = new ArrayList<Invoices>();
+				invoice = invoicesDao.findAllFilterByCode(invoiceCode);
+				asset.setInvoice(invoice.get(0));
+				StatusAssets status = statusAssetsDao.findByCode(excelUtil.getCellData(i, 9));
+				asset.setStatusAsset(status);
+				asset.setCreatedBy(getIdAuth());
+				asset = assetsDao.saveOrUpdate(asset);
+				resData.setId(asset.getId());
+				
+				TrackActivity track = new TrackActivity();
+				track.setCode(generateCodeTrack());
+				track.setNameAsset(asset.getItem().getDescription());
+				track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
+				track.setActivity(ActivityTrack.INSERT_ASSET.getName());
+				track.setDateActivity(LocalDate.now());
+				track.setCreatedBy(getIdAuth());
+				track.setIsActive(true);
+				
+				trackActivityDao.saveOrUpdate(track);
+				
+				commit();
 			}
-			String invoiceCode = excelUtil.getCellData(i, 8);
-			List<Invoices> invoice = new ArrayList<Invoices>();
-			invoice = invoicesDao.findAllFilterByCode(invoiceCode);
-			asset.setInvoice(invoice.get(0));
-			StatusAssets status = statusAssetsDao.findByCode(excelUtil.getCellData(i, 9));
-			asset.setStatusAsset(status);
-			asset.setCreatedBy(getIdAuth());
-			asset = assetsDao.saveOrUpdate(asset);
-			resData.setId(asset.getId());
-			
-			TrackActivity track = new TrackActivity();
-			track.setCode(generateCodeTrack());
-			track.setNameAsset(asset.getItem().getDescription());
-			track.setStatusAsset(asset.getStatusAsset().getStatusAssetName());
-			track.setActivity(ActivityTrack.INSERT_ASSET.getName());
-			track.setDateActivity(LocalDate.now());
-			track.setCreatedBy(getIdAuth());
-			track.setIsActive(true);
-			
-			trackActivityDao.saveOrUpdate(track);
-			
-			commit();
+			if(resData != null) {
+				result.setData(resData);
+				result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
+			}
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
 		}
-		if(resData != null) {
-			result.setData(resData);
-			result.setMsg(ResponseMsg.SUCCESS_INSERT.getMsg());
-		}
-		return result;
+		
 	}
 
 	public FindAllForPdfAssetsExpiredDto findAllForPdf() throws Exception {
@@ -477,5 +487,58 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		
 		send.setMsg("email sent");	
 		return send;
+	}
+
+	@Override
+	public byte[] createTemplateExcel() throws Exception {
+		List<ItemTypes> listItemTypes = typeDao.findAll();
+		List<Companies> listCompanies = companiesDao.findAll();
+		List<StatusAssets> listStatus = statusAssetsDao.findAllForNewAsset();
+		List<Invoices> listInvoices = invoicesDao.findAll();
+		
+		String[][] typesData = new String [listItemTypes.size()+1][2];
+		typesData[0][0] = "Asset Type";
+		typesData[0][1] = "Code";		
+		for(int i = 1 ; i< typesData.length; i++) {
+			typesData[i][0] = listItemTypes.get(i-1).getItemTypeName();
+			typesData[i][1] = listItemTypes.get(i-1).getCode();
+		}
+		
+		String[][] companiesData = new String [listCompanies.size()+1][2];
+		companiesData[0][0] = "Company";
+		companiesData[0][1] = "Code";		
+		for(int i = 1 ; i< companiesData.length; i++) {
+			companiesData[i][0] = listCompanies.get(i-1).getCompanyName();
+			companiesData[i][1] = listCompanies.get(i-1).getCode();
+		}
+		
+		String[][] statusData = new String [listStatus.size()+1][2];
+		statusData[0][0] = "Status";
+		statusData[0][1] = "Code";		
+		for(int i = 1 ; i< statusData.length; i++) {
+			statusData[i][0] = listStatus.get(i-1).getStatusAssetName();
+			statusData[i][1] = listStatus.get(i-1).getCode();
+		}
+		String[][] invoiceData = new String [listInvoices.size()+1][2];
+		invoiceData[0][0] = "PurchaseDate";
+		invoiceData[0][1] = "Code";		
+		for(int i = 1 ; i< invoiceData.length; i++) {
+			invoiceData[i][0] = listInvoices.get(i-1).getPurchaseDate().toString();
+			invoiceData[i][1] = listInvoices.get(i-1).getCode();
+		}
+				
+		String[][] rowName = {{"Asset Code", "Nama Asset", "Brand Asset", "Serial", "Asset Type Code", "Price", "Company Code", "Expired Date", "Invoice Code", "Status Asset"}};
+		
+		
+		excelUtil
+			.init()
+			.setSheetAndData("data", rowName)
+			.setSheetAndData("Asset Type Code", typesData)
+			.setSheetAndData("Company Code", companiesData)
+			.setSheetAndData("Status Asset Code", statusData)
+			.setSheetAndData("Invoice Asset", invoiceData);
+		
+		byte[] result = excelUtil.getByteArrayFile();
+		return result;
 	}
 }

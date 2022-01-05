@@ -120,5 +120,14 @@ public class DetailTransactionsOutServiceImpl extends BaseIamServiceImpl impleme
 		send.setMsg("email sent");	
 		return send;
 	}
+
+	@Override
+	public FindByIdResHeaderDto findByIdHeaderForCheckIn(String idHeader) throws Exception {
+		FindByIdResHeaderDto result = new FindByIdResHeaderDto();
+		result.setData(detailTransactionsOutDao.findByIdHeaderForCheckIn(idHeader));
+		result.setMsg(null);
+		
+		return result;
+	}
 	
 }

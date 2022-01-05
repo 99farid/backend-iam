@@ -28,7 +28,7 @@ public class PermissionsDaoImpl extends BaseDaoImpl<Permissions> implements Perm
 	@Override
 	public List<Permissions> findAllFilterByName(String input) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT id, code, permission_name, ");
+		queryBuilder.append("SELECT id, code, permission_name, permission_link ");
 		queryBuilder.append("ver, created_by, created_date, updated_by, updated_date, is_active ");
 		queryBuilder.append("FROM permissions AS p ");
 		queryBuilder.append("WHERE p.permission_name LIKE %%:input%%");
@@ -47,16 +47,17 @@ public class PermissionsDaoImpl extends BaseDaoImpl<Permissions> implements Perm
 			permission.setId(objArr[0].toString());
 			permission.setCode(objArr[1].toString());
 			permission.setPermissionName(objArr[2].toString());
-			permission.setVersion(Long.valueOf(objArr[3].toString()));
-			permission.setCreatedBy(objArr[4].toString());
-			permission.setCreatedDate(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-			if (objArr[6] != null) {
-				permission.setUpdatedBy(objArr[6].toString());
-			}
+			permission.setPermissionLink(objArr[3].toString());
+			permission.setVersion(Long.valueOf(objArr[4].toString()));
+			permission.setCreatedBy(objArr[5].toString());
+			permission.setCreatedDate(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
 			if (objArr[7] != null) {
-				permission.setUpdatedDate(Timestamp.valueOf(objArr[7].toString()).toLocalDateTime());
+				permission.setUpdatedBy(objArr[7].toString());
 			}
-			permission.setIsActive(Boolean.valueOf(objArr[8].toString()));
+			if (objArr[8] != null) {
+				permission.setUpdatedDate(Timestamp.valueOf(objArr[8].toString()).toLocalDateTime());
+			}
+			permission.setIsActive(Boolean.valueOf(objArr[9].toString()));
 
 			resultListPermissions.add(permission);
 		});
@@ -78,12 +79,13 @@ public class PermissionsDaoImpl extends BaseDaoImpl<Permissions> implements Perm
 	public Permissions findByCode(String code) throws Exception {
 		try {
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT id, code, permission_name, ");
+			queryBuilder.append("SELECT id, code, permission_name, permission_link ");
 			queryBuilder.append("ver, created_by, created_date, updated_by, updated_date, is_active ");
 			queryBuilder.append("FROM permissions AS p ");
 			queryBuilder.append("WHERE code = :code");
 
 			String sql = queryBuilder.toString();
+			
 			Object result = createNativeQuery(sql)
 					.setParameter("code", code)
 					.getSingleResult();
@@ -97,16 +99,17 @@ public class PermissionsDaoImpl extends BaseDaoImpl<Permissions> implements Perm
 				permission.setId(objArr[0].toString());
 				permission.setCode(objArr[1].toString());
 				permission.setPermissionName(objArr[2].toString());
-				permission.setVersion(Long.valueOf(objArr[3].toString()));
-				permission.setCreatedBy(objArr[4].toString());
-				permission.setCreatedDate(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				if (objArr[6] != null) {
-					permission.setUpdatedBy(objArr[6].toString());
-				}
+				permission.setPermissionLink(objArr[3].toString());
+				permission.setVersion(Long.valueOf(objArr[4].toString()));
+				permission.setCreatedBy(objArr[5].toString());
+				permission.setCreatedDate(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
 				if (objArr[7] != null) {
-					permission.setUpdatedDate(Timestamp.valueOf(objArr[7].toString()).toLocalDateTime());
+					permission.setUpdatedBy(objArr[7].toString());
 				}
-				permission.setIsActive(Boolean.valueOf(objArr[8].toString()));
+				if (objArr[8] != null) {
+					permission.setUpdatedDate(Timestamp.valueOf(objArr[8].toString()).toLocalDateTime());
+				}
+				permission.setIsActive(Boolean.valueOf(objArr[9].toString()));
 			}
 			return permission;
 		} catch (NoResultException e) {

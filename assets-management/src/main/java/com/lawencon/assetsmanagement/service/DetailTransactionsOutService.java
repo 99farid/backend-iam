@@ -14,6 +14,8 @@ public interface DetailTransactionsOutService {
 	
 	FindByIdResHeaderDto findByIdHeader(String idHeader) throws Exception;
 	
+	FindByIdResHeaderDto findByIdHeaderForCheckIn(String idHeader) throws Exception;
+	
 	void sendReportDueDate() throws Exception;
 	
 	FindAllForPdfTrxExpiredDto findAllForPdf() throws Exception;

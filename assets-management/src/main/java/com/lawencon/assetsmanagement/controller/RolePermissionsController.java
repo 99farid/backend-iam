@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.companies.FindAllFilterBySearchResCompaniesDto;
+import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleCodeDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResRolePermissionsDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindByIdResRolePermissionsDto;
@@ -41,6 +42,13 @@ public class RolePermissionsController extends BaseIamController{
 	@GetMapping("role")
 	public ResponseEntity<?> findAllFilterByRole(@RequestParam("q") String idRole) throws Exception {
 		FindAllResFilterByRoleDto result = rolePermissionsService.findAllFilterByRole(idRole);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("role-code")
+	public ResponseEntity<?> findAllFilterByRoleCode(@RequestParam("q") String roleCode) throws Exception {
+		FindAllResFilterByRoleCodeDto result = rolePermissionsService.findAllFilterByRoleCode(roleCode);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
