@@ -79,7 +79,7 @@ public class ProfileUsersServiceImpl extends BaseIamServiceImpl implements Profi
 			ProfileUsers profileUsers = new ProfileUsers();
 			
 			Users users = new Users();
-			users.setId(data.getIdUser());
+			users.setId(getIdAuth());
 			
 			Employees employees = new Employees();
 			employees.setId(data.getIdEmployee());
@@ -88,7 +88,7 @@ public class ProfileUsersServiceImpl extends BaseIamServiceImpl implements Profi
 			profileUsers.setEmployee(employees);
 			profileUsers.setProfilePict(filesSave);
 			profileUsers.setCreatedBy(getIdAuth());
-			profileUsers.setIsActive(data.getIsActive());
+			profileUsers.setIsActive(true);
 			
 			ProfileUsers profileUsersSave = profileUsersDao.saveOrUpdate(profileUsers);
 			commit();

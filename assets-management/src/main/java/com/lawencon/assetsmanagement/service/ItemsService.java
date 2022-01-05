@@ -1,12 +1,11 @@
 package com.lawencon.assetsmanagement.service;
 
-import java.math.BigDecimal;
-
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
 import com.lawencon.assetsmanagement.dto.InsertResDto;
 import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.items.FindAllResItemsDto;
 import com.lawencon.assetsmanagement.dto.items.FindByIdResItemsDto;
+import com.lawencon.assetsmanagement.dto.items.GetItemResTotalPriceDto;
 import com.lawencon.assetsmanagement.model.Items;
 
 public interface ItemsService {
@@ -21,5 +20,5 @@ public interface ItemsService {
 	
 	DeleteResDataDto removeById(String id) throws Exception;
 	
-	BigDecimal getTotalPrice() throws Exception;
+	GetItemResTotalPriceDto getTotalPrice() throws Exception;
 }

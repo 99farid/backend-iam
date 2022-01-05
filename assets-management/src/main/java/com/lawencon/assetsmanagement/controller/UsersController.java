@@ -57,7 +57,7 @@ public class UsersController extends BaseIamController{
 	}
 	
 	@PatchMapping("password")
-	public ResponseEntity<?> updatePassword(@PathVariable("password") String data) throws Exception {
+	public ResponseEntity<?> updatePassword(@RequestBody String data) throws Exception {
 		
 		UpdateResDto users = usersService.updatePassword(data);
 		
