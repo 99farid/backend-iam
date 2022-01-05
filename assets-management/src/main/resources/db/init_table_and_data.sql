@@ -237,6 +237,7 @@ CREATE TABLE permissions (
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	code varchar(32),
 	permission_name varchar(64),
+	permission_link varchar(64),
 	ver integer,
 	created_by varchar(36),
 	created_date timestamp without time zone,
@@ -250,9 +251,13 @@ ALTER TABLE permissions
 	ADD CONSTRAINT code_permission_bk UNIQUE (code),
 	ALTER COLUMN code SET NOT NULL,
 	ALTER COLUMN permission_name SET NOT NULL,
+	ALTER COLUMN permission_link SET NOT NULL,
 	ALTER COLUMN created_by SET NOT NULL,
 	ALTER COLUMN created_date SET NOT NULL,
 	ALTER COLUMN is_active SET NOT NULL;
+
+
+
 
 CREATE TABLE roles (
 	id varchar(36) DEFAULT uuid_generate_v4 (),
@@ -542,12 +547,8 @@ ALTER TABLE general_template
 	ALTER COLUMN created_date SET NOT NULL,
 	ALTER COLUMN is_active SET NOT NULL;
 	
-INSERT INTO permissions (code, permission_name, ver, created_by, created_date, is_active)
-			VALUES	('CTU','Create Table User', 0, '1', NOW(), TRUE),
-					('CTA','Create Table Asset', 0, '1', NOW(), TRUE),
-					('CTP','Create Table Profile', 0, '1', NOW(), TRUE),
-					('UTU','Update Table User', 0, '1', NOW(), TRUE),
-					('DTU','Delete Table User', 0, '1', NOW(), TRUE);
+
+					
 
 INSERT INTO roles (code, role_name, ver, created_by, created_date, is_active)
 			VALUES	('RL1', 'Super Admin', 0, '1', NOW(), TRUE),
@@ -559,19 +560,132 @@ INSERT INTO companies (code, company_name, ver, created_by, created_date, is_act
 			VALUES	('LWN', 'Lawencon', 0, '1', NOW(), TRUE),
 					('LNV', 'Linov', 0, '1', NOW(), TRUE);
 				
-INSERT INTO role_permissions (id_role, id_permission, ver, created_by, created_date, is_active)
-			VALUES	((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'CTU'), 0, '1', NOW(), TRUE),
-					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'CTA'), 0, '1', NOW(), TRUE),
-					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'DTU'), 0, '1', NOW(), TRUE),
-					((SELECT id FROM roles WHERE code = 'RL2'), (SELECT id FROM permissions WHERE code = 'CTA'), 0, '1', NOW(), TRUE),
-					((SELECT id FROM roles WHERE code = 'RL3'), (SELECT id FROM permissions WHERE code = 'CTP'), 0, '1', NOW(), TRUE);
+
 				
 INSERT INTO users (id_role, email, pass, ver, created_by, created_date, is_active)
 			VALUES	((SELECT id FROM roles WHERE code = 'RL1'), 'john123@gmail.com','12345', 0, '1', NOW(), TRUE),
 					((SELECT id FROM roles WHERE code = 'RL2'), 'shani56@gmail.com','12345', 0, '1', NOW(), TRUE),
 					((SELECT id FROM roles WHERE code = 'RL3'), 'trianaayu@gmail.com','12345', 0, '1', NOW(), TRUE),
 					((SELECT id FROM roles WHERE code = 'SYS'), 'SYSTEM','12345', 0, '1', NOW(), TRUE);
-
+				
+INSERT INTO permissions (code, permission_name, permission_link, ver, created_by, created_date, is_active)
+			VALUES	
+			('C-Asset','Create Asset', '/assets/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Asset','Read Asset', '/assets', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Company','CREATE Company', '/companies/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Company','Update Company', '/companies/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Company','Read Compmny', '/companies', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Condition','Create Condition', '/condition-assets/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Condition','Update Condition', '/condition-assets/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Condition','Read Condition', '/condition-assets', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Employee','Create Employee', '/employees/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Employee','Update Employee', '/employees/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Employee','Read Employee', '/employees', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Invoice','Create Invoice', '/invoices/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Invoice','Update Invoice', '/invoices/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Invoice','Read Invoice', '/invoices', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Type','Create Type', '/item-types/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Type','Update Type', '/item-types/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Type','Read Type', '/item-types', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('RU-Item','Read and Update Item', '/items-detail', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Location','Create Location', '/location/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Location','Update Location', '/location/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Location','Read Location', '/location', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Permission','Create Permission', '/permissions/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Permission','Update Permission', '/permissions/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Permission','Read Permission', '/permissions', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Role-Permission','Read Role Permission', '/role-permissions/detail', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Profile','Create Profile User', '/profile-users/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Profile','Update Profile User', '/profile-users/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Profile','Read Profile User', '/profile-users', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Role','Create Role', '/roles/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Role','Update Role', '/roles/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Role','Read Role', '/roles', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Status','Create Status', '/status-assets/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-Status','Update Status', '/status-assets/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Status','Read Status', '/status-assets', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Track','Read Track', '/track-activities', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-User','Create User', '/users/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('U-User','Update User', '/users/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-User','Read User', '/users', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			
+			('C-Trx-In','Create Transaction In', '/transaction-in/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Trx-In','Read Transaction In', '/transaction-in', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			
+			('C-Trx-Out','Create Transaction Out', '/transaction-out/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Trx-Out','Read Transaction Out', '/transaction-out', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
+		
+INSERT INTO role_permissions (id_role, id_permission, ver, created_by, created_date, is_active)
+			VALUES	((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Asset'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Asset'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Company'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Company'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Company'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Condition'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Condition'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Condition'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Employee'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Employee'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Employee'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Invoice'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Invoice'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Invoice'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Type'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Type'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Type'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'RU-Item'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Location'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Location'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Location'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Permission'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Permission'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Permission'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Role-Permission'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Profile'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Profile'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Profile'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Role'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Role'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Role'), 0, '1', NOW(), TRUE),
+			
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Status'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Status'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Status'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Track'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-User'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-User'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-User'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Status'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Status'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Status'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Status'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'U-Status'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Status'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Trx-In'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Trx-In'), 0, '1', NOW(), TRUE),
+					
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Trx-Out'), 0, '1', NOW(), TRUE),
+					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Trx-Out'), 0, '1', NOW(), TRUE);
+			
+			
+					
+			
 INSERT INTO employees (id_company, nip, full_name, phone_no, department, ver, created_by, created_date, is_active, email)
 			VALUES	((SELECT id FROM companies WHERE code = 'LWN'), '198609262012051001','Jhonanendra Nugraha', '081229659944', 'Human Resource', 0, '1', NOW(), true, 'john123@gmail.com'),
 					((SELECT id FROM companies WHERE code = 'LWN'), '198409192014051002','Shani Rachma', '081329659984', 'Human Resource', 0, '1', NOW(), true, 'shani56@gmail.com'),
