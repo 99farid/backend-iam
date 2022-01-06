@@ -69,12 +69,14 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 	}
 	public List<DetailTransactionsOut> findAllForPdf() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT tro.code, i.description, e.full_name,  ");
+		queryBuilder.append("SELECT tro.code, a2.code AS assetCode, i2.description AS assetName, i.description, e.full_name,  ");
 		queryBuilder.append("l.locations_name AS locationName, to_char(dto.due_date,'dd-mm-yyyy') AS dueDate ");
 		queryBuilder.append("FROM detail_transactions_out dto ");
 		queryBuilder.append("LEFT JOIN transactions_out tro  ON tro.id = dto.id_transaction_out ");
 		queryBuilder.append("LEFT JOIN assets a ON a.id = tro.id_general_item ");
+		queryBuilder.append("LEFT JOIN assets a2 on a2.id = dto.id_asset ");
 		queryBuilder.append("LEFT JOIN items i ON i.id = a.id_item  ");
+		queryBuilder.append("LEFT JOIN items i2 ON i2.id = a2.id_item  ");
 		queryBuilder.append("LEFT JOIN employees e ON e.id = tro.id_employee ");
 		queryBuilder.append("LEFT JOIN locations l ON l.id = tro.id_location ");
 		queryBuilder.append("WHERE dto.due_date IS NOT NULL AND dto.due_date <= DATE(NOW()) ");
@@ -90,9 +92,19 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 			TransactionsOut transactionsOut = new TransactionsOut();
 			transactionsOut.setCode(objArr[0].toString());
 			
+			Assets assetCode = new Assets();
+			assetCode.setCode(objArr[1].toString());
+
+			Items itemComponent = new Items();
+			itemComponent.setDescription(objArr[2].toString());
+			
+			assetCode.setItem(itemComponent);
+			
+			detailTransactionsOut.setAsset(assetCode);
+			
 			Items itemGeneral = new Items();
-			if (objArr[1] != null) {
-				itemGeneral.setDescription(objArr[1].toString());
+			if (objArr[3] != null) {
+				itemGeneral.setDescription(objArr[3].toString());
 			} else {
 				itemGeneral.setDescription("");
 			}
@@ -102,16 +114,16 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 			transactionsOut.setGeneralItem(receiverItem);
 			
 			Employees employees = new Employees();
-			if (objArr[2] != null) {
-				employees.setFullName(objArr[2].toString());
+			if (objArr[4] != null) {
+				employees.setFullName(objArr[4].toString());
 			} else {
 				employees.setFullName("");
 			}
 			transactionsOut.setEmployee(employees);
 
 			Locations locations = new Locations();
-			if (objArr[3] != null) {
-				locations.setLocationName(objArr[3].toString());
+			if (objArr[5] != null) {
+				locations.setLocationName(objArr[5].toString());
 			} else {
 				locations.setLocationName("");
 			}
@@ -120,7 +132,7 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 			detailTransactionsOut.setTransactionOut(transactionsOut);
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDate dueDate = LocalDate.parse(objArr[4].toString(), formatter);
+			LocalDate dueDate = LocalDate.parse(objArr[6].toString(), formatter);
 			detailTransactionsOut.setDueDate(dueDate);
 
 			resultDetailTransactionOut.add(detailTransactionsOut);
