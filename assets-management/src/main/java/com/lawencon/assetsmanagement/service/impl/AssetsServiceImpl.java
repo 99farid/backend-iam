@@ -20,9 +20,11 @@ import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dao.FilesDao;
+import com.lawencon.assetsmanagement.dao.GeneralTemplateDao;
 import com.lawencon.assetsmanagement.dao.InvoicesDao;
 import com.lawencon.assetsmanagement.dao.ItemTypesDao;
 import com.lawencon.assetsmanagement.dao.ItemsDao;
+import com.lawencon.assetsmanagement.dao.ProfileUsersDao;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dao.TrackActivityDao;
 import com.lawencon.assetsmanagement.dao.UsersDao;
@@ -48,13 +50,16 @@ import com.lawencon.assetsmanagement.email.EmailHandler;
 import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.model.Files;
+import com.lawencon.assetsmanagement.model.GeneralTemplate;
 import com.lawencon.assetsmanagement.model.Invoices;
 import com.lawencon.assetsmanagement.model.ItemTypes;
 import com.lawencon.assetsmanagement.model.Items;
+import com.lawencon.assetsmanagement.model.ProfileUsers;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.model.TrackActivity;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.AssetsService;
+import com.lawencon.assetsmanagement.util.TemplateEmailUtil;
 import com.lawencon.util.ExcelUtil;
 
 
@@ -90,9 +95,18 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 
 	@Autowired
 	private EmailHandler emailHandler;
-	
+
 	@Autowired
 	private UsersDao usersDao;
+	
+	@Autowired
+	private ProfileUsersDao profileUsersDao;
+	
+	@Autowired
+	private GeneralTemplateDao templateDao;
+	
+	@Autowired
+	private TemplateEmailUtil templateEmailUtil;
 	
 	@Override
 	public FindAllResAssetsDto findAll() throws Exception {
@@ -476,14 +490,20 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
         
         FindAllForPdfAssetsExpiredDto result = findAllForPdf();
         
-        EmailModel email = new EmailModel();
-        
-        Users users = usersDao.findById(getIdAuth());
-        email.setTo(users.getEmail());
-        email.setSubject("Report Assets Expired");
-        email.setText("This is report notification to inform you about report assets expired");
-     
-		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "asset-expired", map);
+		Users users = usersDao.findById(getIdAuth());
+
+		ProfileUsers profile = profileUsersDao.findByUser(getIdAuth());
+
+		EmailModel emailData = new EmailModel();
+		emailData.setSubject("Notification Report");
+		emailData.setTo(users.getEmail());
+		GeneralTemplate template = templateDao.findByCode("SEND_REPORTS");
+		Map<String, Object> mapReplace = templateEmailUtil.setKey("@user@", "@filename@")
+				.setValue(profile.getEmployee().getFullName(), "Asset Expired").build();
+
+		String text = templateEmailUtil.replacteTextTemplate(template.getDataTemplate(), mapReplace);
+		emailData.setText(text);
+		emailHandler.sendMailWithAttachmentJasper(emailData, result.getData(), "asset-expired", map);
 		
 		send.setMsg("email sent");	
 		return send;
