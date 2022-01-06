@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.SendResEmailDto;
+import com.lawencon.assetsmanagement.dto.assets.FindAllForPdfAssetsExpiredDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsin.FindByIdHeaderResDetailTransactionInDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllForPdfTrxExpiredDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllResDetailTransactionsOutDto;
@@ -57,6 +58,12 @@ public class DetailTransactionsOutController {
 		FindByIdResHeaderDto result = detailTransactionsOutService.findByIdHeaderForCheckIn(idHeader);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("/view")
+	public ResponseEntity<?> findAllForPdf() throws Exception{
+		FindAllForPdfTrxExpiredDto result = detailTransactionsOutService.findAllForPdf();
+		return new ResponseEntity<>(result, HttpStatus.OK);		
 	}
 	
 	@GetMapping("/pdf")

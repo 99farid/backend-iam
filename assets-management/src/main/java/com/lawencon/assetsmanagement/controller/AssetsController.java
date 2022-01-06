@@ -135,7 +135,16 @@ public class AssetsController extends BaseIamController{
 
 	@GetMapping(value = "pic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getPic(@PathVariable("id") String id) throws Exception {
-		return assetsService.findById(id).getData().getDisplay().getDataFile();
+		if(assetsService.findById(id).getData().getDisplay() != null ) {
+			return assetsService.findById(id).getData().getDisplay().getDataFile();
+		}
+		return null;	
+	}
+	
+	@GetMapping("/view")
+	public ResponseEntity<?> findAllForPdf() throws Exception{
+		FindAllForPdfAssetsExpiredDto result = assetsService.findAllForPdf();
+		return new ResponseEntity<>(result, HttpStatus.OK);		
 	}
 	
 	@GetMapping("/pdf")
