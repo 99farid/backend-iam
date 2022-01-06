@@ -45,7 +45,9 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 		.antMatchers(HttpMethod.POST, "/users")
-		.antMatchers(HttpMethod.GET, "/assets/excel","/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/assets/pic/**", "/track-activities/**", "/companies/search/**");
+		.antMatchers(HttpMethod.GET, "/assets/excel", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+						"/assets/pic/**", "/track-activities/pdf", "/companies/search/**", "/assets/pdf", 
+						"/transactions-out/pdf", "/detail-transactions-out/pdf", "/transactions-in/pdf");
 	}
 
 }
