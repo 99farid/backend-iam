@@ -51,7 +51,7 @@ public class TrackActivityController extends BaseIamController {
         byte[] data = JasperUtil.responseToByteArray(result.getData(), "track-activity", map);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=track-activity.pdf");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=track-activity.pdf");
         headers.setContentType(MediaType.APPLICATION_PDF);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
