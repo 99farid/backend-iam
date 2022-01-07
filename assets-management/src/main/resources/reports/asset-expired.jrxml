@@ -36,40 +36,33 @@
 				</reportElement>
 			</line>
 			<image>
-				<reportElement x="79" y="0" width="125" height="99" uuid="e47e119a-3016-43f5-878a-8f9a40d0bc87"/>
-				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
+				<reportElement x="79" y="7" width="91" height="90" uuid="e47e119a-3016-43f5-878a-8f9a40d0bc87"/>
+				<imageExpression><![CDATA["https://i.imgur.com/5FPDJmC.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="79" y="108" width="132" height="19" uuid="86eb7331-1f9d-4ba0-b2b3-66de4729e659"/>
-				<textElement>
-					<font fontName="Arial" size="10"/>
+				<reportElement x="74" y="108" width="104" height="19" uuid="86eb7331-1f9d-4ba0-b2b3-66de4729e659"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
 				</textElement>
-				<text><![CDATA[PT. Lawencon Internasional]]></text>
+				<text><![CDATA[IAM SYSTEM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="560" y="21" width="57" height="19" uuid="57b12e4e-1986-46e1-9380-f97f6d0d74a0"/>
-				<textElement>
-					<font fontName="Arial" size="10"/>
-				</textElement>
-				<text><![CDATA[IAM System]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="560" y="39" width="57" height="19" uuid="cda86e18-70b8-4e84-8164-7bcba7f848d2"/>
-				<textElement>
+				<reportElement x="560" y="38" width="57" height="19" uuid="cda86e18-70b8-4e84-8164-7bcba7f848d2"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Date       :]]></text>
 			</staticText>
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="607" y="39" width="93" height="12" uuid="5aadb50d-f410-470d-b7df-bcc4005e1a76"/>
-				<textElement>
+				<reportElement x="607" y="41" width="93" height="12" uuid="5aadb50d-f410-470d-b7df-bcc4005e1a76"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="560" y="56" width="183" height="67" uuid="1380ea91-533a-40d7-b8dc-a2d4acd13a49"/>
-				<textElement textAlignment="Justified">
+				<reportElement x="560" y="55" width="183" height="67" uuid="1380ea91-533a-40d7-b8dc-a2d4acd13a49"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Location : Pakuwon Tower, 
