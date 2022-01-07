@@ -59,7 +59,7 @@ public class TransactionsInController {
         byte[] data = JasperUtil.responseToByteArray(result.getData(), "transactions-in", map);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=transactions-in.pdf");
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=transactions-in.pdf");
         headers.setContentType(MediaType.APPLICATION_PDF);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);

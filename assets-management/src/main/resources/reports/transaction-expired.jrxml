@@ -36,19 +36,19 @@
 				<reportElement x="32" y="5" width="737" height="123" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="46e7184d-1e65-4c3a-aefa-b653d39f93ca"/>
 			</rectangle>
 			<image>
-				<reportElement x="32" y="8" width="125" height="99" uuid="726d85f0-3b60-40fc-b36f-2fcb6c72617b"/>
-				<imageExpression><![CDATA["C:/Users/ASUS/Downloads/logo-lawencon.png"]]></imageExpression>
+				<reportElement x="40" y="11" width="98" height="92" uuid="726d85f0-3b60-40fc-b36f-2fcb6c72617b"/>
+				<imageExpression><![CDATA["https://i.imgur.com/5FPDJmC.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="32" y="113" width="132" height="19" uuid="bf4250cb-6ddf-4d38-a807-94150cb660f2"/>
-				<textElement>
-					<font fontName="Arial" size="10"/>
+				<reportElement x="39" y="112" width="98" height="19" uuid="bf4250cb-6ddf-4d38-a807-94150cb660f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
 				</textElement>
-				<text><![CDATA[PT. Lawencon Internasional]]></text>
+				<text><![CDATA[IAM SYSTEM]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="589" y="60" width="173" height="67" uuid="603e78c5-5732-4f9f-934a-0c775868f6f3"/>
-				<textElement textAlignment="Justified">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Location : Pakuwon Tower, 
@@ -58,25 +58,18 @@ Kec. Tebet, Kota Jakarta Selatan,
 Daerah Khusus Ibukota Jakarta 12870]]></text>
 			</staticText>
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="636" y="43" width="118" height="12" uuid="ea8b821a-4855-42c7-9019-9204494a4e7f"/>
-				<textElement>
+				<reportElement x="636" y="46" width="118" height="12" uuid="ea8b821a-4855-42c7-9019-9204494a4e7f"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="589" y="43" width="57" height="19" uuid="a73ba543-5991-4188-a0a0-fb8fa9df1407"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Date       :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="589" y="25" width="57" height="19" uuid="db12020f-c470-428c-8817-8c7aa8c69657"/>
-				<textElement>
-					<font fontName="Arial" size="10"/>
-				</textElement>
-				<text><![CDATA[IAM System]]></text>
 			</staticText>
 			<line>
 				<reportElement x="32" y="134" width="737" height="1" uuid="1ffe7dad-034b-4b42-bcac-580ead1c1ec0">
