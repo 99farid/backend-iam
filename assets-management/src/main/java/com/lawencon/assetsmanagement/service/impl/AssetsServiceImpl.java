@@ -402,7 +402,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			excelUtil.init("data", data.getInputStream());
 			for(int i = 1; i< excelUtil.getRowCountInSheet(); i++) {
 				Assets asset = new Assets();
-				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +excelUtil.getCellData(i, 0));
+				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +Integer.valueOf(excelUtil.getCellData(i, 0)));
 				Items item = new Items();
 				item.setDescription(excelUtil.getCellData(i, 1));
 				item.setBrand(excelUtil.getCellData(i, 2));

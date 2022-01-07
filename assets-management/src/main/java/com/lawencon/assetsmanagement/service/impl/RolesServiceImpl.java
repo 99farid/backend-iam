@@ -1,8 +1,11 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.PermissionDeleteCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.RolePermissionsDao;
 import com.lawencon.assetsmanagement.dao.RolesDao;
@@ -15,6 +18,7 @@ import com.lawencon.assetsmanagement.dto.roles.FindAllResRolesDto;
 import com.lawencon.assetsmanagement.dto.roles.FindByIdResRolesDto;
 import com.lawencon.assetsmanagement.dto.roles.InsertReqDataRolesDto;
 import com.lawencon.assetsmanagement.dto.roles.UpdateReqRolesDto;
+import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.Permissions;
 import com.lawencon.assetsmanagement.model.RolePermissions;
 import com.lawencon.assetsmanagement.model.Roles;
@@ -54,7 +58,7 @@ public class RolesServiceImpl extends BaseIamServiceImpl implements RolesService
 			role.setCode(data.getCode());
 			role.setRoleName(data.getRoleName());
 			role.setCreatedBy(getIdAuth());
-			role.setIsActive(data.getIsActive());
+			role.setIsActive(true);
 		
 			begin();
 			Roles rolesSave = rolesDao.saveOrUpdate(role);
@@ -63,6 +67,7 @@ public class RolesServiceImpl extends BaseIamServiceImpl implements RolesService
 				RolePermissions rolepermission = new RolePermissions();
 				rolepermission.setRole(rolesSave);
 				rolepermission.setCreatedBy(getIdAuth());
+				rolepermission.setIsActive(true);
 				
 				Permissions permission = new Permissions();
 				permission.setId(permissionId);
@@ -122,7 +127,16 @@ public class RolesServiceImpl extends BaseIamServiceImpl implements RolesService
 	public DeleteResDataDto removeById(String id) throws Exception {
 		try {
 			DeleteResDataDto deleteResDataDto = new DeleteResDataDto();
-			
+			List<RolePermissions> listPermission = getUserPermission();
+			boolean isForbidden = true;
+			for(RolePermissions i : listPermission) {
+				if(i.getPermission().getCode().equals(PermissionDeleteCode.DELETE_ROLE.getCode())) {
+					isForbidden = false;
+				}
+			}
+			if(isForbidden) {
+				throw new ValidationIamException("Invalid Permission");
+			}
 			begin();
 			boolean resultDelete = rolesDao.removeById(id);
 			commit();

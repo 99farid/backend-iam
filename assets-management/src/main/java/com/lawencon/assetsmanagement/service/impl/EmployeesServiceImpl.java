@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lawencon.assetsmanagement.constant.PermissionDeleteCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
@@ -20,6 +21,7 @@ import com.lawencon.assetsmanagement.dto.employees.FindByResNipDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.Companies;
 import com.lawencon.assetsmanagement.model.Employees;
+import com.lawencon.assetsmanagement.model.RolePermissions;
 import com.lawencon.assetsmanagement.service.EmployeesService;
 import com.lawencon.util.ExcelUtil;
 
@@ -115,6 +117,8 @@ public class EmployeesServiceImpl extends BaseIamServiceImpl implements Employee
 				employee.setFullName(excelUtil.getCellData(i, 2));
 				employee.setPhoneNo(excelUtil.getCellData(i, 3));
 				employee.setEmail(excelUtil.getCellData(i, 4));
+				employee.setCreatedBy(getIdAuth());
+				employee.setIsActive(true);
 				employee.setDepartment(excelUtil.getCellData(i, 5));
 				begin();
 				employee = employeesDao.saveOrUpdate(employee);
@@ -177,7 +181,16 @@ public class EmployeesServiceImpl extends BaseIamServiceImpl implements Employee
 	public DeleteResDataDto removeById(String id) throws Exception {
 		try {
 			DeleteResDataDto deleteResDataDto = new DeleteResDataDto();
-			
+			List<RolePermissions> listPermission = getUserPermission();
+			boolean isForbidden = true;
+			for(RolePermissions i : listPermission) {
+				if(i.getPermission().getCode().equals(PermissionDeleteCode.DELETE_EMPLOYEE.getCode())) {
+					isForbidden = false;
+				}
+			}
+			if(isForbidden) {
+				throw new ValidationIamException("Invalid Permission");
+			}
 			begin();
 			boolean resultDelete = employeesDao.removeById(id);
 			commit();

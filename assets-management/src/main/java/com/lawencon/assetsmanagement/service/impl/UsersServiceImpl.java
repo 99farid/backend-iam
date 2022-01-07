@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.GeneralTemplateCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.GeneralTemplateDao;
 import com.lawencon.assetsmanagement.dao.UsersDao;
@@ -109,7 +110,7 @@ public class UsersServiceImpl extends BaseIamServiceImpl implements UsersService
 			EmailModel emailData = new EmailModel();
 			emailData.setSubject("New Password");
 			emailData.setTo(usersSave.getEmail());
-			GeneralTemplate template = templateDao.findByCode("SEND_PASSWORD");
+			GeneralTemplate template = templateDao.findByCode(GeneralTemplateCode.SEND_PASSWORD.getCode());
 			Map<String, Object> mapReplace =  templateEmailUtil.setKey("@password@").setValue(newPass).build();
 			
 			String text = templateEmailUtil.replacteTextTemplate(template.getDataTemplate(), mapReplace );
