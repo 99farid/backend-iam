@@ -54,7 +54,7 @@ public class RolesServiceImpl extends BaseIamServiceImpl implements RolesService
 			role.setCode(data.getCode());
 			role.setRoleName(data.getRoleName());
 			role.setCreatedBy(getIdAuth());
-			role.setIsActive(data.getIsActive());
+			role.setIsActive(true);
 		
 			begin();
 			Roles rolesSave = rolesDao.saveOrUpdate(role);
