@@ -159,15 +159,21 @@ public class AssetsController extends BaseIamController{
         byte[] data = assetsService.createTemplateExcel();
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=template-data.xls");
-//        headers.setContentType(MediaType.TEXT);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(data);
     }
     
 	@GetMapping("/send-pdf")
-	public ResponseEntity<?> sendFileToEmail() throws Exception {
-		SendResEmailDto result = assetsService.sendFileToEmail();
-		
-		return new ResponseEntity<>(result, HttpStatus.OK);
+	public CompletableFuture<?> sendFileToEmail() throws Exception {
+		return CompletableFuture.supplyAsync(() ->{
+			SendResEmailDto result = new SendResEmailDto();
+			try {
+				 result = assetsService.sendFileToEmail();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new CompletionException(e);
+			}
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}, executor);
 	}
 }
