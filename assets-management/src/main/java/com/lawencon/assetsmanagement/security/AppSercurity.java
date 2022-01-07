@@ -33,7 +33,7 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new AuthenticationFilter(objectMapper, super.authenticationManager(), jwtComponent, userService));
-		http.addFilter(new AuthorizationFilter(super.authenticationManager(), jwtComponent));
+		http.addFilter(new AuthorizationFilter(super.authenticationManager(), jwtComponent, objectMapper));
 	}
 	
 	@Override

@@ -77,7 +77,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws java.io.IOException, ServletException {
 		Map<String, Object> errMap = new HashMap<>();
-		errMap.put("msg", "Username atau password salah");
+		errMap.put("msg", "Invalid Username or Password");
 		
 		response.getWriter().append(objectMapper.writeValueAsString(errMap));
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());

@@ -28,7 +28,7 @@ public class JwtComponent {
 		String token = Jwts.builder()
 				.signWith(key)
 				.setClaims(claims)
-				.setExpiration(new Date(new Date().getTime() + 8640000)).compact();
+				.setExpiration(new Date(new Date().getTime() + 2400000)).compact();
 		
 		return token;
 	}
