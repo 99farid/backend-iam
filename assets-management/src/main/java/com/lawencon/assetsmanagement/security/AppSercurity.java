@@ -33,7 +33,7 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new AuthenticationFilter(objectMapper, super.authenticationManager(), jwtComponent, userService));
-		http.addFilter(new AuthorizationFilter(super.authenticationManager(), jwtComponent));
+		http.addFilter(new AuthorizationFilter(super.authenticationManager(), jwtComponent, objectMapper));
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 		.antMatchers(HttpMethod.POST, "/users")
-		.antMatchers(HttpMethod.GET, "/assets/excel", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+		.antMatchers(HttpMethod.GET, "/employees/excel", "/assets/excel", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
 						"/assets/pic/**", "/track-activities/pdf", "/companies/search/**", "/assets/pdf", 
 						"/transactions-out/pdf", "/detail-transactions-out/pdf", "/transactions-in/pdf");
 	}

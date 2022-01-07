@@ -12,7 +12,7 @@ public class TrasactionDetailSchedule {
 	@Autowired
 	private DetailTransactionsOutService detailService;
 	
-	@Scheduled(fixedDelay = 600000)
+	@Scheduled(fixedDelay = 60000)
 	public void dueDateReminder() throws Exception{
 		detailService.sendReportDueDate();
 	}

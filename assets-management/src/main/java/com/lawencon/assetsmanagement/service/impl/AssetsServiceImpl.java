@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.assetsmanagement.constant.ActivityTrack;
+import com.lawencon.assetsmanagement.constant.GeneralTemplateCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.AssetsDao;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
@@ -416,7 +417,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			excelUtil.init("data", data.getInputStream());
 			for(int i = 1; i< excelUtil.getRowCountInSheet(); i++) {
 				Assets asset = new Assets();
-				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +excelUtil.getCellData(i, 0));
+				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +Integer.valueOf(excelUtil.getCellData(i, 0)));
 				Items item = new Items();
 				item.setDescription(excelUtil.getCellData(i, 1));
 				item.setBrand(excelUtil.getCellData(i, 2));
@@ -497,7 +498,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		EmailModel emailData = new EmailModel();
 		emailData.setSubject("Notification Report");
 		emailData.setTo(users.getEmail());
-		GeneralTemplate template = templateDao.findByCode("SEND_REPORTS");
+		GeneralTemplate template = templateDao.findByCode(GeneralTemplateCode.SEND_REPORTS.getCode());
 		Map<String, Object> mapReplace = templateEmailUtil.setKey("@user@", "@filename@")
 				.setValue(profile.getEmployee().getFullName(), "Asset Expired").build();
 
@@ -540,14 +541,14 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			statusData[i][1] = listStatus.get(i-1).getCode();
 		}
 		String[][] invoiceData = new String [listInvoices.size()+1][2];
-		invoiceData[0][0] = "PurchaseDate";
+		invoiceData[0][0] = "Purchase Date";
 		invoiceData[0][1] = "Code";		
 		for(int i = 1 ; i< invoiceData.length; i++) {
 			invoiceData[i][0] = listInvoices.get(i-1).getPurchaseDate().toString();
 			invoiceData[i][1] = listInvoices.get(i-1).getCode();
 		}
 				
-		String[][] rowName = {{"Asset Code", "Nama Asset", "Brand Asset", "Serial", "Asset Type Code", "Price", "Company Code", "Expired Date", "Invoice Code", "Status Asset"}};
+		String[][] rowName = {{"Asset Code", "Asset Name", "Brand Asset", "Serial", "Asset Type Code", "Price", "Company Code", "Expired Date", "Invoice Code", "Status Asset"}};
 		
 		
 		excelUtil

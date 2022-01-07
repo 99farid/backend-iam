@@ -64,8 +64,8 @@ public class DetailTransactionsOutDaoImpl extends BaseDaoImpl<DetailTransactions
 		queryBuilder.append("INNER JOIN FETCH a.item ");
 		queryBuilder.append("WHERE day(dti.dueDate) - day(current_date()) <= 7 AND dti.statusEmail = false");
 		String sql = queryBuilder.toString();
-		
-		return createQuery(sql, DetailTransactionsOut.class).getResultList();
+		List<DetailTransactionsOut> result = createQuery(sql, DetailTransactionsOut.class).getResultList();
+		return result;
 	}
 	public List<DetailTransactionsOut> findAllForPdf() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();

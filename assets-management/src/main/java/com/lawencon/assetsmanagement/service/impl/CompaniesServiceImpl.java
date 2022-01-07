@@ -1,8 +1,11 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.PermissionDeleteCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.CompaniesDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
@@ -15,6 +18,7 @@ import com.lawencon.assetsmanagement.dto.companies.FindAllResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.companies.FindByIdResCompaniesDto;
 import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.Companies;
+import com.lawencon.assetsmanagement.model.RolePermissions;
 import com.lawencon.assetsmanagement.service.CompaniesService;
 
 @Service
@@ -22,6 +26,8 @@ public class CompaniesServiceImpl extends BaseIamServiceImpl implements Companie
 
 	@Autowired
 	private CompaniesDao companiesDao;
+	
+	
 
 	public FindAllResCompaniesDto findAll() throws Exception {
 		FindAllResCompaniesDto result = new FindAllResCompaniesDto();
@@ -126,6 +132,17 @@ public class CompaniesServiceImpl extends BaseIamServiceImpl implements Companie
 	public DeleteResDataDto removeById(String id) throws Exception {
 		try {
 			DeleteResDataDto deleteResDataDto = new DeleteResDataDto();
+			List<RolePermissions> listPermission = getUserPermission();
+			boolean isForbidden = true;
+			for(RolePermissions i : listPermission) {
+				if(i.getPermission().getCode().equals(PermissionDeleteCode.DELETE_COMPANY.getCode())) {
+					isForbidden = false;
+				}
+			}
+			if(isForbidden) {
+				throw new ValidationIamException("Invalid Permission");
+			}
+			
 			
 			begin();
 			boolean resultDelete = companiesDao.removeById(id);
@@ -149,6 +166,8 @@ public class CompaniesServiceImpl extends BaseIamServiceImpl implements Companie
 	@Override
 	public FindAllFilterBySearchResCompaniesDto findAllFilterBySearch(String input) throws Exception {
 		FindAllFilterBySearchResCompaniesDto result = new FindAllFilterBySearchResCompaniesDto();
+		
+		
 		if(input.equals("") || input ==null) {
 			return result;
 		}else {

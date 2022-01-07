@@ -1,8 +1,11 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.PermissionDeleteCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.LocationsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
@@ -13,7 +16,9 @@ import com.lawencon.assetsmanagement.dto.UpdateResDto;
 import com.lawencon.assetsmanagement.dto.locations.FindAllFilterBySearchResLocationsDto;
 import com.lawencon.assetsmanagement.dto.locations.FindAllResLocationsDto;
 import com.lawencon.assetsmanagement.dto.locations.FindByIdResLocationsDto;
+import com.lawencon.assetsmanagement.exception.ValidationIamException;
 import com.lawencon.assetsmanagement.model.Locations;
+import com.lawencon.assetsmanagement.model.RolePermissions;
 import com.lawencon.assetsmanagement.service.LocationsService;
 
 @Service
@@ -97,6 +102,17 @@ public class LocationsServiceImpl extends BaseIamServiceImpl implements Location
 	public DeleteResDataDto removeById(String id) throws Exception {
 		try {
 			DeleteResDataDto result = new DeleteResDataDto();
+			
+			List<RolePermissions> listPermission = getUserPermission();
+			boolean isForbidden = true;
+			for(RolePermissions i : listPermission) {
+				if(i.getPermission().getCode().equals(PermissionDeleteCode.DELETE_LOCATION.getCode())) {
+					isForbidden = false;
+				}
+			}
+			if(isForbidden) {
+				throw new ValidationIamException("Invalid Permission");
+			}
 			begin();
 			if (!locationsDao.removeById(id)) {
 				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());

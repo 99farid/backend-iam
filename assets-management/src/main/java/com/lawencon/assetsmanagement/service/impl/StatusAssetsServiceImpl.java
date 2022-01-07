@@ -1,8 +1,11 @@
 package com.lawencon.assetsmanagement.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.constant.PermissionDeleteCode;
 import com.lawencon.assetsmanagement.constant.ResponseMsg;
 import com.lawencon.assetsmanagement.dao.StatusAssetsDao;
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
@@ -14,6 +17,8 @@ import com.lawencon.assetsmanagement.dto.statusassets.FindAllFilterBySearchResSt
 import com.lawencon.assetsmanagement.dto.statusassets.FindAllForNewAssetResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindAllResStatusAsstesDto;
 import com.lawencon.assetsmanagement.dto.statusassets.FindByIdResStatusAsstesDto;
+import com.lawencon.assetsmanagement.exception.ValidationIamException;
+import com.lawencon.assetsmanagement.model.RolePermissions;
 import com.lawencon.assetsmanagement.model.StatusAssets;
 import com.lawencon.assetsmanagement.service.StatusAssetsService;
 
@@ -89,6 +94,16 @@ public class StatusAssetsServiceImpl extends BaseIamServiceImpl implements Statu
 	public DeleteResDataDto removeById(String id) throws Exception {
 		try {
 			DeleteResDataDto result = new DeleteResDataDto();
+			List<RolePermissions> listPermission = getUserPermission();
+			boolean isForbidden = true;
+			for(RolePermissions i : listPermission) {
+				if(i.getPermission().getCode().equals(PermissionDeleteCode.DELETE_STATUS.getCode())) {
+					isForbidden = false;
+				}
+			}
+			if(isForbidden) {
+				throw new ValidationIamException("Invalid Permission");
+			}
 			begin();
 			if (!statusAssetsDao.removeById(id)) {
 				result.setMsg(ResponseMsg.FAILED_DELETE.getMsg());

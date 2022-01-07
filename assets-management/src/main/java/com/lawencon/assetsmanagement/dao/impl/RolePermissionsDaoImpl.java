@@ -38,7 +38,7 @@ public class RolePermissionsDaoImpl extends BaseDaoImpl<RolePermissions> impleme
 	@Override
 	public List<RolePermissions> findAllFilterByRole(String idRole) throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT rp.id, id_role, r.code, id_permission, p.permission_name, ");
+		queryBuilder.append("SELECT rp.id, id_role, r.code, id_permission, p.permission_name, p.code as permissionCode, ");
 		queryBuilder.append("rp.ver, rp.created_by, rp.created_date, rp.updated_by, rp.updated_date, rp.is_active ");
 		queryBuilder.append("FROM role_permissions rp ");
 		queryBuilder.append("INNER JOIN permissions p ON p.id =  rp.id_permission ");
@@ -63,19 +63,20 @@ public class RolePermissionsDaoImpl extends BaseDaoImpl<RolePermissions> impleme
 			Permissions permissions = new Permissions();
 			permissions.setId(arrObj[3].toString());
 			permissions.setPermissionName(arrObj[4].toString());
+			permissions.setCode(arrObj[5].toString());
 			rolePermissions.setPermission(permissions);
 			
-			rolePermissions.setVersion(Long.valueOf(arrObj[5].toString()));
-			rolePermissions.setCreatedBy(arrObj[6].toString());
-			rolePermissions.setCreatedDate(((Timestamp)arrObj[7]).toLocalDateTime());
+			rolePermissions.setVersion(Long.valueOf(arrObj[6].toString()));
+			rolePermissions.setCreatedBy(arrObj[7].toString());
+			rolePermissions.setCreatedDate(((Timestamp)arrObj[8]).toLocalDateTime());
 			
-			if(arrObj[8] != null) {
-				rolePermissions.setUpdatedBy(arrObj[8].toString());
-			}
 			if(arrObj[9] != null) {
-				rolePermissions.setUpdatedDate(((Timestamp)arrObj[9]).toLocalDateTime());
+				rolePermissions.setUpdatedBy(arrObj[9].toString());
 			}
-			rolePermissions.setIsActive((Boolean)arrObj[10]);
+			if(arrObj[10] != null) {
+				rolePermissions.setUpdatedDate(((Timestamp)arrObj[10]).toLocalDateTime());
+			}
+			rolePermissions.setIsActive((Boolean)arrObj[11]);
 			
 			resultList.add(rolePermissions);
 		});
