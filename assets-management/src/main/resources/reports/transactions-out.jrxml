@@ -148,7 +148,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[NO.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="109" y="72" width="100" height="35" backcolor="#BFE1FF" uuid="534ec545-80b0-4ab2-97a8-e9cd21ebd74b">
+				<reportElement mode="Opaque" x="109" y="72" width="111" height="35" backcolor="#BFE1FF" uuid="534ec545-80b0-4ab2-97a8-e9cd21ebd74b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -163,7 +163,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[RECEIVER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="209" y="72" width="101" height="35" backcolor="#BFE1FF" uuid="50002616-4d6e-42d4-b486-4c5282cd95b9">
+				<reportElement mode="Opaque" x="220" y="72" width="100" height="35" backcolor="#BFE1FF" uuid="50002616-4d6e-42d4-b486-4c5282cd95b9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -178,7 +178,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[LOCATION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="310" y="72" width="100" height="35" backcolor="#BFE1FF" uuid="0a36237b-7483-42c9-998f-241c533a2516">
+				<reportElement mode="Opaque" x="320" y="72" width="100" height="35" backcolor="#BFE1FF" uuid="0a36237b-7483-42c9-998f-241c533a2516">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -193,7 +193,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<text><![CDATA[GENERAL ITEM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="410" y="72" width="112" height="35" backcolor="#BFE1FF" uuid="3aa8b8b6-3cf8-42d2-9afe-21f194f30d4e">
+				<reportElement mode="Opaque" x="420" y="72" width="102" height="35" backcolor="#BFE1FF" uuid="3aa8b8b6-3cf8-42d2-9afe-21f194f30d4e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -232,7 +232,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="116" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField>
 				<reportElement x="60" y="0" width="49" height="30" uuid="5b59e431-d4c8-4c56-a2a7-c88c5fc2e23f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
@@ -247,7 +247,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="109" y="0" width="100" height="30" uuid="6e1e9f34-eefa-4beb-bd30-a2afc03ed159">
+				<reportElement x="109" y="0" width="111" height="30" uuid="6e1e9f34-eefa-4beb-bd30-a2afc03ed159">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -260,7 +260,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getEmployee() != null ? $F{_THIS}.getEmployee().getFullName() : "-"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="209" y="0" width="101" height="30" uuid="93673768-cbf5-4d06-9b98-69ee82bc691e">
+				<reportElement x="220" y="0" width="100" height="30" uuid="93673768-cbf5-4d06-9b98-69ee82bc691e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -273,7 +273,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<textFieldExpression><![CDATA[$F{_THIS}.getLocation() != null ? $F{_THIS}.getLocation() .getLocationName() : "-"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="310" y="0" width="100" height="30" uuid="f3dc7c4d-31c7-4d8d-b39d-284dec9cf103">
+				<reportElement x="320" y="0" width="100" height="30" uuid="f3dc7c4d-31c7-4d8d-b39d-284dec9cf103">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>
@@ -299,7 +299,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="410" y="0" width="112" height="30" uuid="b49d5351-aa71-4c97-8d22-94b4b5632436">
+				<reportElement x="420" y="0" width="102" height="30" uuid="b49d5351-aa71-4c97-8d22-94b4b5632436">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f2ce39-d848-4800-bd2d-54d0a23f7977"/>
 				</reportElement>
 				<box>

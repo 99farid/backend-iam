@@ -609,12 +609,17 @@ INSERT INTO permissions (code, permission_name, permission_link, ver, created_by
 			('U-User','Update User', '/users/modify', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
 			('R-User','Read User', '/users', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
 			
-			('C-Trx-In','Create Transaction In', '/transaction-in/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
-			('R-Trx-In','Read Transaction In', '/transaction-in', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('C-Trx-In','Create Transaction In', '/transactions-in/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Trx-In','Read Transaction In', '/transactions-in', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
 			
-			('C-Trx-Out','Create Transaction Out', '/transaction-out/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
-			('R-Trx-Out','Read Transaction Out', '/transaction-out', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
-		
+			('C-Trx-Out','Create Transaction Out', '/transactions-out/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
+			('R-Trx-Out','Read Transaction Out', '/transactions-out', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
+INSERT INTO permissions (code, permission_name, permission_link, ver, created_by, created_date, is_active)
+			VALUES		('R-Report-Asset','Read Report Asset', '/assets-expired', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
+
+INSERT INTO permissions (code, permission_name, permission_link, ver, created_by, created_date, is_active)
+			VALUES		('R-Report-Transactions','Read Report Transactions', '/transactions-out/expired', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
+
 INSERT INTO role_permissions (id_role, id_permission, ver, created_by, created_date, is_active)
 			VALUES	((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Asset'), 0, '1', NOW(), TRUE),
 					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Asset'), 0, '1', NOW(), TRUE),
@@ -683,8 +688,11 @@ INSERT INTO role_permissions (id_role, id_permission, ver, created_by, created_d
 					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'C-Trx-Out'), 0, '1', NOW(), TRUE),
 					((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Trx-Out'), 0, '1', NOW(), TRUE);
 			
-			
-					
+INSERT INTO role_permissions (id_role, id_permission, ver, created_by, created_date, is_active)
+			VALUES ((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Report-Asset'), 0, '1', NOW(), TRUE);
+		
+INSERT INTO role_permissions (id_role, id_permission, ver, created_by, created_date, is_active)
+			VALUES ((SELECT id FROM roles WHERE code = 'RL1'), (SELECT id FROM permissions WHERE code = 'R-Report-Transactions'), 0, '1', NOW(), TRUE);
 			
 INSERT INTO employees (id_company, nip, full_name, phone_no, department, ver, created_by, created_date, is_active, email)
 			VALUES	((SELECT id FROM companies WHERE code = 'LWN'), '198609262012051001','Jhonanendra Nugraha', '081229659944', 'Human Resource', 0, '1', NOW(), true, 'john123@gmail.com'),
@@ -777,4 +785,278 @@ INSERT INTO transactions_in (code, id_transaction_out, check_in_date, ver, creat
 			VALUES	('TRI1', (SELECT id FROM transactions_out WHERE code = 'TRXO1'), '2022-10-20', 0, '1', NOW(), TRUE),
 					('TRI2', (SELECT id FROM transactions_out WHERE code = 'TRXO2'), '2022-11-20', 0, '1', NOW(), TRUE),
 					('TRI3', (SELECT id FROM transactions_out WHERE code = 'TRXO3'), '2022-12-20', 0, '1', NOW(), TRUE);
-					
+
+
+INSERT INTO general_template (code, data_template, ver, created_by, created_date, is_active) VALUES
+	('SEND_REPORTS', '<!DOCTYPE html>
+<!-- saved from url=(0064)https://cdn.getvero.com/dd-editor/templates/bangkok/bangkok.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+    </title>
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<![endif]-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        #outlook a {
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        p {
+            display: block;
+            margin: 13px 0;
+        }
+    </style>
+    <!--[if mso]> 
+                      <xml> 
+                      <o:OfficeDocumentSettings> 
+                        <o:AllowPNG/> 
+                      <o:PixelsPerInch>96</o:PixelsPerInch> 
+                  </o:OfficeDocumentSettings> 
+                  </xml> 
+                    <![endif]-->
+    <!--[if lte mso 11]> 
+                      <style type="text/css"> 
+                        .mj-outlook-group-fix { width:100% !important; } 
+                  </style> 
+                    <![endif]-->
+    <!--[if !mso]><!-->
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Nunito:normal,italic,bold&display=swap);
+    </style>
+    <!--<![endif]-->
+    <style type="text/css">
+        @media only screen and (min-width:480px) {
+            .mj-column-per-100 {
+                width: 100% !important;
+                max-width: 100%;
+            }
+
+            .mj-column-per-33-333333333333336 {
+                width: 33.333333333333336% !important;
+                max-width: 33.333333333333336%;
+            }
+        }
+    </style>
+    <style media="screen and (min-width:480px)">
+        .moz-text-html .mj-column-per-100 {
+            width: 100% !important;
+            max-width: 100%;
+        }
+
+        .moz-text-html .mj-column-per-33-333333333333336 {
+            width: 33.333333333333336% !important;
+            max-width: 33.333333333333336%;
+        }
+    </style>
+    <style type="text/css">
+        @media only screen and (max-width:480px) {
+            table.mj-full-width-mobile {
+                width: 100% !important;
+            }
+
+            td.mj-full-width-mobile {
+                width: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="word-spacing:normal;background-color:#EEEDEA;">
+    <div style="background-color:#EEEDEA;">
+        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                style="background:#ffffff;background-color:#ffffff;width:100%;">
+                <tbody>
+                    <tr>
+                        <td
+                            style="border-bottom:none;border-left:none;border-right:none;border-top:10px solid #7897cc;direction:ltr;font-size:0px;padding:40px;padding-bottom:0px;padding-left:40px;padding-right:40px;padding-top:20px;text-align:center;">
+                            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:520px;" ><![endif]-->
+                            <div class="mj-column-per-100 mj-outlook-group-fix"
+                                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td style="vertical-align:top;padding:0;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                                    style="" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center"
+                                                                style="font-size:0px;padding:10px;word-break:break-word;">
+                                                                <img height="auto" src="https://i.imgur.com/5FPDJmC.png"
+                                                                    style="margin-bottom: 10px; border:0;display:block;outline:none;text-decoration:none;height:auto;width:25%;font-size:13px;"
+                                                                    width="75px">
+                                                                <div
+                                                                    style="font-family:Nunito, Helvetica, Arial, sans-serif;font-size:20px;line-height:1;text-align:center;color:#7897cc;">
+                                                                    I - Assets Management</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size:0px;word-break:break-word;">
+                                                                <div style="height:5px;line-height:5px;"> </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center"
+                                                                style="font-size:0px;padding:10px 0;padding-top:10px;padding-right:0;padding-bottom:10px;padding-left:0;word-break:break-word;">
+                                                                <p
+                                                                    style="border-top:solid 2px #7897cc;font-size:1px;margin:0px auto;width:100%;">
+                                                                </p>
+                                                                <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #7897cc;font-size:1px;margin:0px auto;width:520px;" role="presentation" width="520px" ><tr><td style="height:0;line-height:0;"> &nbsp; 
+              
+            </td></tr></table><![endif]-->
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size:0px;word-break:break-word;">
+                                                                <div style="height:30px;line-height:30px;"> </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center"
+                                                                style="font-size:0px;padding:10px;word-break:break-word;">
+                                                                <div
+                                                                    style="font-family:Nunito, Helvetica, Arial, sans-serif;font-size:40px;line-height:1.25;text-align:center;color:#231F20;">
+                                                                    <strong>Notification Report</strong>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--[if mso | IE]></td></tr></table><![endif]-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div
+            style="background:#ffffff;background-color:#ffffff;margin:0px auto;border-radius:0px 0px 10px 10px;max-width:600px;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                style="background:#ffffff;background-color:#ffffff;width:100%;border-radius:0px 0px 10px 10px;">
+                <tbody>
+                    <tr>
+                        <td
+                            style="direction:ltr;font-size:0px;padding:40px;padding-bottom:0px;padding-left:50px;padding-right:50px;padding-top:0px;text-align:center;">
+                            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:500px;" ><![endif]-->
+                            <div class="mj-column-per-100 mj-outlook-group-fix"
+                                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td style="vertical-align:top;padding:0;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                                    style="" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="justify"
+                                                                style="font-size:0px;padding:10px;word-break:break-word;">
+                                                                <div
+                                                                    style="font-family:Nunito, Helvetica, Arial, sans-serif;font-size:24px;line-height:1.5;text-align:justify;color:#231F20;">
+                                                                    <span style="word-spacing: normal;">
+                                                                       <br> Dear, <br>
+                                                                        @user@ <br><br>
+                                                                        This is report notification to inform you about
+                                                                        report @filename@. Please kindlly check. You can see details by downloading the report attachment below.<br><br>
+                                                                        This email send by our system. Do not reply this message.
+                                                                        <br>
+                                                                        <br>
+                                                                        <br>
+                                                                        Regards,
+                                                                        <br>
+                                                                        <br>
+                                                                        <br>
+                                                                        IAM System</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size:0px;word-break:break-word;">
+                                                                <div style="height:20px;line-height:20px;"> </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size:0px;word-break:break-word;">
+                                                                <div style="height:10px;line-height:10px;"> </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="font-size:0px;word-break:break-word;">
+                                                                <div style="height:10px;line-height:10px;"> </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center"
+                                                                style="font-size:0px;padding:0px;word-break:break-word;">
+                                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                                    role="presentation"
+                                                                    style="border-collapse:collapse;border-spacing:0px;"
+                                                                    class="mj-full-width-mobile">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td style="width:500px;"
+                                                                                class="mj-full-width-mobile">
+                                                                                <img height="auto"
+                                                                                    src="https://i.imgur.com/uwAgW4e.png"
+                                                                                    style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                                                                    width="500">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--[if mso | IE]></td></tr></table><![endif]-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+</body>
+
+</html>', 0, '1', now(), true);

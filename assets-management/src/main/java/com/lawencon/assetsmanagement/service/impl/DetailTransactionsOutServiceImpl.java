@@ -11,6 +11,7 @@ import com.lawencon.assetsmanagement.constant.GeneralTemplateCode;
 import com.lawencon.assetsmanagement.dao.DetailTransactionsOutDao;
 import com.lawencon.assetsmanagement.dao.EmployeesDao;
 import com.lawencon.assetsmanagement.dao.GeneralTemplateDao;
+import com.lawencon.assetsmanagement.dao.ProfileUsersDao;
 import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.SendResEmailDto;
 import com.lawencon.assetsmanagement.dto.detailtransactionsout.FindAllForPdfTrxExpiredDto;
@@ -22,6 +23,7 @@ import com.lawencon.assetsmanagement.helper.EmailModel;
 import com.lawencon.assetsmanagement.model.DetailTransactionsOut;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.model.GeneralTemplate;
+import com.lawencon.assetsmanagement.model.ProfileUsers;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.DetailTransactionsOutService;
 import com.lawencon.assetsmanagement.util.TemplateEmailUtil;
@@ -42,11 +44,13 @@ public class DetailTransactionsOutServiceImpl extends BaseIamServiceImpl impleme
 	private EmailHandler emailHandler;
 	
 	@Autowired
+	private ProfileUsersDao profileUsersDao;
+	
+	@Autowired
 	private GeneralTemplateDao templateDao;
 	
 	@Autowired
 	private TemplateEmailUtil templateEmailUtil;
-	
 
 	@Override
 	public FindAllResDetailTransactionsOutDto findAll() throws Exception {
@@ -137,15 +141,21 @@ public class DetailTransactionsOutServiceImpl extends BaseIamServiceImpl impleme
 		map.put("company", "PT. Lawencon Internasional");
         
 		FindAllForPdfTrxExpiredDto result = findAllForPdf();
-        
-        EmailModel email = new EmailModel();
-        
-        Users users = usersDao.findById(getIdAuth());
-        email.setTo(users.getEmail());
-        email.setSubject("Report Transaction Due Date");
-        email.setText("This is report notification to inform you about report transaction due date");
-     
-		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "transaction-expired", map);
+
+		Users users = usersDao.findById(getIdAuth());
+		
+		ProfileUsers profile = profileUsersDao.findByUser(getIdAuth());
+		
+		EmailModel emailData = new EmailModel();
+		emailData.setSubject("Notification Report");
+		emailData.setTo(users.getEmail());
+		GeneralTemplate template = templateDao.findByCode("SEND_REPORTS");
+		Map<String, Object> mapReplace = templateEmailUtil.setKey("@user@", "@filename@")
+				.setValue(profile.getEmployee().getFullName(), "Transaction Expired").build();
+
+		String text = templateEmailUtil.replacteTextTemplate(template.getDataTemplate(), mapReplace);
+		emailData.setText(text);
+		emailHandler.sendMailWithAttachmentJasper(emailData, result.getData(), "transaction-expired", map);
 		
 		send.setMsg("email sent");	
 		return send;

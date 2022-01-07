@@ -50,7 +50,7 @@ public class EmailHandler {
         helper.setFrom("noreply@baeldung.com");
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
-        helper.setText("<b>"+email.getText()+"</b>",true);
+        helper.setText(email.getText(),true);
         helper.addAttachment(jrxmlName + ".pdf", attachment);
         mailSender.send(message);
     	

@@ -140,7 +140,7 @@ public class TransactionsOutDaoImpl extends BaseDaoImpl<TransactionsOut> impleme
 		queryBuilder.append("INNER JOIN items AS i ON i.id = a.id_item ");
 		queryBuilder.append("INNER JOIN detail_transactions_out dto on t.id = dto.id_transaction_out ");
 		queryBuilder.append("INNER JOIN assets a2 on a2.id = dto.id_asset ");
-		queryBuilder.append("INNER JOIN status_assets sa on sa.id = a.id_status_asset ");
+		queryBuilder.append("INNER JOIN status_assets sa on sa.id = a2.id_status_asset ");
 		queryBuilder.append("WHERE t.id_employee IS NULL AND t.id_location IS NULL AND sa.code = :statusCode ");
 		queryBuilder.append("GROUP BY (t.id, a.id, i.description)");
 
