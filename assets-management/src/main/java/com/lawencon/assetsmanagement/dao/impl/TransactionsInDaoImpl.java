@@ -8,7 +8,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.assetsmanagement.dao.TransactionsInDao;
+import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.model.Employees;
+import com.lawencon.assetsmanagement.model.Items;
+import com.lawencon.assetsmanagement.model.Locations;
 import com.lawencon.assetsmanagement.model.TransactionsIn;
 import com.lawencon.assetsmanagement.model.TransactionsOut;
 import com.lawencon.base.BaseDaoImpl;
@@ -42,10 +45,15 @@ public class TransactionsInDaoImpl extends BaseDaoImpl<TransactionsIn> implement
 	@Override
 	public List<TransactionsIn> findAllForPdf() throws Exception {
 		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append("SELECT ti.code, e.full_name AS fullName, to_char(check_in_date,'dd-mm-yyyy') AS checkInDate ");
+		queryBuilder.append("SELECT ti.code, e.full_name AS fullName, ");
+		queryBuilder.append("l.locations_name AS locationName, i.description AS itemName, ");
+		queryBuilder.append("to_char(check_in_date,'dd-mm-yyyy') AS checkInDate ");
 		queryBuilder.append("FROM transactions_in ti ");
-		queryBuilder.append("INNER JOIN transactions_out t ON t.id = ti.id_transaction_out  ");
-		queryBuilder.append("INNER JOIN employees e ON e.id = t.id_employee ");
+		queryBuilder.append("LEFT JOIN transactions_out t ON t.id = ti.id_transaction_out  ");
+		queryBuilder.append("LEFT JOIN employees e ON e.id = t.id_employee  ");
+		queryBuilder.append("LEFT JOIN locations l ON l.id = t.id_location ");
+		queryBuilder.append("LEFT JOIN assets a ON a.id = t.id_general_item ");
+		queryBuilder.append("LEFT JOIN items i ON i.id = a.id_item ");
 		
 		String sql = queryBuilder.toString();
 		List<?> result = createNativeQuery(sql).getResultList();
@@ -63,12 +71,31 @@ public class TransactionsInDaoImpl extends BaseDaoImpl<TransactionsIn> implement
 				receiver.setFullName("");
 			}
 			
+			Locations locations = new Locations();
+			if (objArr[2] != null) {
+				locations.setLocationName(objArr[2].toString());
+			} else {
+				locations.setLocationName("");
+			}
+
+			Items itemGeneral = new Items();
+			if (objArr[3] != null) {
+				itemGeneral.setDescription(objArr[3].toString());
+			} else {
+				itemGeneral.setDescription("");
+			}
+			
+			Assets receiverItem = new Assets();
+			receiverItem.setItem(itemGeneral);
+			
 			TransactionsOut transactionsOut = new TransactionsOut();
 			transactionsOut.setEmployee(receiver);
+			transactionsOut.setLocation(locations);
+			transactionsOut.setGeneralItem(receiverItem);
 			
 			transactionsIn.setTransactionOut(transactionsOut);
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDate localDate = LocalDate.parse(objArr[2].toString(), formatter);
+			LocalDate localDate = LocalDate.parse(objArr[4].toString(), formatter);
 			transactionsIn.setCheckInDate(localDate);
 			
 			resultTransactionIn.add(transactionsIn);
