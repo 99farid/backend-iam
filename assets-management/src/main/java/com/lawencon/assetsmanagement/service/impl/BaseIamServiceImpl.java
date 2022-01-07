@@ -31,7 +31,7 @@ public class BaseIamServiceImpl extends BaseServiceImpl {
 
 	protected String getIdAuth() throws Exception {
 		if (authPrincipal.getAuthentication() == null || authPrincipal.getAuthentication().getPrincipal() == null) {
-			throw new Exception("invalid user");
+			throw new Exception("Invalid user");
 		}
 		return (String) authPrincipal.getAuthentication().getPrincipal();
 	}
