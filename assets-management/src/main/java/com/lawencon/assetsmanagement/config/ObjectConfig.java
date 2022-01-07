@@ -24,6 +24,7 @@ import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 public class ObjectConfig {
+	
 //	@Bean
 //	public SpringLiquibase initTabel(@Autowired DataSource dataSource) {
 //		SpringLiquibase liquibase = new SpringLiquibase();
