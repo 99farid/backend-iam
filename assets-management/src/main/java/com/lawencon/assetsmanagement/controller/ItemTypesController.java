@@ -22,6 +22,10 @@ import com.lawencon.assetsmanagement.dto.itemtypes.FindByIdResItemTypesDto;
 import com.lawencon.assetsmanagement.model.ItemTypes;
 import com.lawencon.assetsmanagement.service.ItemTypesService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 @RestController
 @RequestMapping("item-types")
 public class ItemTypesController extends BaseIamController{
@@ -29,36 +33,42 @@ public class ItemTypesController extends BaseIamController{
 	private ItemTypesService typeService;
 	
 	@GetMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResItemTypesDto.class)))
 	public ResponseEntity<?> findAll() throws Exception{
 		FindAllResItemTypesDto result = typeService.findAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByIdResItemTypesDto.class)))
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
 		FindByIdResItemTypesDto result = typeService.findById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("search")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllFilterBySearchResItemTypesDto.class)))
 	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResItemTypesDto result = typeService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@PostMapping
+	@ApiResponse(responseCode = "201", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public ResponseEntity<?> insert (@RequestBody ItemTypes data) throws Exception{
 		InsertResDto result = typeService.insert(data);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Update Data", content = @Content(schema = @Schema (implementation = UpdateResDto.class)))
 	public ResponseEntity<?> update (@RequestBody ItemTypes data) throws Exception{
 		UpdateResDto result = typeService.update(data);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@DeleteMapping ("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Delete Data", content = @Content(schema = @Schema (implementation = DeleteResDataDto.class)))
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception{
 		DeleteResDataDto result =   typeService.removeById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);

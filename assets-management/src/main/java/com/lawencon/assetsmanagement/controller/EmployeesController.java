@@ -29,6 +29,9 @@ import com.lawencon.assetsmanagement.dto.employees.FindByResNipDto;
 import com.lawencon.assetsmanagement.model.Employees;
 import com.lawencon.assetsmanagement.service.EmployeesService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
@@ -42,6 +45,7 @@ public class EmployeesController extends BaseIamController{
 	private Executor executor;
 	
 	@GetMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResEmployeesDto.class)))
 	public ResponseEntity<?> findAll() throws Exception {
 		FindAllResEmployeesDto result = employeesService.findAll();
 		
@@ -49,6 +53,7 @@ public class EmployeesController extends BaseIamController{
 	}
 	
 	@GetMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByIdResEmployeesDto.class)))
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception {
 		FindByIdResEmployeesDto result = employeesService.findById(id);
 		
@@ -56,6 +61,7 @@ public class EmployeesController extends BaseIamController{
 	}
 	
 	@GetMapping("nip")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByResNipDto.class)))
 	public ResponseEntity<?> findByNip(@RequestParam("q") String nip) throws Exception {
 		FindByResNipDto result = employeesService.findByNip(nip);
 		
@@ -63,6 +69,7 @@ public class EmployeesController extends BaseIamController{
 	}
 	
 	@PostMapping
+	@ApiResponse(responseCode = "201", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public ResponseEntity<?> insert(@RequestBody Employees data) throws Exception {
 		InsertResDto employees = employeesService.insert(data);
 		
@@ -70,6 +77,7 @@ public class EmployeesController extends BaseIamController{
 	}
 	
 	@PostMapping("excel")
+	@ApiResponse(responseCode = "200", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public CompletableFuture<?> insertExcel(@RequestBody MultipartFile data) throws Exception {
 		return CompletableFuture.supplyAsync(() ->{
 			InsertResDto result = new InsertResDto();
@@ -86,6 +94,7 @@ public class EmployeesController extends BaseIamController{
 	}
 	
 	@GetMapping("excel")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data")
     public ResponseEntity<byte[]> generateExcel() throws Exception, JRException {
     	
         byte[] data = employeesService.downloadTemplate();
@@ -96,6 +105,7 @@ public class EmployeesController extends BaseIamController{
     }
 	
 	@PutMapping
+	@ApiResponse(responseCode = "201", description = "Successfuly Update Data", content = @Content(schema = @Schema (implementation = UpdateResDto.class)))
 	public ResponseEntity<?> update(@RequestBody Employees data) throws Exception {
 		UpdateResDto employees = employeesService.update(data);
 		
@@ -103,6 +113,7 @@ public class EmployeesController extends BaseIamController{
 	}
 	
 	@DeleteMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Delete Data", content = @Content(schema = @Schema (implementation = DeleteResDataDto.class)))
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception {
 		DeleteResDataDto result = employeesService.removeById(id);
 		

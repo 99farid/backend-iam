@@ -22,6 +22,10 @@ import com.lawencon.assetsmanagement.dto.permissions.FindByIdResPermissionsDto;
 import com.lawencon.assetsmanagement.model.Permissions;
 import com.lawencon.assetsmanagement.service.PermissionsService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 @RestController
 @RequestMapping("permissions")
 public class PermissionsController extends BaseIamController{
@@ -30,6 +34,7 @@ public class PermissionsController extends BaseIamController{
 	private PermissionsService permissionsService;
 	
 	@GetMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResPemissionsDto.class)))
 	public ResponseEntity<?> findAll() throws Exception {
 		FindAllResPemissionsDto result = permissionsService.findAll();
 		
@@ -37,6 +42,7 @@ public class PermissionsController extends BaseIamController{
 	}
 
 	@GetMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByIdResPermissionsDto.class)))
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception {
 		FindByIdResPermissionsDto result = permissionsService.findById(id);
 		
@@ -44,6 +50,7 @@ public class PermissionsController extends BaseIamController{
 	}
 	
 	@GetMapping("name")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResFilterByNameDto.class)))
 	public ResponseEntity<?> findAllFilterByName(@RequestParam("q") String input) throws Exception {
 		FindAllResFilterByNameDto result = permissionsService.findAllFilterByName(input);
 		
@@ -51,6 +58,7 @@ public class PermissionsController extends BaseIamController{
 	}
 	
 	@PostMapping
+	@ApiResponse(responseCode = "201", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public ResponseEntity<?> insert(@RequestBody Permissions data) throws Exception {
 		InsertResDto permissions = permissionsService.insert(data);
 		
@@ -58,6 +66,7 @@ public class PermissionsController extends BaseIamController{
 	}
 	
 	@PutMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Update Data", content = @Content(schema = @Schema (implementation = UpdateResDto.class)))
 	public ResponseEntity<?> update(@RequestBody Permissions data) throws Exception {
 		UpdateResDto permissions = permissionsService.update(data);
 		
@@ -65,6 +74,7 @@ public class PermissionsController extends BaseIamController{
 	}
 	
 	@DeleteMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Delete Data", content = @Content(schema = @Schema (implementation = DeleteResDataDto.class)))
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception {
 		DeleteResDataDto result = permissionsService.removeById(id);
 		

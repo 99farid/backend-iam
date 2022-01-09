@@ -1,7 +1,6 @@
 package com.lawencon.assetsmanagement.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,7 +46,7 @@ public class AppSercurity extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.POST, "/users")
 		.antMatchers(HttpMethod.GET, "/employees/excel", "/assets/excel", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
 						"/assets/pic/**", "/track-activities/pdf", "/companies/search/**", "/assets/pdf", 
-						"/transactions-out/pdf", "/detail-transactions-out/pdf", "/transactions-in/pdf");
+						"/transactions-out/pdf", "/detail-transactions-out/pdf", "/transactions-in/pdf", "/files/img/**");
 	}
 
 }

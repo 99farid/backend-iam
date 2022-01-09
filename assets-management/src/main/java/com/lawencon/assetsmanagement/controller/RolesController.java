@@ -21,6 +21,10 @@ import com.lawencon.assetsmanagement.dto.roles.InsertReqDataRolesDto;
 import com.lawencon.assetsmanagement.dto.roles.UpdateReqRolesDto;
 import com.lawencon.assetsmanagement.service.RolesService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 @RestController
 @RequestMapping("roles")
 public class RolesController extends BaseIamController{
@@ -29,6 +33,7 @@ public class RolesController extends BaseIamController{
 	private RolesService rolesService;
 	
 	@GetMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResRolesDto.class)))
 	public ResponseEntity<?> findAll() throws Exception {
 		FindAllResRolesDto result = rolesService.findAll();
 		
@@ -36,6 +41,7 @@ public class RolesController extends BaseIamController{
 	}
 	
 	@GetMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByIdResRolesDto.class)))
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception {
 		FindByIdResRolesDto result = rolesService.findById(id);
 		
@@ -43,6 +49,7 @@ public class RolesController extends BaseIamController{
 	}
 	
 	@PostMapping
+	@ApiResponse(responseCode = "201", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public ResponseEntity<?> insert(@RequestBody InsertReqDataRolesDto data) throws Exception {
 		InsertResDto roles = rolesService.insert(data);
 		
@@ -50,6 +57,7 @@ public class RolesController extends BaseIamController{
 	}
 	
 	@PutMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Update Data", content = @Content(schema = @Schema (implementation = UpdateResDto.class)))
 	public ResponseEntity<?> update(@RequestBody UpdateReqRolesDto data) throws Exception {
 		UpdateResDto roles = rolesService.update(data);
 		
@@ -57,6 +65,7 @@ public class RolesController extends BaseIamController{
 	}
 	
 	@DeleteMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Delete Data", content = @Content(schema = @Schema (implementation = DeleteResDataDto.class)))
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception {
 		DeleteResDataDto result = rolesService.removeById(id);
 		
