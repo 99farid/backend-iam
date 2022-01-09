@@ -615,7 +615,7 @@ INSERT INTO permissions (code, permission_name, permission_link, ver, created_by
 			('C-Trx-Out','Create Transaction Out', '/transactions-out/new', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE),
 			('R-Trx-Out','Read Transaction Out', '/transactions-out', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
 INSERT INTO permissions (code, permission_name, permission_link, ver, created_by, created_date, is_active)
-			VALUES		('R-Report-Asset','Read Report Asset', '/assets-expired', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
+			VALUES		('R-Report-Asset','Read Report Asset', '/assets/expired', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
 
 INSERT INTO permissions (code, permission_name, permission_link, ver, created_by, created_date, is_active)
 			VALUES		('R-Report-Transactions','Read Report Transactions', '/transactions-out/expired', 0, (SELECT id FROM users WHERE email = 'SYSTEM'), NOW(), TRUE);
