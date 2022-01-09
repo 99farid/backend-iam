@@ -304,7 +304,7 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{codeTransaction}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{codeTransaction} != null ? $F{codeTransaction} : "-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="438" y="0" width="75" height="70" uuid="59daa140-c797-4e6b-9d06-af7f0781e064">
