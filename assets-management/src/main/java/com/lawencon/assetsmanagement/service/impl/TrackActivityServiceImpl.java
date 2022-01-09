@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.assetsmanagement.dao.GeneralTemplateDao;
+import com.lawencon.assetsmanagement.dao.ProfileUsersDao;
 import com.lawencon.assetsmanagement.dao.TrackActivityDao;
 import com.lawencon.assetsmanagement.dao.UsersDao;
 import com.lawencon.assetsmanagement.dto.SendResEmailDto;
@@ -13,8 +15,11 @@ import com.lawencon.assetsmanagement.dto.trackactivity.FindAllResTrackActivityDt
 import com.lawencon.assetsmanagement.dto.trackactivity.FindByIdResTrackActivityDto;
 import com.lawencon.assetsmanagement.email.EmailHandler;
 import com.lawencon.assetsmanagement.helper.EmailModel;
+import com.lawencon.assetsmanagement.model.GeneralTemplate;
+import com.lawencon.assetsmanagement.model.ProfileUsers;
 import com.lawencon.assetsmanagement.model.Users;
 import com.lawencon.assetsmanagement.service.TrackActivityService;
+import com.lawencon.assetsmanagement.util.TemplateEmailUtil;
 
 @Service
 public class TrackActivityServiceImpl extends BaseIamServiceImpl implements TrackActivityService {
@@ -27,6 +32,15 @@ public class TrackActivityServiceImpl extends BaseIamServiceImpl implements Trac
 	
 	@Autowired
 	private UsersDao usersDao;
+	
+	@Autowired
+	private ProfileUsersDao profileUsersDao;
+	
+	@Autowired
+	private GeneralTemplateDao templateDao;
+	
+	@Autowired
+	private TemplateEmailUtil templateEmailUtil;
 	
 	@Override
 	public FindAllResTrackActivityDto findAll() throws Exception {
@@ -54,15 +68,21 @@ public class TrackActivityServiceImpl extends BaseIamServiceImpl implements Trac
 		map.put("company", "PT. Lawencon Internasional");
         
 		FindAllResTrackActivityDto result = findAll();
-        
-        EmailModel email = new EmailModel();
-        
+               
         Users users = usersDao.findById(getIdAuth());
-        email.setTo(users.getEmail());
-        email.setSubject("Report Track Activity");
-        email.setText("This is report notification to inform you about report track activity");
-     
-		emailHandler.sendMailWithAttachmentJasper(email, result.getData(), "track-activity", map);
+
+		ProfileUsers profile = profileUsersDao.findByUser(getIdAuth());
+
+		EmailModel emailData = new EmailModel();
+		emailData.setSubject("Notification Report");
+		emailData.setTo(users.getEmail());
+		GeneralTemplate template = templateDao.findByCode("SEND_REPORTS");
+		Map<String, Object> mapReplace = templateEmailUtil.setKey("@user@", "@filename@")
+				.setValue(profile.getEmployee().getFullName(), "Track Activity").build();
+
+		String text = templateEmailUtil.replacteTextTemplate(template.getDataTemplate(), mapReplace);
+		emailData.setText(text);
+		emailHandler.sendMailWithAttachmentJasper(emailData, result.getData(), "track-activity", map);
 		
 		send.setMsg("email sent");	
 		return send;
