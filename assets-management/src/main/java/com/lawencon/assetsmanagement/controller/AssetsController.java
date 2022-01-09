@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -41,6 +40,9 @@ import com.lawencon.assetsmanagement.model.Assets;
 import com.lawencon.assetsmanagement.service.AssetsService;
 import com.lawencon.util.JasperUtil;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
@@ -54,12 +56,14 @@ public class AssetsController extends BaseIamController{
 	private Executor executor;
 	
 	@GetMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResAssetsDto.class)))
 	public ResponseEntity<?> findAll() throws Exception{
 		FindAllResAssetsDto result = assetsService.findAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByIdResAssetsDto.class)))
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception{
 		FindByIdResAssetsDto result = assetsService.findById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
@@ -67,11 +71,14 @@ public class AssetsController extends BaseIamController{
 
 	
 	@PostMapping
+	@ApiResponse(responseCode = "201", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public ResponseEntity<?> insert (@RequestPart String data, @RequestPart(required = false) MultipartFile display, @RequestPart(required = false) MultipartFile invoicePict ) throws Exception{
 		InsertResDto result = assetsService.insert(convertToModel(data, InsertReqDataAssetsDto.class), display, invoicePict);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
+	
 	@PostMapping("excel")
+	@ApiResponse(responseCode = "201", description = "Successfuly Insert Data", content = @Content(schema = @Schema (implementation = InsertResDto.class)))
 	public CompletableFuture<?> insertFromExcel(@RequestPart MultipartFile data ) throws Exception{
 		return CompletableFuture.supplyAsync(() ->{
 			InsertResDto result = new InsertResDto();
@@ -86,29 +93,34 @@ public class AssetsController extends BaseIamController{
 	}
 	
 	@PutMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Update Data", content = @Content(schema = @Schema (implementation = UpdateResDto.class)))
 	public ResponseEntity<?> update (@RequestPart String data, @RequestPart(required = false) MultipartFile display) throws Exception{
 		UpdateResDto result = assetsService.update(convertToModel(data, Assets.class), display);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@DeleteMapping ("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Remove Data", content = @Content(schema = @Schema (implementation = DeleteResDataDto.class)))
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception{
 		DeleteResDataDto result =   assetsService.removeById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping ("count")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = CountAssetResAssetsDto.class)))
 	public ResponseEntity<?> countAsset() throws Exception{
 		CountAssetResAssetsDto result =   assetsService.countAsset();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@GetMapping ("count-by-status")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = CountAssetByStatusResAssetsDto.class)))
 	public ResponseEntity<?> countAssetByStatus(@RequestParam("q") String code) throws Exception{
 		CountAssetByStatusResAssetsDto result =   assetsService.countAssetByStatus(code);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping ("type")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllFilterByTypeResAssetsDto.class)))
 	public ResponseEntity<?> findAllFilterByType(@RequestParam("q") String typeCode) throws Exception{
 		FindAllFilterByTypeResAssetsDto result =   assetsService.findAllFilterByType(typeCode);
 		return new ResponseEntity<>(result, HttpStatus.OK);
@@ -116,18 +128,21 @@ public class AssetsController extends BaseIamController{
 	
 	
 	@GetMapping ("search")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllFilterBySearchResAssetsDto.class)))
 	public ResponseEntity<?> findAllFilterBySearch(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResAssetsDto result =   assetsService.findAllFilterBySearch(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping ("general")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllFilterBySearchResGeneralItemDto.class)))
 	public ResponseEntity<?> findAllFilterBySearchForGeneralItem(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResGeneralItemDto result = assetsService.findAllFilterBySearchForGeneralItem(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping ("component")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllFilterBySearchResComponentDto.class)))
 	public ResponseEntity<?> findAllFilterBySearchForComponent(@RequestParam("query") String input) throws Exception{
 		FindAllFilterBySearchResComponentDto result = assetsService.findAllFilterBySearchForComponent(input);
 		return new ResponseEntity<>(result, HttpStatus.OK);
@@ -143,12 +158,14 @@ public class AssetsController extends BaseIamController{
 	}
 	
 	@GetMapping("/view")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllForPdfAssetsExpiredDto.class)))
 	public ResponseEntity<?> findAllForPdf() throws Exception{
 		FindAllForPdfAssetsExpiredDto result = assetsService.findAllForPdf();
 		return new ResponseEntity<>(result, HttpStatus.OK);		
 	}
 	
 	@GetMapping("/pdf")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllForPdfAssetsExpiredDto.class)))
     public ResponseEntity<byte[]> generatePdf() throws Exception, JRException {
     	Map<String, Object> map = new HashMap<>();
 		map.put("company", "PT. Lawencon Internasional");
@@ -164,6 +181,7 @@ public class AssetsController extends BaseIamController{
     }
     
     @GetMapping("excel")
+    @ApiResponse(responseCode = "200", description = "Successfuly Get Data")
     public ResponseEntity<byte[]> generateExcel() throws Exception, JRException {
     	
         byte[] data = assetsService.createTemplateExcel();
@@ -174,6 +192,7 @@ public class AssetsController extends BaseIamController{
     }
     
 	@GetMapping("/send-pdf")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data")
 	public CompletableFuture<?> sendFileToEmail() throws Exception {
 		return CompletableFuture.supplyAsync(() ->{
 			SendResEmailDto result = new SendResEmailDto();

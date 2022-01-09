@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.assetsmanagement.dto.DeleteResDataDto;
-import com.lawencon.assetsmanagement.dto.companies.FindAllFilterBySearchResCompaniesDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleCodeDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResFilterByRoleDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindAllResRolePermissionsDto;
 import com.lawencon.assetsmanagement.dto.rolepermissions.FindByIdResRolePermissionsDto;
 import com.lawencon.assetsmanagement.service.RolePermissionsService;
+
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("role-permissions")
@@ -26,6 +29,7 @@ public class RolePermissionsController extends BaseIamController{
 	private RolePermissionsService rolePermissionsService;
 	
 	@GetMapping
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResRolePermissionsDto.class)))
 	public ResponseEntity<?> findAll() throws Exception {
 		FindAllResRolePermissionsDto result = rolePermissionsService.findAll();
 		
@@ -33,6 +37,7 @@ public class RolePermissionsController extends BaseIamController{
 	}
 	
 	@GetMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindByIdResRolePermissionsDto.class)))
 	public ResponseEntity<?> findById(@PathVariable("id") String id) throws Exception {
 		FindByIdResRolePermissionsDto result = rolePermissionsService.findById(id);
 		
@@ -40,6 +45,7 @@ public class RolePermissionsController extends BaseIamController{
 	}
 	
 	@GetMapping("role")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResFilterByRoleDto.class)))
 	public ResponseEntity<?> findAllFilterByRole(@RequestParam("q") String idRole) throws Exception {
 		FindAllResFilterByRoleDto result = rolePermissionsService.findAllFilterByRole(idRole);
 		
@@ -47,6 +53,7 @@ public class RolePermissionsController extends BaseIamController{
 	}
 	
 	@GetMapping("role-code")
+	@ApiResponse(responseCode = "200", description = "Successfuly Get Data", content = @Content(schema = @Schema (implementation = FindAllResFilterByRoleCodeDto.class)))
 	public ResponseEntity<?> findAllFilterByRoleCode(@RequestParam("q") String roleCode) throws Exception {
 		FindAllResFilterByRoleCodeDto result = rolePermissionsService.findAllFilterByRoleCode(roleCode);
 		
@@ -54,6 +61,7 @@ public class RolePermissionsController extends BaseIamController{
 	}
 	
 	@DeleteMapping("{id}")
+	@ApiResponse(responseCode = "200", description = "Successfuly Delete Data", content = @Content(schema = @Schema (implementation = DeleteResDataDto.class)))
 	public ResponseEntity<?> removeById(@PathVariable("id") String id) throws Exception {
 		DeleteResDataDto result = rolePermissionsService.removeById(id);
 		
