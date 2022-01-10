@@ -417,7 +417,8 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 			excelUtil.init("data", data.getInputStream());
 			for(int i = 1; i< excelUtil.getRowCountInSheet(); i++) {
 				Assets asset = new Assets();
-				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +Integer.valueOf(excelUtil.getCellData(i, 0)));
+				Double codeTail = Double.valueOf(excelUtil.getCellData(i, 0));
+				asset.setCode(excelUtil.getCellData(i, 6)+ "-" +excelUtil.getCellData(i, 4)+"-" +codeTail.intValue());
 				Items item = new Items();
 				item.setDescription(excelUtil.getCellData(i, 1));
 				item.setBrand(excelUtil.getCellData(i, 2));
@@ -434,7 +435,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 				Companies company = companiesDao.findByCode(excelUtil.getCellData(i, 6));
 				asset.setCompany(company);
 				if(excelUtil.getCellData(i, 7) != null) {
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					LocalDate date = LocalDate.parse(excelUtil.getCellData(i, 7), formatter);
 					asset.setExpiredDate(date);
 				}
@@ -469,7 +470,7 @@ public class AssetsServiceImpl extends BaseIamServiceImpl implements AssetsServi
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
-			throw new Exception(e);
+			throw new ValidationIamException("Invalid data format");
 		}
 		
 	}
