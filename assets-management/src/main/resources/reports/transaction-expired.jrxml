@@ -334,12 +334,17 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="55" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<staticText>
-				<reportElement x="319" y="19" width="163" height="30" uuid="97512b9b-26fc-4739-bfec-655be209f57b"/>
+				<reportElement x="319" y="60" width="163" height="30" uuid="97512b9b-26fc-4739-bfec-655be209f57b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[@Copyright 2021 IAM System]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="685" y="20" width="84" height="30" uuid="ce86eb74-e383-4e48-96cc-677b66caf6b5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

@@ -259,6 +259,11 @@ Daerah Khusus Ibukota Jakarta 12870]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[@Copyright 2021 IAM System]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="435" y="60" width="84" height="30" uuid="c9967139-5c3d-4201-9b8b-07b412f0494b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>
